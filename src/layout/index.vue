@@ -1,12 +1,15 @@
 <template>
-    <WaterMark>
+    <WaterMark :show="watermark">
         <el-container>
             <el-aside>
                 <Sidebar />
             </el-aside>
             <el-main>
                 <el-scrollbar class="main-scrollbar">
-                    <div></div>
+                    <div :style="{ position: fixedHeader ? 'absolute' : '' }">
+                        <Navbar />
+                        <TagsView v-if="showTagsView" />
+                    </div>
                 </el-scrollbar>
             </el-main>
         </el-container>
@@ -14,13 +17,20 @@
 </template>
 
 <script>
+import { useSettingsStore } from '@/store/settings'
+import { mapState } from 'pinia'
+
 import WaterMark from "@/components/WaterMark"
 import Sidebar from "@/layout/components/Sidebar"
 import Navbar from "@/layout/components/Navbar"
+import TagsView from "@/layout/components/TagsView"
 
 export default {
     name: "Layout",
-    components: { WaterMark, Sidebar, Navbar }
+    components: { WaterMark, Sidebar, Navbar, TagsView },
+    computed: {
+        ...mapState(useSettingsStore, ["fixedHeader", "showTagsView", "watermark"])
+    },
 }
 </script>
 

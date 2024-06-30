@@ -1,9 +1,10 @@
 import { defineStore } from 'pinia'
-import { getRouters } from '@/api/system/menu'
+import { getRouters } from '@/api/menu'
 
 export const usePermissionStore = defineStore('permission', {
     state: () => ({
-
+        sidebarRouterList: [],
+        sidebarRouterTree: []
     }),
     actions: {
         // 生成路由
@@ -17,3 +18,7 @@ export const usePermissionStore = defineStore('permission', {
         }
     }
 })
+
+function flatRouters(routeTree) {
+
+}

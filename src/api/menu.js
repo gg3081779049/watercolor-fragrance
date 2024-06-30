@@ -7,42 +7,32 @@ export function getRouters() {
             msg: '操作成功',
             data: [{
                 path: 'home',
-                icon: 'home',
-                name: '首页',
+                meta: { icon: 'home', title: '首页' }
             }, {
                 path: 'room',
-                icon: 'room',
-                name: '房间管理',
+                meta: { icon: 'room', title: '房间管理' },
                 children: [{
                     path: 'state',
-                    icon: 'state',
-                    name: '房态',
+                    meta: { icon: 'state', title: '房态' }
                 }]
             }, {
                 path: 'finance',
-                icon: 'finance',
-                name: '财务管理',
-                children: []
+                meta: { icon: 'finance', title: '财务管理' }
             }, {
                 path: 'system',
-                icon: 'system',
-                name: '系统管理',
+                meta: { icon: 'system', title: '系统管理' },
                 children: [{
                     path: 'dept',
-                    icon: 'dept',
-                    name: '部门管理',
+                    meta: { icon: 'dept', title: '部门管理' }
                 }, {
                     path: 'role',
-                    icon: 'role',
-                    name: '角色管理',
+                    meta: { icon: 'role', title: '角色管理' }
                 }, {
                     path: 'project',
-                    icon: 'project',
-                    name: '项目管理',
+                    meta: { icon: 'project', title: '项目管理' }
                 }, {
                     path: 'branchStore',
-                    icon: 'branchStore',
-                    name: '分店管理',
+                    meta: { icon: 'branchStore', title: '分店管理' }
                 }]
             }]
         })
