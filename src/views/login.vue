@@ -1,60 +1,41 @@
 <template>
-    <div class="login">
-      <el-form class="login-form" ref="loginForm" :model="loginForm" :rules="loginRules">
-        <h3 class="title">{{ title }}</h3>
-        <el-form-item prop="username">
-          <el-input
-            v-model="loginForm.username"
-            type="text"
-            auto-complete="off"
-            placeholder="账号"
-          ><template #prefix>
+  <div class="login">
+    <el-form class="login-form" ref="loginForm" :model="loginForm" :rules="loginRules">
+      <h3 class="title">{{ title }}</h3>
+      <el-form-item prop="username">
+        <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号"><template #prefix>
             <SvgIcon icon="user" />
           </template>
-          </el-input>
-        </el-form-item>
-        <el-form-item prop="password">
-          <el-input
-            v-model="loginForm.password"
-            type="password"
-            auto-complete="off"
-            placeholder="密码"
-            show-password
-          ><template #prefix>
+        </el-input>
+      </el-form-item>
+      <el-form-item prop="password">
+        <el-input v-model="loginForm.password" type="password" auto-complete="off" placeholder="密码"
+          show-password><template #prefix>
             <SvgIcon icon="lock" />
           </template>
-          </el-input>
-        </el-form-item>
-        <el-form-item prop="code" v-if="captcha">
-          <el-input
-            v-model="loginForm.code"
-            auto-complete="off"
-            placeholder="验证码"
-            style="width: 64%"
-            @keyup.enter.native="handleLogin"
-          ><template #prefix>
+        </el-input>
+      </el-form-item>
+      <el-form-item prop="code" v-if="captcha">
+        <el-input v-model="loginForm.code" auto-complete="off" placeholder="验证码" style="width: 64%"
+          @keyup.enter.native="handleLogin"><template #prefix>
             <SvgIcon icon="validCode" />
           </template>
-          </el-input>
-          <div class="captcha-container">
-            <img :src="codeUrl" @click="getCode"/>
-          </div>
-        </el-form-item>
-        <div class="box">
-          <el-checkbox v-model="loginForm.rememberMe">记住密码</el-checkbox>
-          <router-link v-if="register" class="register-link" :to="'/register'">立即注册</router-link>
+        </el-input>
+        <div class="captcha-container">
+          <img :src="codeUrl" @click="getCode" />
         </div>
-        <el-button
-          style="width:100%"
-          type="primary"
-          :loading="loading"
-          @click.native.prevent="handleLogin">
-          <span v-if="!loading">登 录</span>
-          <span v-else>登 录 中...</span>
-        </el-button>
-      </el-form>
-      <span class="copyright">Copyright © 2024 watercolor-fragrance All Rights Reserved.</span>
-    </div>
+      </el-form-item>
+      <div class="box">
+        <el-checkbox v-model="loginForm.rememberMe">记住密码</el-checkbox>
+        <router-link v-if="register" class="register-link" :to="'/register'">立即注册</router-link>
+      </div>
+      <el-button style="width:100%" type="primary" :loading="loading" @click.native.prevent="handleLogin">
+        <span v-if="!loading">登 录</span>
+        <span v-else>登 录 中...</span>
+      </el-button>
+    </el-form>
+    <span class="copyright">Copyright © 2024 watercolor-fragrance All Rights Reserved.</span>
+  </div>
 </template>
 
 <script>
@@ -127,7 +108,7 @@ export default {
             Cookies.remove('rememberMe')
           }
           useUserStore().Login(this.loginForm).then(() => {
-            this.$router.push({ path: this.redirect || "/" }).catch(() => {})
+            this.$router.push({ path: this.redirect || "/" }).catch(() => { })
           }).catch(() => {
             this.loading = false
             if (this.captcha) {
@@ -150,75 +131,85 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.login {
-  width: 100vw;
-  height: 100vh;
-  background-image: url("@/assets/images/login-background.jpg");
-  background-size: cover;
-  position: relative;
-  .login-form {
-    width: 400px;
-    height: auto;
-    padding: 25px;
-    border-radius: 6px;
-    background: #fff;
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    cursor: default;
-    .title {
-      margin-bottom: 25px;
-      text-align: center;
-      color: #707070;
-    }
-    .el-input {
-      height: 38px;
-      svg {
-        fill: #a8abb2;
+  .login {
+    width: 100vw;
+    height: 100vh;
+    background-image: url("@/assets/images/login-background.jpg");
+    background-size: cover;
+    position: relative;
+
+    .login-form {
+      width: 400px;
+      height: auto;
+      padding: 25px;
+      border-radius: 6px;
+      background: #fff;
+      box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      cursor: default;
+
+      .title {
+        margin-bottom: 25px;
+        text-align: center;
+        color: #707070;
       }
-    }
-    .captcha-container {
-      width: 34%;
-      height: 38px;
-      background: rgba(0, 0, 0, 0.06);
-      margin-left: 2%;
-      border-radius: 4px;
-      float: right;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      img {
-        width: 100%;
-        cursor: pointer;
-        vertical-align: middle;
+
+      .el-input {
+        height: 38px;
+
+        svg {
+          fill: #a8abb2;
+        }
       }
-    }
-    .box {
-      margin-bottom: 25px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      .register-link {
-        margin-right: 8px;
-        font-size: 14px;
-        color: #337ab7;
-        cursor: pointer;
-        &:hover {
-          color: rgb(32, 160, 255);
+
+      .captcha-container {
+        width: 34%;
+        height: 38px;
+        background: rgba(0, 0, 0, 0.06);
+        margin-left: 2%;
+        border-radius: 4px;
+        float: right;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+
+        img {
+          width: 100%;
+          cursor: pointer;
+          vertical-align: middle;
+        }
+      }
+
+      .box {
+        margin-bottom: 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .register-link {
+          margin-right: 8px;
+          font-size: 14px;
+          color: #337ab7;
+          text-decoration: none;
+          cursor: pointer;
+
+          &:hover {
+            color: rgb(32, 160, 255);
+          }
         }
       }
     }
-  }
 
-  .copyright {
-    color: #999;
-    font-size: 12px;
-    position: absolute;
-    left: 50%;
-    bottom: 18px;
-    transform: translateX(-50%);
+    .copyright {
+      color: #999;
+      font-size: 12px;
+      position: absolute;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+    }
   }
-}
 </style>

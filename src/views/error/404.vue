@@ -27,177 +27,200 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.page-404 {
-  position: absolute;
-  left: 50%;
-  top: 40%;
-  transform: translate(-50%,-50%);
-  .page-404-container {
-    width: 1200px;
-    padding: 0 50px;
-    overflow: hidden;
-    position: relative;
-    .pic-404 {
-      width: 600px;
-      float: left;
+  .page-404 {
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+
+    .page-404-container {
+      width: 1200px;
+      padding: 0 50px;
       overflow: hidden;
       position: relative;
-      &__parent {
-        width: 100%;
-      }
-      &__child {
-        position: absolute;
-        &.left {
-          width: 80px;
-          left: 220px;
-          top: 17px;
-          opacity: 0;
-          animation: cloudLeft 2s linear 1s forwards;
-        }
-        &.mid {
-          width: 46px;
-          left: 420px;
-          top: 10px;
-          opacity: 0;
-          animation: cloudMid 2s linear 1.2s forwards;
-        }
-        &.right {
-          width: 62px;
-          left: 500px;
-          top: 100px;
-          opacity: 0;
-          animation: cloudRight 2s linear 1s forwards;
-        }
-          @keyframes cloudLeft {
-          0% {
-            top: 17px;
-            left: 220px;
-            opacity: 0;
-          }
-          20% {
-            top: 33px;
-            left: 188px;
-            opacity: 1;
-          }
-          80% {
-            top: 81px;
-            left: 92px;
-            opacity: 1;
-          }
-          100% {
-            top: 97px;
-            left: 60px;
-            opacity: 0;
-          }
-        }
-        @keyframes cloudMid {
-          0% {
-            top: 10px;
-            left: 420px;
-            opacity: 0;
-          }
-          20% {
-            top: 40px;
-            left: 360px;
-            opacity: 1;
-          }
-          70% {
-            top: 130px;
-            left: 180px;
-            opacity: 1;
-          }
-          100% {
-            top: 160px;
-            left: 120px;
-            opacity: 0;
-          }
-        }
-        @keyframes cloudRight {
-          0% {
-            top: 100px;
-            left: 500px;
-            opacity: 0;
-          }
-          20% {
-            top: 120px;
-            left: 460px;
-            opacity: 1;
-          }
-          80% {
-            top: 180px;
-            left: 340px;
-            opacity: 1;
-          }
-          100% {
-            top: 200px;
-            left: 300px;
-            opacity: 0;
-          }
-        }
-      }
-    }
-    .bullshit {
-      position: relative;
-      float: left;
-      width: 300px;
-      padding: 30px 0;
-      overflow: hidden;
-      &__oops {
-        font-size: 32px;
-        font-weight: bold;
-        line-height: 40px;
-        color: #1482f0;
-        opacity: 0;
-        margin-bottom: 20px;
-        animation: slideUp 0.5s forwards;
-      }
-      &__headline {
-        font-size: 20px;
-        line-height: 24px;
-        color: #222;
-        font-weight: bold;
-        opacity: 0;
-        margin-bottom: 10px;
-        animation: slideUp 0.5s forwards;
-        animation-delay: 0.1s;
-      }
-      &__info {
-        text-indent: 2em;
-        font-size: 13px;
-        line-height: 21px;
-        color: grey;
-        opacity: 0;
-        margin-bottom: 30px;
-        animation: slideUp 0.5s forwards;
-        animation-delay: 0.2s;
-      }
-      &__return-home {
-        display: block;
+
+      .pic-404 {
+        width: 600px;
         float: left;
-        width: 110px;
-        height: 36px;
-        background: #1482f0;
-        border-radius: 100px;
-        text-align: center;
-        color: #ffffff;
-        opacity: 0;
-        font-size: 14px;
-        line-height: 36px;
-        cursor: pointer;
-        animation: slideUp 0.5s forwards;
-        animation-delay: 0.3s;
-      }
-      @keyframes slideUp {
-        0% {
-          transform: translateY(60px);
-          opacity: 0;
+        overflow: hidden;
+        position: relative;
+
+        &__parent {
+          width: 100%;
         }
-        100% {
-          transform: translateY(0);
-          opacity: 1;
+
+        &__child {
+          position: absolute;
+
+          &.left {
+            width: 80px;
+            left: 220px;
+            top: 17px;
+            opacity: 0;
+            animation: cloudLeft 2s linear 1s forwards;
+          }
+
+          &.mid {
+            width: 46px;
+            left: 420px;
+            top: 10px;
+            opacity: 0;
+            animation: cloudMid 2s linear 1.2s forwards;
+          }
+
+          &.right {
+            width: 62px;
+            left: 500px;
+            top: 100px;
+            opacity: 0;
+            animation: cloudRight 2s linear 1s forwards;
+          }
+
+          @keyframes cloudLeft {
+            0% {
+              left: 220px;
+              top: 17px;
+              opacity: 0;
+            }
+
+            20% {
+              left: 188px;
+              top: 33px;
+              opacity: 1;
+            }
+
+            80% {
+              left: 92px;
+              top: 81px;
+              opacity: 1;
+            }
+
+            100% {
+              left: 60px;
+              top: 97px;
+              opacity: 0;
+            }
+          }
+
+          @keyframes cloudMid {
+            0% {
+              left: 420px;
+              top: 10px;
+              opacity: 0;
+            }
+
+            20% {
+              left: 360px;
+              top: 40px;
+              opacity: 1;
+            }
+
+            70% {
+              left: 180px;
+              top: 130px;
+              opacity: 1;
+            }
+
+            100% {
+              left: 120px;
+              top: 160px;
+              opacity: 0;
+            }
+          }
+
+          @keyframes cloudRight {
+            0% {
+              left: 500px;
+              top: 100px;
+              opacity: 0;
+            }
+
+            20% {
+              left: 460px;
+              top: 120px;
+              opacity: 1;
+            }
+
+            80% {
+              left: 340px;
+              top: 180px;
+              opacity: 1;
+            }
+
+            100% {
+              left: 300px;
+              top: 200px;
+              opacity: 0;
+            }
+          }
+        }
+      }
+
+      .bullshit {
+        width: 300px;
+        padding: 30px 0;
+        float: left;
+        overflow: hidden;
+        position: relative;
+
+        &__oops {
+          margin-bottom: 20px;
+          font-size: 32px;
+          font-weight: bold;
+          line-height: 40px;
+          color: #1482f0;
+          opacity: 0;
+          animation: slideUp 0.5s forwards;
+        }
+
+        &__headline {
+          margin-bottom: 10px;
+          font-size: 20px;
+          line-height: 24px;
+          color: #222;
+          font-weight: bold;
+          opacity: 0;
+          animation: slideUp 0.5s 0.1s forwards;
+        }
+
+        &__info {
+          text-indent: 2em;
+          font-size: 13px;
+          line-height: 21px;
+          color: grey;
+          opacity: 0;
+          margin-bottom: 30px;
+          animation: slideUp 0.5s 0.2s forwards;
+        }
+
+        &__return-home {
+          width: 110px;
+          height: 36px;
+          border-radius: 100px;
+          background: #1482f0;
+          display: block;
+          float: left;
+          text-align: center;
+          color: #ffffff;
+          font-size: 14px;
+          line-height: 36px;
+          opacity: 0;
+          cursor: pointer;
+          animation: slideUp 0.5s 0.3s forwards;
+        }
+
+        @keyframes slideUp {
+          0% {
+            transform: translateY(60px);
+            opacity: 0;
+          }
+
+          100% {
+            transform: translateY(0);
+            opacity: 1;
+          }
         }
       }
     }
   }
-}
 </style>

@@ -42,33 +42,39 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.page-401 {
-  width: 800px;
-  max-width: 100%;
-  margin: 100px auto;
-  .back-btn {
-    border: none !important;
-    background: #008489;
-    color: #fff;
-  }
-  .text-jumbo {
-    margin: 40px 0;
-    font-size: 60px;
-    font-weight: 700;
-    color: #484848;
-  }
-  ul {
-    font-size: 14px;
-    li {
-      padding-bottom: 5px;
+  .page-401 {
+    width: 800px;
+    max-width: 100%;
+    margin: 100px auto;
+
+    .back-btn {
+      border: none !important;
+      background: #008489;
+      color: #fff;
     }
-    a {
-      color: #008489;
-      text-decoration: none;
-      &:hover {
-        text-decoration: underline;
+
+    .text-jumbo {
+      margin: 40px 0;
+      font-size: 60px;
+      font-weight: 700;
+      color: #484848;
+    }
+
+    ul {
+      font-size: 14px;
+
+      li {
+        padding-bottom: 5px;
+      }
+
+      a {
+        color: #008489;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
       }
     }
   }
-}
 </style>
