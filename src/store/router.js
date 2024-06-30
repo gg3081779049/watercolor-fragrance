@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
-import { getRouters } from '@/api/menu'
+import { getRouters } from '@/api/router'
 
-export const usePermissionStore = defineStore('permission', {
+export const useRouterStore = defineStore('router', {
     state: () => ({
         sidebarRouterList: [],
         sidebarRouterTree: []

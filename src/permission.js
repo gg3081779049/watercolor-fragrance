@@ -3,7 +3,7 @@ import { ElMessage } from 'element-plus'
 import { getToken } from '@/utils/auth'
 import { isRelogin } from '@/utils/request'
 import { useUserStore } from '@/store/user'
-import { usePermissionStore } from '@/store/permission'
+import { useRouterStore } from '@/store/router'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 
@@ -28,7 +28,7 @@ router.beforeEach((to, from, next) => {
                 // 判断当前用户是否已拉取完user_info信息
                 userStore.GetInfo().then(() => {
                     isRelogin.show = false
-                    usePermissionStore().GenerateRoutes().then((accessRoutes) => {
+                    useRouterStore().GenerateRoutes().then((accessRoutes) => {
                         // hack方法 确保addRoutes已完成
                         next({ ...to, replace: true })
                     })
