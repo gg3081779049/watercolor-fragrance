@@ -1,9 +1,9 @@
 export default {
-    // 主题
-    theme: 'light',
+    // 系统主题
+    theme: 'default',
 
-    // 布局
-    layout: 'vertical-mix',
+    // 浅色模式
+    light: true,
 
     // 系统语言
     language: 'zh',

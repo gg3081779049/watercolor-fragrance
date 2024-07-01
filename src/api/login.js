@@ -46,11 +46,3 @@ export function getCodeImg() {
         })
     })
 }
-
-export function register() {
-    return new Promise((resolve, reject) => {
-        resolve({
-
-        })
-    })
-}

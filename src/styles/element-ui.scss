@@ -1,0 +1,35 @@
+.el-button {
+    svg {
+        margin-right: 5px;
+        fill: var(--el-button-text-color)
+    }
+
+    &:hover svg {
+        fill: var(--el-button-hover-text-color)
+    }
+
+    &.is-disabled {
+        svg {
+            fill: var(--el-color-info-light-5);
+        }
+    }
+}
+
+.el-dropdown__popper li {
+    svg {
+        fill: var(--el-text-color-regular);
+    }
+
+    &:hover svg,
+    &:focus svg {
+        fill: var(--el-dropdown-menuItem-hover-color);
+    }
+}
+
+.el-dialog {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+}

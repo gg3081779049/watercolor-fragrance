@@ -6,7 +6,7 @@ export const useSettingsStore = defineStore('settings', {
         const storageSettings = JSON.parse(localStorage.getItem('system-settings')) || ''
         return {
             theme: storageSettings.theme ?? defaultSettings.theme,
-            layout: storageSettings.layout ?? defaultSettings.layout,
+            light: storageSettings.light ?? defaultSettings.light,
             language: storageSettings.language ?? defaultSettings.language,
             fixedHeader: storageSettings.fixedHeader ?? defaultSettings.fixedHeader,
             showBreadcrumb: storageSettings.showBreadcrumb ?? defaultSettings.showBreadcrumb,
