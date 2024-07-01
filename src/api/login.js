@@ -18,6 +18,7 @@ export function logout(token) {
     })
 }
 
+// 获取用户信息
 export function getInfo() {
     return new Promise((res, rej) => {
         res({
