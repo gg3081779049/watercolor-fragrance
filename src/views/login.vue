@@ -67,8 +67,7 @@ export default {
       // 验证码开关
       captcha: false,
       // 注册开关
-      register: true,
-      redirect: undefined,
+      register: true
     }
   },
   created() {
@@ -108,7 +107,7 @@ export default {
             Cookies.remove('rememberMe')
           }
           useUserStore().Login(this.loginForm).then(() => {
-            this.$router.push({ path: this.redirect || "/" }).catch(() => { })
+            this.$router.push({ path: this.$route.query && this.$route.query.redirect || "/" }).catch(() => { })
           }).catch(() => {
             this.loading = false
             if (this.captcha) {
@@ -117,14 +116,6 @@ export default {
           });
         }
       })
-    }
-  },
-  watch: {
-    $route: {
-      immediate: true,
-      handler(route) {
-        this.redirect = route.query && route.query.redirect
-      },
     }
   },
 }
