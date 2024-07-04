@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function getRouters() {
+export function getRoutes() {
     return new Promise((res) => {
         res({
             code: 200,

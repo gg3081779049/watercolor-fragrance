@@ -1,17 +1,17 @@
 import { defineStore } from 'pinia'
-import { getRouters } from '@/api/router'
+import { getRoutes } from '@/api/route'
 
-export const useRouterStore = defineStore('router', {
+export const useRouteStore = defineStore('route', {
     state: () => ({
-        sidebarRouterList: [],
-        sidebarRouterTree: []
+        routeList: [],
+        routeTree: []
     }),
     actions: {
         // 生成路由
         GenerateRoutes() {
             return new Promise(resolve => {
                 // 向后端请求路由数据
-                getRouters().then(res => {
+                getRoutes().then(res => {
                     resolve()
                 })
             })
