@@ -3,7 +3,8 @@
     <el-form class="login-form" ref="loginForm" :model="loginForm" :rules="loginRules">
       <h3 class="title">{{ title }}</h3>
       <el-form-item prop="username">
-        <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号"><template #prefix>
+        <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号">
+          <template #prefix>
             <SvgIcon icon="user" />
           </template>
         </el-input>

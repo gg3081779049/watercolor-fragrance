@@ -31,8 +31,21 @@ export function getRouters() {
                     path: 'project',
                     meta: { icon: 'project', title: '项目管理' }
                 }, {
+                    path: 'permission',
+                    meta: { icon: 'permission', title: '权限管理' },
+                }, {
                     path: 'branchStore',
                     meta: { icon: 'branchStore', title: '分店管理' }
+                }, {
+                    path: 'log',
+                    meta: { icon: 'log', title: '日志管理' },
+                    children: [{
+                        path: 'operate',
+                        meta: { icon: 'operate', title: '操作日志' },
+                    } < {
+                        path: 'login',
+                        meta: { icon: 'login', title: '登录日志' },
+                    }]
                 }]
             }]
         })

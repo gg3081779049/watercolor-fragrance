@@ -18,7 +18,3 @@ export const useRouterStore = defineStore('router', {
         }
     }
 })
-
-function flatRouters(routeTree) {
-
-}
