@@ -42,7 +42,7 @@ export function getRoutes() {
                     children: [{
                         path: 'operate',
                         meta: { icon: 'operate', title: '操作日志' },
-                    } < {
+                    }, {
                         path: 'login',
                         meta: { icon: 'login', title: '登录日志' },
                     }]

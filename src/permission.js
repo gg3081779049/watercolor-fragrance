@@ -18,7 +18,7 @@ router.beforeEach((to, from, next) => {
     if (getToken()) {
         if (to.path === '/login') {
             next({ path: '/' })
-            NProgress.done();
+            NProgress.done()
         } else {
             const userStore = useUserStore()
             if (userStore.roles.length) {
@@ -29,7 +29,8 @@ router.beforeEach((to, from, next) => {
                 userStore.GetInfo().then(() => {
                     isRelogin.show = false
                     useRouteStore().GenerateRoutes().then((accessRoutes) => {
-                        // hack方法 确保addRoutes已完成
+                        // 动态添加可访问路由表
+                        accessRoutes.forEach(route => router.addRoute('Layout', route))
                         next({ ...to, replace: true })
                     })
                 }).catch(err => {
