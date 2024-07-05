@@ -16,7 +16,10 @@ export default {
     name: "Layout",
     components: { WaterMark },
     computed: {
-        ...mapState(useSettingsStore, ["fixedHeader", "showTagsView", "watermark"])
+        ...mapState(useSettingsStore, ["theme", "light", "fixedHeader", "showTagsView", "watermark"])
+    },
+    created() {
+        document.documentElement.className = `${this.theme}-${this.light ? 'light' : 'dark'}`
     },
 }
 </script>
@@ -25,5 +28,6 @@ export default {
 .el-container {
   width: 100vw;
   height: 100vh;
+  background: var(--base-bg);
 }
 </style>
