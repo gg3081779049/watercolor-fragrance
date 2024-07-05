@@ -1,8 +1,8 @@
-html.default-light {
+.default-light {
     --base-bg: none;
     /* logo */
     --logo-bg: none;
-    --logo-text-color: none;
+    --logo-title-color: none;
     /* sidebar */
     --sidebar-text-color: none;
     --sidebar-menu-bg: none;
@@ -13,7 +13,7 @@ html.default-light {
     --sidebar-text-color-active: none;
     /* navbar */
     --navbar-bg: none;
-    --navbar-text-color: none;
+    --navbar-icon-fill-color: none;
     --navbar-icon-bg-hover: none;
     /* tabs */
     --tabs-bg: none;
