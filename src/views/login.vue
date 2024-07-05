@@ -5,21 +5,21 @@
       <el-form-item prop="username">
         <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号">
           <template #prefix>
-            <SvgIcon icon="user" />
+            <svg-icon icon="user" />
           </template>
         </el-input>
       </el-form-item>
       <el-form-item prop="password">
         <el-input v-model="loginForm.password" type="password" auto-complete="off" placeholder="密码"
           show-password><template #prefix>
-            <SvgIcon icon="lock" />
+            <svg-icon icon="lock" />
           </template>
         </el-input>
       </el-form-item>
       <el-form-item prop="code" v-if="captcha">
         <el-input v-model="loginForm.code" auto-complete="off" placeholder="验证码" style="width: 64%"
           @keyup.enter.native="handleLogin"><template #prefix>
-            <SvgIcon icon="validCode" />
+            <svg-icon icon="validCode" />
           </template>
         </el-input>
         <div class="captcha-container">
