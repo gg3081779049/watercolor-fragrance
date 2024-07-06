@@ -5,10 +5,7 @@
 </template>
 
 <script>
-export default {
-  name: "Home"
-}
+export default {}
 </script>
 
-<style scoped>
-</style>
+<style lang="scss" scoped></style>

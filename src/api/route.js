@@ -19,6 +19,13 @@ export function getRoutes() {
                 path: 'finance',
                 meta: { icon: 'finance', title: '财务管理' }
             }, {
+                path: 'news',
+                meta: { icon: 'news', title: '消息管理' },
+                children: [{
+                    path: 'bulletin',
+                    meta: { icon: 'bulletin', title: '消息公告' },
+                }]
+            }, {
                 path: 'system',
                 meta: { icon: 'system', title: '系统管理' },
                 children: [{

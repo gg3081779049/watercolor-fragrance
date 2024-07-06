@@ -46,7 +46,7 @@ export const useUserStore = defineStore('user', {
                     const user = res.user
                     this.$patch(state => {
                         state.name = user.username
-                        state.avatar = user.avatar
+                        state.avatar = (user.avatar && user.avatar !== "") ? user.avatar : require("@/assets/images/avatar.png")
                         if (res.roles && res.roles.length) {
                             state.roles = res.roles
                         }

@@ -1,7 +1,7 @@
 <template>
     <div class="sidebar-container" :style="{ width: `${collapse ? 54 : sidebarWidth}px` }">
         <div class="sidebar-logo-container" v-if="showLogo">
-            <router-link to="/">
+            <router-link to="/home" draggable="false">
                 <img draggable="false" src="@/assets/logo/logo.png" alt="logo">
                 <transition name="el-zoom-in-center">
                     <h1 v-show="!collapse">{{ title }}</h1>
@@ -66,7 +66,7 @@ export default {
 
         img {
             width: 32px;
-            height: 29px;
+            height: 28px;
             vertical-align: middle;
             cursor: pointer;
         }

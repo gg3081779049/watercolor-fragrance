@@ -1,5 +1,5 @@
 <template>
-    <WaterMark :show="watermark" :class="`${theme}-${light ? 'light' : 'dark'}`">
+    <WaterMark :show="watermark">
         <el-container>
             <el-aside>
               <Sidebar />
@@ -9,25 +9,31 @@
                     <div :style="{ position: fixedHeader ? 'absolute' : '' }">
                       <Navbar />
                     </div>
+                    <AppMain :style="{ marginTop: `${fixedHeader * (50 + showTagsView * 34)}px` }" />
                 </el-scrollbar>
             </el-main>
         </el-container>
     </WaterMark>
+    <Settings v-model="showSettings" />
 </template>
 
 <script>
+import { useAppStore } from '@/store/app'
 import { useSettingsStore } from '@/store/settings'
-import { mapState } from 'pinia'
+import { mapState, mapWritableState } from 'pinia'
 
 import WaterMark from "@/components/WaterMark"
 import Sidebar from "@/layout/components/Sidebar"
 import Navbar from "@/layout/components/Navbar"
+import AppMain from "@/layout/components/AppMain"
+import Settings from "@/layout/components/Settings"
 
 export default {
     name: "Layout",
-    components: { WaterMark, Sidebar, Navbar },
+    components: { WaterMark, Sidebar, Navbar, AppMain, Settings },
     computed: {
-        ...mapState(useSettingsStore, ["theme", "light", "fixedHeader", "showTagsView", "watermark"])
+        ...mapState(useSettingsStore, ["fixedHeader", "showTagsView", "watermark"]),
+        ...mapWritableState(useAppStore, ["showSettings"]),
     }
 }
 </script>

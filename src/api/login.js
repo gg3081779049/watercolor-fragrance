@@ -26,8 +26,8 @@ export function getInfo() {
             mag: "操作成功",
             roles: ["admin"],
             user: {
-                avatar: '',
-                username: '',
+                avatar: "",
+                username: 'admin',
                 password: ''
             },
         })

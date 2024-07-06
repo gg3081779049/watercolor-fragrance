@@ -33,6 +33,11 @@ const router = createRouter({
             name: 'Home',
             component: () => import('@/views/home/index.vue'),
             meta: { title: ['首页'], icon: ['home'] },
+        }, {
+            path: 'user',
+            name: 'User',
+            component: () => import('@/views/user/index.vue'),
+            meta: { title: ['个人中心'], icon: ['user'] },
         }]
     }]
 });
