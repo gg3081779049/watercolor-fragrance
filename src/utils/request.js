@@ -14,6 +14,13 @@ const service = axios.create({
     timeout: 10000
 })
 
+// request拦截器
+service.interceptors.request.use(config => {
+    // 是否需要设置 token
+}, error => {
+    Promise.reject(error)
+})
+
 // 响应拦截器
 service.interceptors.response.use(res => {
     // 未设置状态码则默认成功状态
@@ -52,6 +59,8 @@ service.interceptors.response.use(res => {
     } else {
         return res.data
     }
+}, error => {
+    Promise.reject(error)
 })
 
 let downloadLoadingInstance

@@ -18,5 +18,13 @@ export const useSettingsStore = defineStore('settings', {
             uniqueOpened: storageSettings.uniqueOpened ?? defaultSettings.uniqueOpened,
             watermark: storageSettings.watermark ?? defaultSettings.watermark,
         }
+    },
+    actions: {
+        setTheme(theme) {
+            document.documentElement.className = `${this.theme = theme ?? 'default'}-${this.light ? 'light' : 'dark'}`
+        },
+        setLight(light) {
+            document.documentElement.className = `${this.theme}-${(this.light = light ?? true) ? 'light' : 'dark'}`
+        }
     }
 })

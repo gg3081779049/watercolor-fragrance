@@ -31,8 +31,9 @@ import Settings from "@/layout/components/Settings"
 export default {
     name: "Layout",
     components: { WaterMark, Sidebar, Navbar, AppMain, Settings },
+    created() { useSettingsStore().setTheme(this.theme) },
     computed: {
-        ...mapState(useSettingsStore, ["fixedHeader", "showTagsView", "watermark"]),
+        ...mapState(useSettingsStore, ["theme", "fixedHeader", "showTagsView", "watermark"]),
         ...mapWritableState(useAppStore, ["showSettings"]),
     }
 }
