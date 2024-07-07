@@ -2,7 +2,7 @@
     <div class="sidebar-container" :style="{ width: `${collapse ? 54 : sidebarWidth}px` }">
         <div class="sidebar-logo-container" v-if="showLogo">
             <img draggable="false" src="@/assets/logo/logo.png" alt="logo">
-            <h1 v-show="!collapse">{{ title }}</h1>
+            <h1 :class="{ collapse }">{{ title }}</h1>
         </div>
         <el-scrollbar>
             <Menu />
@@ -75,8 +75,14 @@ export default {
             font-size: 14px;
             font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
             white-space: nowrap;
-            transition: 0.5s;
+            overflow: hidden;
+            transition: 0.28s;
             cursor: pointer;
+            &.collapse {
+                width: 0;
+                margin-left: 0;
+                transform: scaleX(0);
+            }
         }
     }
 

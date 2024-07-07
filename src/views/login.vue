@@ -190,6 +190,7 @@ export default {
 
           &:hover {
             color: rgb(32, 160, 255);
+            text-decoration: underline;
           }
         }
       }

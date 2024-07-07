@@ -69,7 +69,7 @@ export default {
       }
     },
     change(val) {
-      this.$router.push(val)
+      this.$router.push('/' + val)
       this.search = ""
       this.options = []
     },
