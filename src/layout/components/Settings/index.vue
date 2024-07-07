@@ -5,11 +5,11 @@
       <el-divider>主题设置</el-divider>
     </el-scrollbar>
     <div class="footer">
-      <el-button plain type="primary" @click="saveSettings">
+      <el-button plain type="primary" @click="save">
         <svg-icon icon="save" />
         保存配置
       </el-button>
-      <el-button plain @click="resetSettings">
+      <el-button plain @click="reset">
         <svg-icon icon="refresh" />
         重置配置
       </el-button>
@@ -19,12 +19,23 @@
 
 <script>
 import settings from "@/settings.js"
+import { useSettingsStore } from '@/store/settings'
+import { mapActions } from 'pinia'
 
 export default {
   name: "Settings",
   methods: {
-    saveSettings() {},
-    resetSettings() {}
+    ...mapActions(useSettingsStore, ["saveSettings", "resetSettings"]),
+    save() {
+      this.$model.openLoading("正在保存到本地，请稍候...")
+      this.saveSettings()
+      setTimeout(() => this.$model.closeLoading(), 800)
+    },
+    reset() {
+      this.$model.openLoading("正在清除设置，请稍候...")
+      this.resetSettings()
+      setTimeout(() => this.$model.closeLoading(), 800)
+    }
   }
 }
 </script>

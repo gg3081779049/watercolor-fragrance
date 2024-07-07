@@ -1,6 +1,6 @@
 <template>
   <el-dropdown trigger="click" teleported>
-    <slot :src="avatar">
+    <slot :src="avatar" :username="name">
       <img :src="avatar" class="user-avatar" alt="avatar">
     </slot>
     <template #dropdown>

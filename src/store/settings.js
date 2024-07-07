@@ -3,7 +3,7 @@ import defaultSettings from '@/settings.js'
 
 export const useSettingsStore = defineStore('settings', {
     state: () => {
-        const storageSettings = JSON.parse(localStorage.getItem('system-settings')) || ''
+        const storageSettings = JSON.parse(localStorage.getItem('system-settings') ?? "{}")
         return {
             theme: storageSettings.theme ?? defaultSettings.theme,
             light: storageSettings.light ?? defaultSettings.light,
@@ -25,6 +25,12 @@ export const useSettingsStore = defineStore('settings', {
         },
         setLight(light) {
             document.documentElement.className = `${this.theme} ${(this.light = light ?? true) ? 'light' : 'dark'}`
+        },
+        saveSettings() {
+            localStorage.setItem("system-settings", JSON.stringify(this.$state))
+        },
+        resetSettings() {
+            localStorage.removeItem("system-settings")
         }
-    }
+    },
 })

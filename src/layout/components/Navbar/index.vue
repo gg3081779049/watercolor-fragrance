@@ -13,7 +13,7 @@
         <template #default="obj">
           <div class="avatar-wrapper">
             <img :src="obj.src" alt="avatar">
-            <span>管理员</span>
+            <span>{{ obj.username }}</span>
             <svg-icon icon="arrow-right" />
           </div>
         </template>
@@ -91,6 +91,12 @@ export default {
         margin-right: 5px;
         border-radius: 50%;
         box-sizing: border-box;
+      }
+      span {
+        max-width: 100px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
       svg {
         fill: var(--navbar-icon-fill-color);

@@ -13,6 +13,10 @@ import '@/styles/index.scss'
 import '@/permission'
 import '@/icons'
 
+// 全局方法
+import model from '@/plugins/model'
+import { download } from '@/utils/request'
+
 // 全局组件
 import SvgIcon from '@/components/SvgIcon'
 
@@ -21,6 +25,9 @@ const pinia = createPinia()
 
 // 禁用生产提示信息
 app.config.productionTip = false
+
+app.config.globalProperties.$model = model
+app.config.globalProperties.$download = download
 
 app.component(SvgIcon.name || 'SvgIcon', SvgIcon)
 
