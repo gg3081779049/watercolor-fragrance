@@ -21,10 +21,10 @@ export const useSettingsStore = defineStore('settings', {
     },
     actions: {
         setTheme(theme) {
-            document.documentElement.className = `${this.theme = theme ?? 'default'}-${this.light ? 'light' : 'dark'}`
+            document.documentElement.className = `${this.theme = theme ?? 'default'} ${this.light ? 'light' : 'dark'}`
         },
         setLight(light) {
-            document.documentElement.className = `${this.theme}-${(this.light = light ?? true) ? 'light' : 'dark'}`
+            document.documentElement.className = `${this.theme} ${(this.light = light ?? true) ? 'light' : 'dark'}`
         }
     }
 })

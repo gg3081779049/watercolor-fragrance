@@ -1,5 +1,5 @@
 <template>
-    <svg-icon icon="hamburger" :style="{ transform: `rotate(${appStore.collapse ? 0 : 180}deg)` }"
+    <svg-icon icon="hamburger" className="hamburger" :style="{ transform: `rotate(${appStore.collapse ? 0 : 180}deg)` }"
         @click="appStore.collapse = !appStore.collapse" />
 </template>
 
@@ -16,7 +16,7 @@ export default {
 </script>
 
 <style scoped>
-svg {
+.hamburger {
   width: 20px;
   height: 20px;
   fill: var(--navbar-icon-fill-color);

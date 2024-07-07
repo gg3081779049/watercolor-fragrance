@@ -6,11 +6,11 @@
     </el-scrollbar>
     <div class="footer">
       <el-button plain type="primary" @click="saveSettings">
-        <SvgIcon icon-class="save" />
+        <svg-icon icon="save" />
         保存配置
       </el-button>
       <el-button plain @click="resetSettings">
-        <SvgIcon icon-class="refresh" />
+        <svg-icon icon="refresh" />
         重置配置
       </el-button>
     </div>
