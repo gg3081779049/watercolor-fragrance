@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import errGif from '@/assets/images/401.gif'
+import errGif from '@/assets/gif/401.gif'
 
 export default {
   name: 'Page401',
