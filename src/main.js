@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
-import { createPinia } from 'pinia'
 import App from '@/App.vue'
+import store from '@/store'
 import router from '@/router'
 import i18n from '@/locales'
 
@@ -21,7 +21,6 @@ import { download } from '@/utils/request'
 import SvgIcon from '@/components/SvgIcon'
 
 const app = createApp(App)
-const pinia = createPinia()
 
 // 禁用生产提示信息
 app.config.productionTip = false
@@ -31,7 +30,7 @@ app.config.globalProperties.$download = download
 
 app.component(SvgIcon.name || 'SvgIcon', SvgIcon)
 
-app.use(pinia)
+app.use(store)
 app.use(router)
 app.use(ElementPlus)
 app.use(i18n)
