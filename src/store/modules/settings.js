@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import defaultSettings from '@/../../settings'
+import defaultSettings from '@/settings'
 
 export const useSettingsStore = defineStore('settings', {
     state: () => {

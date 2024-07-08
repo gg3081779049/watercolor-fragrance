@@ -1,20 +1,20 @@
 <template>
-    <WaterMark :show="watermark">
-        <el-container>
-            <el-aside>
-              <Sidebar />
-            </el-aside>
-            <el-main>
-                <el-scrollbar class="main-scrollbar">
-                    <div :style="{ position: fixedHeader ? 'absolute' : '' }">
-                      <Navbar />
-                    </div>
-                    <AppMain :style="{ marginTop: `${fixedHeader * (50 + showTagsView * 34)}px` }" />
-                </el-scrollbar>
-            </el-main>
-        </el-container>
-    </WaterMark>
-    <Settings v-model="showSettings" />
+  <WaterMark :show="watermark">
+      <el-container>
+          <el-aside>
+            <Sidebar />
+          </el-aside>
+          <el-main>
+              <el-scrollbar class="main-scrollbar">
+                  <div :style="{ position: fixedHeader ? 'absolute' : '' }">
+                    <Navbar />
+                  </div>
+                  <AppMain :style="{ marginTop: `${fixedHeader * (50 + showTagsView * 34)}px` }" />
+              </el-scrollbar>
+          </el-main>
+      </el-container>
+  </WaterMark>
+  <Settings v-model="showSettings" />
 </template>
 
 <script>
