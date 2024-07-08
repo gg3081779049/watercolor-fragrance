@@ -13,8 +13,8 @@
         </el-input>
       </el-form-item>
       <el-form-item prop="password">
-        <el-input v-model="loginForm.password" type="password" auto-complete="off" placeholder="密码"
-          show-password><template #prefix>
+        <el-input v-model="loginForm.password" type="password" auto-complete="off" placeholder="密码">
+          <template #prefix>
             <svg-icon icon="lock" />
           </template>
         </el-input>
