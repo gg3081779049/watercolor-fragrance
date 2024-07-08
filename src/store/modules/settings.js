@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import defaultSettings from '@/settings'
+import i18n from '@/locales'
 
 export const useSettingsStore = defineStore('settings', {
     state: () => {
@@ -32,18 +33,16 @@ export const useSettingsStore = defineStore('settings', {
             })
         }
     },
+    created() {
+        i18n.global.locale = this.language
+        document.documentElement.className = `${this.theme} ${this.light ? 'light' : 'dark'}`
+    },
     watch: {
-        theme: {
-            immediate: true,
-            handler(newVal) {
-                document.documentElement.className = `${newVal} ${this.light ? 'light' : 'dark'}`
-            },
+        theme(val) {
+            document.documentElement.className = `${val} ${this.light ? 'light' : 'dark'}`
         },
-        light: {
-            immediate: true,
-            handler(newVal) {
-                document.documentElement.className = `${this.theme} ${newVal ? 'light' : 'dark'}`
-            },
+        light(val) {
+            document.documentElement.className = `${this.theme} ${val ? 'light' : 'dark'}`
         }
     }
 })

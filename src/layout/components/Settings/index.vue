@@ -3,6 +3,8 @@
     <hr>
     <el-scrollbar style="height:calc(100% - 52.8px)">
       <el-divider>主题设置</el-divider>
+      <br>
+      <el-divider>系统设置</el-divider>
     </el-scrollbar>
     <div class="footer">
       <el-button plain type="primary" @click="save">
@@ -20,10 +22,11 @@
 <script>
 import settings from "@/settings.js"
 import { useSettingsStore } from '@/store/modules/settings'
-import { mapActions } from 'pinia'
+import { mapWritableState, mapActions } from 'pinia'
 
 export default {
   name: "Settings",
+  computed: { ...mapWritableState(useSettingsStore, Object.keys(settings)) },
   methods: {
     ...mapActions(useSettingsStore, ["saveSettings", "resetSettings"]),
     save() {
@@ -41,30 +44,32 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.drawer-container {
-  hr {
-    width: 100%;
-    border-top: 0.8px solid var(--el-border-color);
-    border-bottom: none;
-    overflow: visible;
-    position: absolute;
-    left: 50%;
-    top: 60px;
-    transform: translateX(-50%);
-    opacity: 0.6;
-  }
-  .el-scrollbar {
-    .el-divider--horizontal {
-      margin: 16px 0;
+  .drawer-container {
+    hr {
+      width: 100%;
+      border-top: 0.8px solid var(--el-border-color);
+      border-bottom: none;
+      overflow: visible;
+      position: absolute;
+      left: 50%;
+      top: 60px;
+      transform: translateX(-50%);
+      opacity: 0.6;
+    }
+
+    .el-scrollbar {
+      .el-divider--horizontal {
+        margin: 16px 0;
+      }
+    }
+
+    .footer {
+      width: 100%;
+      padding-top: 20px;
+      border-top: 1px solid var(--el-border-color);
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
     }
   }
-  .footer {
-    width: 100%;
-    padding-top: 20px;
-    border-top: 1px solid var(--el-border-color);
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-  }
-}
 </style>

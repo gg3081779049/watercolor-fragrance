@@ -1,8 +1,9 @@
 import { createPinia } from 'pinia'
-import { watcher } from '@/store/plugins'
+import { stateWatcher, createdHook } from '@/store/plugins'
 
 const pinia = createPinia()
 
-pinia.use(watcher)
+pinia.use(stateWatcher)
+pinia.use(createdHook)
 
 export default pinia
