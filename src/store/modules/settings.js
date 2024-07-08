@@ -25,6 +25,11 @@ export const useSettingsStore = defineStore('settings', {
         },
         resetSettings() {
             localStorage.removeItem("system-settings")
+            this.$patch(state => {
+                for (const key in defaultSettings) {
+                    state[key] = defaultSettings[key]
+                }
+            })
         }
     },
     watch: {
@@ -39,6 +44,6 @@ export const useSettingsStore = defineStore('settings', {
             handler(newVal) {
                 document.documentElement.className = `${this.theme} ${newVal ? 'light' : 'dark'}`
             },
-        },
+        }
     }
 })
