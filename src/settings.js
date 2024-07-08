@@ -8,6 +8,9 @@ export default {
     // 系统语言
     language: 'zh',
 
+    // 头部高度
+    headerHeight: 50,
+
     // 是否固定头部
     fixedHeader: true,
 
@@ -17,11 +20,14 @@ export default {
     // 是否显示面包屑图标
     showBreadcrumbIcon: false,
 
+    // 标签页高度
+    TabsHeight: 34,
+
     // 是否显示标签页
-    showTagsView: true,
+    showTabs: true,
 
     // 是否显示标签页图标
-    showTagsViewIcon: false,
+    showTabsIcon: false,
 
     // 是否开启标签拖拽
     draggable: true,

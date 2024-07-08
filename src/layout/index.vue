@@ -9,7 +9,7 @@
                   <div :style="{ position: fixedHeader ? 'absolute' : '' }">
                     <Navbar />
                   </div>
-                  <AppMain :style="{ marginTop: `${fixedHeader * (50 + showTagsView * 34)}px` }" />
+                  <AppMain :style="{ marginTop: `${fixedHeader * (headerHeight + showTabs * TabsHeight)}px` }" />
               </el-scrollbar>
           </el-main>
       </el-container>
@@ -32,7 +32,7 @@ export default {
     name: "Layout",
     components: { WaterMark, Sidebar, Navbar, AppMain, Settings },
     computed: {
-        ...mapState(useSettingsStore, ["theme", "fixedHeader", "showTagsView", "watermark"]),
+        ...mapState(useSettingsStore, ["theme", "headerHeight", "fixedHeader", "TabsHeight", "showTabs", "watermark"]),
         ...mapWritableState(useAppStore, ["showSettings"]),
     }
 }

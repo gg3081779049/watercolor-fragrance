@@ -1,7 +1,10 @@
 <template>
   <div class="login">
     <el-form class="login-form" ref="loginForm" :model="loginForm" :rules="loginRules">
-      <h3 class="title">{{ title }}</h3>
+      <h3 class="title">
+        <img draggable="false" src="@/assets/images/logo.png" alt="logo">
+        {{ title }}
+      </h3>
       <el-form-item prop="username">
         <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号">
           <template #prefix>
@@ -145,8 +148,15 @@ export default {
 
       .title {
         margin-bottom: 25px;
-        text-align: center;
         color: #707070;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+        img {
+          height: 24px;
+          transform: translateY(1px);
+        }
       }
 
       .el-input {

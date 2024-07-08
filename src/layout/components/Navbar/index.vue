@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar-container">
+  <div class="navbar-container" :style="{ height: `${headerHeight}px` }">
     <div class="left-side">
       <Hamburger class="hamburger" />
       <Breadcrumb v-if="showBreadcrumb" />
@@ -37,7 +37,7 @@ export default {
     name: "Navbar",
     components: { Hamburger, Breadcrumb, NavbarSearch, Screenfull, ThemeSwitch, AvatarBox },
     computed: {
-      ...mapState(useSettingsStore, ["showBreadcrumb"])
+      ...mapState(useSettingsStore, ["headerHeight", "showBreadcrumb"])
     }
 }
 </script>
