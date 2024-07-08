@@ -20,12 +20,6 @@ export const useSettingsStore = defineStore('settings', {
         }
     },
     actions: {
-        setTheme(theme) {
-            document.documentElement.className = `${this.theme = theme ?? 'default'} ${this.light ? 'light' : 'dark'}`
-        },
-        setLight(light) {
-            document.documentElement.className = `${this.theme} ${(this.light = light ?? true) ? 'light' : 'dark'}`
-        },
         saveSettings() {
             localStorage.setItem("system-settings", JSON.stringify(this.$state))
         },
@@ -33,4 +27,18 @@ export const useSettingsStore = defineStore('settings', {
             localStorage.removeItem("system-settings")
         }
     },
+    watch: {
+        theme: {
+            immediate: true,
+            handler(newVal) {
+                document.documentElement.className = `${newVal} ${this.light ? 'light' : 'dark'}`
+            },
+        },
+        light: {
+            immediate: true,
+            handler(newVal) {
+                document.documentElement.className = `${this.theme} ${newVal ? 'light' : 'dark'}`
+            },
+        },
+    }
 })

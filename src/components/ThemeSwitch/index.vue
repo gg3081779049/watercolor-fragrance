@@ -1,5 +1,5 @@
 <template>
-  <div :class="`theme-switch theme-switch-${light ? 'light' : 'dark'}`" @click="toggleTheme">
+  <div :class="`theme-switch theme-switch-${light ? 'light' : 'dark'}`" @click="light ^= true">
     <svg-icon icon="theme-switch-light" :style="{ transform: light ? 'scale(1) rotate(360deg)' : 'scale(0)' }" />
     <svg-icon icon="theme-switch-dark" :style="{ transform: light ? 'rotate(360deg) scale(0)' : '' }" />
   </div>
@@ -7,17 +7,12 @@
 
 <script>
 import { useSettingsStore } from '@/store/modules/settings'
-import { mapState  } from 'pinia'
+import { mapWritableState  } from 'pinia'
 
 export default {
   name: "ThemeSwitch",
   computed: {
-    ...mapState (useSettingsStore, ["light"])
-  },
-  methods: {
-    toggleTheme() {
-      useSettingsStore().setLight(!this.light)
-    }
+    ...mapWritableState(useSettingsStore, ["light"])
   }
 };
 </script>
