@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import { useSettingsStore } from '@/store/settings'
+import { useSettingsStore } from '@/store/modules/settings'
 import { mapState  } from 'pinia'
 
 export default {

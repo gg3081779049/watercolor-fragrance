@@ -19,7 +19,7 @@
 
 <script>
 import settings from "@/settings.js"
-import { useSettingsStore } from '@/store/settings'
+import { useSettingsStore } from '@/store/modules/settings'
 import { mapActions } from 'pinia'
 
 export default {
@@ -68,4 +68,3 @@ export default {
   }
 }
 </style>
-  

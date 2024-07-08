@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import { useAppStore } from '@/store/app'
-import { useSettingsStore } from '@/store/settings'
+import { useAppStore } from '@/store/modules/app'
+import { useSettingsStore } from '@/store/modules/settings'
 import { mapState, mapWritableState } from 'pinia'
 
 import WaterMark from "@/components/WaterMark"

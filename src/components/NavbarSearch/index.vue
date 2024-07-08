@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { useRouteStore } from '@/store/route'
+import { useRouteStore } from '@/store/modules/route'
 import { mapState } from 'pinia'
 import Fuse from "fuse.js"
 

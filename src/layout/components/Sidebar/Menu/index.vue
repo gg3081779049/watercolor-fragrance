@@ -9,9 +9,9 @@
 </template>
 
 <script>
-import { useAppStore } from '@/store/app'
-import { useRouteStore } from '@/store/route'
-import { useSettingsStore } from '@/store/settings'
+import { useAppStore } from '@/store/modules/app'
+import { useRouteStore } from '@/store/modules/route'
+import { useSettingsStore } from '@/store/modules/settings'
 import { mapState } from 'pinia'
 
 import MenuItem from "./MenuItem"

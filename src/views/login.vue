@@ -43,8 +43,8 @@
 import { getCodeImg } from "@/api/login"
 import Cookies from "js-cookie"
 import { encrypt, decrypt } from '@/utils/jsencrypt'
-import { useAppStore } from '@/store/app'
-import { useUserStore } from '@/store/user'
+import { useAppStore } from '@/store/modules/app'
+import { useUserStore } from '@/store/modules/user'
 
 export default {
   name: 'Login',

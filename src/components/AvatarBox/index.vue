@@ -29,8 +29,8 @@
 </template>
 
 <script>
-import { useAppStore } from '@/store/app'
-import { useUserStore } from '@/store/user'
+import { useAppStore } from '@/store/modules/app'
+import { useUserStore } from '@/store/modules/user'
 import { mapState, mapWritableState, mapActions } from 'pinia'
 
 export default {
