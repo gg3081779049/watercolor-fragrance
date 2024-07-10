@@ -7,7 +7,7 @@
       filterable
       default-first-option
       remote
-      placeholder="搜索"
+      placeholder="搜索..."
       class="navbar-search-select"
       :remote-method="querySearch"
       @change="change">

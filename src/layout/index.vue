@@ -8,6 +8,7 @@
               <el-scrollbar class="main-scrollbar">
                   <div :style="{ position: fixedHeader ? 'absolute' : '' }">
                     <Navbar />
+                    <Tabs v-if="showTabs" />
                   </div>
                   <AppMain :style="{ marginTop: `${fixedHeader * (headerHeight + showTabs * TabsHeight)}px` }" />
               </el-scrollbar>
@@ -25,12 +26,13 @@ import { mapState, mapWritableState } from 'pinia'
 import WaterMark from "@/components/WaterMark"
 import Sidebar from "@/layout/components/Sidebar"
 import Navbar from "@/layout/components/Navbar"
+import Tabs from "@/layout/components/Tabs"
 import AppMain from "@/layout/components/AppMain"
 import Settings from "@/layout/components/Settings"
 
 export default {
     name: "Layout",
-    components: { WaterMark, Sidebar, Navbar, AppMain, Settings },
+    components: { WaterMark, Sidebar, Navbar, Tabs, AppMain, Settings },
     computed: {
         ...mapState(useSettingsStore, ["theme", "headerHeight", "fixedHeader", "TabsHeight", "showTabs", "watermark"]),
         ...mapWritableState(useAppStore, ["showSettings"]),

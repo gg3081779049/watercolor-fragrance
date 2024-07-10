@@ -38,5 +38,10 @@ export default {
         margin-right: 15px;
         fill: var(--sidebar-text-color);
     }
+
+    + span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 }
 </style>
