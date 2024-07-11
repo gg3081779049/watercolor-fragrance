@@ -25,5 +25,6 @@ export default {
   width: 100%;
   height: 34px;
   background: var(--tabs-bg);
+  border-bottom: 1px solid var(--el-border-color-light);
 }
 </style>

@@ -33,9 +33,9 @@ export const useUserStore = defineStore('user', {
                         state.token = ''
                         state.name = ''
                         state.avatar = ''
-                        removeToken()
-                        resolve()
                     })
+                    removeToken()
+                    resolve()
                 })
             })
         },
@@ -50,8 +50,8 @@ export const useUserStore = defineStore('user', {
                         if (res.roles && res.roles.length) {
                             state.roles = res.roles
                         }
-                        resolve(res)
                     })
+                    resolve(res)
                 }).catch(error => {
                     reject(error)
                 })

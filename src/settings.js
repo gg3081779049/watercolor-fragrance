@@ -3,7 +3,7 @@ export default {
     theme: 'default',
 
     // 浅色模式
-    light: true,
+    mode: 'light',
 
     // 系统语言
     language: 'zh',

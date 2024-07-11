@@ -34,8 +34,15 @@ export default {
     name: "Layout",
     components: { WaterMark, Sidebar, Navbar, Tabs, AppMain, Settings },
     computed: {
-        ...mapState(useSettingsStore, ["theme", "headerHeight", "fixedHeader", "TabsHeight", "showTabs", "watermark"]),
+        ...mapState(useSettingsStore, ["theme", "mode", "language", "headerHeight", "fixedHeader", "TabsHeight", "showTabs", "watermark"]),
         ...mapWritableState(useAppStore, ["showSettings"]),
+    },
+    mounted() {
+      document.documentElement.className = `${this.theme} ${this.mode}`
+      this.$i18n.locale = this.language
+    },
+    unmounted() {
+      document.documentElement.className = ``
     }
 }
 </script>
@@ -47,8 +54,8 @@ export default {
   background: var(--base-bg);
   .el-aside {
     width: auto;
-    box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
-    -webkit-box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
+    box-shadow: 2px 0 6px rgba(0, 0, 0, 0.2);
+    -webkit-box-shadow: 2px 0 6px rgba(0, 0, 0, 0.2);
     z-index: 9;
   }
   .el-main {

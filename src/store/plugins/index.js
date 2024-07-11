@@ -22,9 +22,3 @@ export function stateWatcher({ options: { watch }, store }) {
         })
     }
 }
-
-export function createdHook({ options: { created }, store }) {
-    if (created && typeof created === 'function') {
-        created.bind(store)()
-    }
-}

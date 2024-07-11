@@ -1,13 +1,12 @@
 import { defineStore } from 'pinia'
 import defaultSettings from '@/settings'
-import i18n from '@/locales'
 
 export const useSettingsStore = defineStore('settings', {
     state: () => {
         const storageSettings = JSON.parse(localStorage.getItem('system-settings') ?? "{}")
         return {
             theme: storageSettings.theme ?? defaultSettings.theme,
-            light: storageSettings.light ?? defaultSettings.light,
+            mode: storageSettings.mode ?? defaultSettings.mode,
             language: storageSettings.language ?? defaultSettings.language,
             headerHeight: storageSettings.headerHeight ?? defaultSettings.headerHeight,
             fixedHeader: storageSettings.fixedHeader ?? defaultSettings.fixedHeader,
@@ -35,16 +34,12 @@ export const useSettingsStore = defineStore('settings', {
             })
         }
     },
-    created() {
-        i18n.global.locale = this.language
-        document.documentElement.className = `${this.theme} ${this.light ? 'light' : 'dark'}`
-    },
     watch: {
         theme(val) {
-            document.documentElement.className = `${val} ${this.light ? 'light' : 'dark'}`
+            document.documentElement.className = `${val} ${this.mode}`
         },
-        light(val) {
-            document.documentElement.className = `${this.theme} ${val ? 'light' : 'dark'}`
+        mode(val) {
+            document.documentElement.className = `${this.theme} ${val}`
         }
     }
 })

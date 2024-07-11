@@ -7,7 +7,6 @@ const messages = {}
 locales.keys().forEach(key => messages[key.replace(/\.\/|\.js/g, '')] = locales(key))
 
 const i18n = createI18n({
-    locale: 'zh',
     messages
 })
 

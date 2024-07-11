@@ -1,5 +1,5 @@
 <template>
-    <el-watermark :font="{ color: light ? '#00000026' : '#ffffff26' }" :content="show ? '水色天香' : null">
+    <el-watermark :font="{ color: mode === 'light' ? '#00000026' : '#ffffff26' }" :content="show ? '水色天香' : null">
         <slot />
     </el-watermark>
 </template>
@@ -17,7 +17,7 @@ export default {
         },
     },
     computed: {
-        ...mapState(useSettingsStore, ["light"])
+        ...mapState(useSettingsStore, ["mode"])
     },
 }
 </script>
