@@ -2,7 +2,7 @@
   <section>
     <router-view v-slot="{ Component }">
       <transition name="fade">
-        <keep-alive :include="[]">
+        <keep-alive :include="cachesTabs">
           <component :is="Component" />
         </keep-alive>
       </transition>
@@ -11,10 +11,13 @@
 </template>
 
 <script>
+import { useTabsStore } from '@/store/modules/tabs'
+import { mapState } from 'pinia'
+
 export default {
     name: "AppMain",
     computed: {
-
+      ...mapState(useTabsStore, ["cachesTabs"])
     }
 }
 </script>

@@ -46,6 +46,7 @@ export default {
 .navbar-container {
   width: 100%;
   height: 50px;
+  box-sizing: border-box;
   background: var(--navbar-bg);
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
   display: flex;
