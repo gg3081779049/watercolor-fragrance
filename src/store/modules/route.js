@@ -43,18 +43,22 @@ function getSidebarRouteList(routes, parentList = []) {
                 path: route.path,
                 name: component && component.default ? component.default.name || (component.default.name = route.path) : route.path,
                 meta: { title: list.map(r => r.meta.title), icon: list.map(r => r.meta.icon) },
-                component
+                component: async () => component
             })
         }
     }, [])
 }
 
 function loadView(path) {
-    if (process.env.NODE_ENV === 'development') {
-        // 开发环境使用 require 立即加载
-        return () => require(`@/views/${path}/index.vue`)
-    } else {
-        // 生产环境使用 import 路由懒加载, 优化应用性能
-        return () => import(`@/views/${path}/index.vue`)
+    try {
+        if (process.env.NODE_ENV === 'development') {
+            // 开发环境使用 require 立即加载
+            return require(`@/views/${path}/index.vue`)
+        } else {
+            // 生产环境使用 import 路由懒加载, 优化应用性能
+            return import(`@/views/${path}/index.vue`)
+        }
+    } catch (e) {
+        // 加载失败
     }
 }
