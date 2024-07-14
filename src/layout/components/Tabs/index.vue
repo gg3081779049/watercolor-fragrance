@@ -12,12 +12,11 @@
                 @close="closeTab(tab)" />
         </ScrollPane>
         <ul class="contextmenu" v-show="visible" :style="{ left: left + 'px', top: top + 'px' }">
-            <li @click="refreshTab"><svg-icon icon="refresh-right" />刷新页面</li>
             <li @click="closeTab(selectedTab)" v-if="showCloseTab"><svg-icon icon="close" />关闭当前</li>
-            <li @click="closeOthersTabs"><svg-icon icon="close" />关闭其他</li>
-            <li @click="closeLeftTabs"><svg-icon icon="left-arrow" />关闭左侧</li>
-            <li @click="closeRightTabs"><svg-icon icon="right-arrow" />关闭右侧</li>
-            <li @click="closeAllTabs"><svg-icon icon="circle-close" />全部关闭</li>
+            <li @click="closeOthersTabs" v-if="showCloseOthersTabs"><svg-icon icon="close" />关闭其他</li>
+            <li @click="closeLeftTabs" v-if="showCloseLeftTabs"><svg-icon icon="left-arrow" />关闭左侧</li>
+            <li @click="closeRightTabs" v-if="showCloseRightTabs"><svg-icon icon="right-arrow" />关闭右侧</li>
+            <li @click="closeAllTabs" v-if="showCloseAllTabs"><svg-icon icon="circle-close" />全部关闭</li>
         </ul>
     </div>
 </template>
@@ -57,16 +56,16 @@ export default {
             return this.selectedTabIndex !== this.defaultTabIndex
         },
         showCloseOthersTabs() {
-
+            return this.tabs.length - 1 - (this.selectedTabIndex !== this.defaultTabIndex)
         },
         showCloseLeftTabs() {
-
+            return this.selectedTabIndex > (this.selectedTabIndex > this.defaultTabIndex)
         },
         showCloseRightTabs() {
-
+            return this.tabs.length - this.selectedTabIndex > (this.selectedTabIndex < this.defaultTabIndex ? 2 : 1)
         },
         showCloseAllTabs() {
-            
+            return this.tabs.length > 1
         },
     },
     mounted() {
@@ -132,7 +131,6 @@ export default {
             let lastTab = this.tabs.at(-1)
             this.$router.push(lastTab.fullPath ?? lastTab.path)
         },
-        refreshTab(e) {},
         closeTab(tab) {
             let currentTabIndex = this.currentTabIndex
             let tabIndex = this.tabs.findIndex(t => t.path === tab.path)
