@@ -6,6 +6,7 @@
                 v-for="tab in tabs"
                 :key="tab"
                 :route="tab"
+                :draggable="draggable"
                 :show-icon="showTabsIcon"
                 :show-close="tab.name !== defaultTab"
                 @contextmenu.prevent="openMenu($event, tab)"
@@ -25,6 +26,7 @@
 import { useSettingsStore } from '@/store/modules/settings'
 import { useTabsStore } from '@/store/modules/tabs'
 import { mapState, mapActions } from 'pinia'
+import { useDraggable } from "vue-draggable-plus"
 
 import ScrollPane from "./ScrollPane"
 import TabLink from "./TabLink"
@@ -37,11 +39,12 @@ export default {
             left: 0,
             top: 0,
             visible: false,
-            selectedTab: {}
+            selectedTab: {},
+            draggableInstance: {}
         }
     },
     computed: {
-        ...mapState(useSettingsStore, ["TabsHeight", "showTabsIcon"]),
+        ...mapState(useSettingsStore, ["TabsHeight", "showTabsIcon", "draggable"]),
         ...mapState(useTabsStore, ["tabs", "defaultTab"]),
         currentTabIndex() {
             return this.tabs.findIndex(t => t.path === this.$route.path)
@@ -71,6 +74,11 @@ export default {
     mounted() {
         this.init()
         this.addTabs(this.$route)
+        this.draggableInstance = useDraggable(this.$refs.scrollPane.$el.querySelector(".el-scrollbar__view"), this.tabs, {
+            animation: 150,
+            ghostClass: "ghost"
+        })
+        this.draggableInstance[this.draggable ? 'start' : 'pause']()
         document.body.addEventListener("click", this.closeMenu)
     },
     unmounted() {
@@ -172,19 +180,34 @@ export default {
         $route() {
             this.addTabs(this.$route)
             this.moveToCurrentTab()
+        },
+        draggable(val) {
+            if (this.draggableInstance) {
+                if (val) {
+                    this.draggableInstance.start()
+                } else {
+                    this.draggableInstance.pause()
+                }
+            }
         }
     }
 }
 </script>
 
 <style lang="scss" scoped>
+
+@import url('@/styles/tabs.scss');
+
 .tabs-container {
   width: 100%;
   height: 34px;
-  border-bottom: 1px solid var(--el-border-color-light);
-  box-sizing: border-box;
-  background: var(--tabs-bg);
   position: relative;
+
+  .scroll-pane {
+    .ghost {
+      opacity: 0.2;
+    }
+  }
 
   .contextmenu {
     padding: 5px 0;

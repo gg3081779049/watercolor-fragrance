@@ -1,0 +1,65 @@
+.tabs-container {
+    background: var(--tabs-bg);
+    position: relative;
+
+    &::before {
+        content: '';
+        width: 100%;
+        height: 0;
+        border-bottom: 1px solid var(--el-border-color-lighter);
+        position: absolute;
+        left: 0;
+        bottom: 0;
+    }
+
+    .scroll-pane .el-scrollbar__view {
+        padding: 0 8px;
+
+        .tab {
+            height: 26px;
+            margin-top: 5px;
+            margin-left: 2px;
+            margin-right: 2px;
+            padding: 2px 8px;
+            border: 1px solid var(--el-border-color-light);
+            background: var(--tabs-tag--bg);
+            display: inline-block;
+            color: var(--tabs-tag-text-color);
+            cursor: pointer;
+
+            span {
+                font-size: 14px;
+                line-height: 26px;
+                margin: 0 5px;
+            }
+
+            svg {
+                width: 12px;
+                height: 12px;
+                vertical-align: middle;
+                fill: var(--tabs-tag-text-color);
+
+                &.close-icon {
+                    border-radius: 10%;
+                    transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+                    &:hover {
+                        background: var(--el-text-color-placeholder);
+                        box-shadow: 0 0 0 1px var(--el-text-color-placeholder);
+                        fill: var(--el-bg-color);
+                    }
+                }
+            }
+
+            &.is-active {
+                border-bottom-color: var(--tabs-tag--bg-active);
+                background: var(--tabs-tag--bg-active);
+                color: var(--tabs-tag-text-color-active);
+
+                svg {
+                    fill: var(--tabs-tag-text-color-active);
+                }
+            }
+        }
+    }
+}

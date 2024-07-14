@@ -3,7 +3,7 @@
         :to="{ path: route.path, query: route.query, fullPath: route.fullPath }"
         @click.middle="close">
         <svg-icon :icon="route.meta.icon.at(-1)" v-if="showIcon && route.meta.icon" />
-        {{ route.meta.title.at(-1) }}
+        <span>{{ route.meta.title.at(-1) }}</span>
         <svg-icon class="close-icon" icon="close" v-if="showClose" @click.prevent.stop="close" />
     </router-link>
 </template>
@@ -38,5 +38,6 @@ export default {
 <style lang="css" scoped>
 .tab {
     text-decoration: none;
+    cursor: pointer;
 }
 </style>

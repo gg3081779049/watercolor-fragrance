@@ -1,6 +1,6 @@
 <template>
     <el-menu
-      :default-active="$route.path.substring(1)"
+      :default-active="$route.path"
       :collapse="collapse"
       :unique-opened="uniqueOpened"
       router>

@@ -3,7 +3,7 @@ export default {
     theme: 'default',
 
     // 浅色模式
-    mode: 'light',
+    mode: 'dark',
 
     // 系统语言
     language: 'zh',
@@ -21,7 +21,7 @@ export default {
     showBreadcrumbIcon: false,
 
     // 标签页高度
-    TabsHeight: 34,
+    TabsHeight: 36,
 
     // 是否显示标签页
     showTabs: true,
