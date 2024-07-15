@@ -1,28 +1,28 @@
 html.default.dark {
-    --base-bg: none;
+    --base-bg: hsl(0, 0%, 4%);
     /* logo */
     --logo-bg: none;
     --logo-title-color: none;
     /* sidebar */
-    --sidebar-text-color: none;
-    --sidebar-menu-bg: none;
-    --sidebar-menu-bg-hover: none;
-    --sidebar-sub-menu-bg: none;
-    --sidebar-sub-menu-bg-hover: none;
-    --sidebar-menu-bg-active: none;
-    --sidebar-text-color-active: none;
+    --sidebar-text-color: hsl(0, 0%, 83%);
+    --sidebar-menu-bg: hsl(0, 0%, 12%);
+    --sidebar-menu-bg-hover: hsl(0, 0%, 10%);
+    --sidebar-sub-menu-bg: hsl(0, 0%, 8%);
+    --sidebar-sub-menu-bg-hover: hsl(0, 0%, 4%);
+    --sidebar-menu-bg-active: hsl(47, 50%, 4%);
+    --sidebar-text-color-active: hsl(47, 50%, 50%);
     /* navbar */
-    --navbar-bg: none;
-    --navbar-icon-fill-color: none;
-    --navbar-icon-bg-hover: none;
+    --navbar-bg: hsl(0, 0%, 8%);
+    --navbar-icon-fill-color: hsl(0, 0%, 83%);
+    --navbar-icon-bg-hover: hsl(0, 0%, 100%, 0.06);
     /* tabs */
-    --tabs-bg: none;
-    --tabs-tag--bg: none;
-    --tabs-tag--bg-active: none;
-    --tabs-tag-text-color: none;
-    --tabs-tag-text-color-active: none;
+    --tabs-bg: hsl(0, 0%, 8%);
+    --tabs-tag--bg: hsl(0, 0%, 12%);
+    --tabs-tag--bg-active: hsl(0, 0%, 4%);
+    --tabs-tag-text-color: hsl(0, 0%, 93%);
+    --tabs-tag-text-color-active: hsl(47, 50%, 50%);
     /* element */
-    --el-color-primary: none;
+    --el-color-primary: hsl(47, 50%, 50%);
     --el-color-primary-light-3: none;
     --el-color-primary-light-5: none;
     --el-color-primary-light-7: none;
