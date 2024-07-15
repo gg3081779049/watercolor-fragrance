@@ -34,91 +34,104 @@ import ThemeSwitch from "@/components/ThemeSwitch"
 import AvatarBox from "@/components/AvatarBox"
 
 export default {
-    name: "Navbar",
-    components: { Hamburger, Breadcrumb, NavbarSearch, Screenfull, ThemeSwitch, AvatarBox },
-    computed: {
-      ...mapState(useSettingsStore, ["headerHeight", "showBreadcrumb"])
-    }
+  name: "Navbar",
+  components: { Hamburger, Breadcrumb, NavbarSearch, Screenfull, ThemeSwitch, AvatarBox },
+  computed: {
+    ...mapState(useSettingsStore, ["headerHeight", "showBreadcrumb"])
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-.navbar-container {
-  width: 100%;
-  height: 50px;
-  box-sizing: border-box;
-  background: var(--navbar-bg);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  overflow: hidden;
-  position: relative;
-  z-index: 1;
-  .left-side {
+  .navbar-container {
+    width: 100%;
+    height: 50px;
+    box-sizing: border-box;
+    background: var(--navbar-bg);
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    .hamburger {
-      margin: 0 15px;
-      cursor: pointer;
-      &:hover {
-        background: var(--navbar-icon-bg-hover);
-        box-shadow: 0 0 0 6px var(--navbar-icon-bg-hover);
-      }
-    }
-  }
-  .right-side {
-    padding-right: 12px;
-    height: 100%;
-    line-height: 50px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    .el-divider {
-      height: 22px;
-      margin: 0 -6px;
-      opacity: 0.4;
-      border-left-width: 1px;
-      border-color: var(--navbar-icon-fill-color);
-    }
-    .avatar-wrapper {
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+
+    .left-side {
       display: flex;
       align-items: center;
-      color: var(--navbar-icon-fill-color);
-      cursor: pointer;
-      img {
-        width: 30px;
-        height: 30px;
-        margin-right: 5px;
-        border-radius: 50%;
-        box-sizing: border-box;
+
+      .hamburger {
+        margin: 0 15px;
+        cursor: pointer;
+
+        &:hover {
+          background: var(--navbar-icon-bg-hover);
+          box-shadow: 0 0 0 6px var(--navbar-icon-bg-hover);
+        }
       }
-      span {
-        max-width: 100px;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
+    }
+
+    .right-side {
+      padding-right: 12px;
+      height: 100%;
+      line-height: 50px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+
+      .el-divider {
+        height: 22px;
+        margin: 0 -6px;
+        opacity: 0.4;
+        border-left-width: 1px;
+        border-color: var(--navbar-icon-fill-color);
       }
-      svg {
-        fill: var(--navbar-icon-fill-color);
-        transition: var(--el-transition-duration);
-      }
-      &:hover {
+
+      .avatar-wrapper {
+        display: flex;
+        align-items: center;
+        color: var(--navbar-icon-fill-color);
+        cursor: pointer;
+
         img {
-          box-shadow: 0 0 0 3px var(--navbar-icon-bg-hover);
+          width: 30px;
+          height: 30px;
+          margin-right: 5px;
+          border-radius: 50%;
+          box-sizing: border-box;
         }
+
         span {
-          color: var(--el-color-primary);
+          max-width: 100px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
         }
+
         svg {
-          fill: var(--el-color-primary);
+          fill: var(--navbar-icon-fill-color);
+          transition: var(--el-transition-duration);
         }
-      }
-      &[aria-expanded="true"] {
-        svg {
-          transform: rotate(90deg);
+
+        &:hover {
+          img {
+            box-shadow: 0 0 0 3px var(--navbar-icon-bg-hover);
+          }
+
+          span {
+            color: var(--el-color-primary);
+          }
+
+          svg {
+            fill: var(--el-color-primary);
+          }
+        }
+
+        &[aria-expanded="true"] {
+          svg {
+            transform: rotate(90deg);
+          }
         }
       }
     }
   }
-}
 </style>

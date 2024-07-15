@@ -23,12 +23,13 @@ export default {
 </script>
 
 <style scoped>
-.el-breadcrumb {
-  display: inline-block;
-  font-size: 14px;
-  line-height: 50px;
-  svg {
-    fill: var(--el-text-color-regular);
+  .el-breadcrumb {
+    display: inline-block;
+    font-size: 14px;
+    line-height: 50px;
+
+    svg {
+      fill: var(--el-text-color-regular);
+    }
   }
-}
 </style>

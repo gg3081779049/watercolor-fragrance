@@ -15,16 +15,16 @@ import { useTabsStore } from '@/store/modules/tabs'
 import { mapState } from 'pinia'
 
 export default {
-    name: "AppMain",
-    computed: {
-      ...mapState(useTabsStore, ["cachesTabs"])
-    }
+  name: "AppMain",
+  computed: {
+    ...mapState(useTabsStore, ["cachesTabs"])
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-.app-container {
-  box-sizing: border-box;
-  padding: 20px;
-}
+  .app-container {
+    box-sizing: border-box;
+    padding: 20px;
+  }
 </style>

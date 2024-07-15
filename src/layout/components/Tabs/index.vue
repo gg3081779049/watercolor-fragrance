@@ -1,16 +1,9 @@
 <template>
     <div class="tabs-container" :style="{ height: `${TabsHeight}px` }">
         <ScrollPane ref="scrollPane" class="scroll-pane" @scroll="closeMenu">
-            <TabLink 
-                ref="tab"
-                v-for="tab in tabs"
-                :key="tab"
-                :route="tab"
-                :draggable="draggable"
-                :show-icon="showTabsIcon"
-                :show-close="tab.name !== defaultTab"
-                @contextmenu.prevent="openMenu($event, tab)"
-                @close="closeTab(tab)" />
+            <TabLink ref="tab" v-for="tab in tabs" :key="tab" :route="tab" :draggable="draggable"
+                :show-icon="showTabsIcon" :show-close="tab.name !== defaultTab"
+                @contextmenu.prevent="openMenu($event, tab)" @close="closeTab(tab)" />
         </ScrollPane>
         <ul class="contextmenu" v-show="visible" :style="{ left: left + 'px', top: top + 'px' }">
             <li @click="closeTab(selectedTab)" v-if="showCloseTab"><svg-icon icon="close" />关闭当前</li>
@@ -191,45 +184,48 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+    .tabs-container {
+        width: 100%;
+        height: 34px;
+        position: relative;
 
-.tabs-container {
-  width: 100%;
-  height: 34px;
-  position: relative;
-
-  .scroll-pane {
-    .ghost {
-      opacity: 0.2;
-    }
-  }
-
-  .contextmenu {
-    padding: 5px 0;
-    border-radius: 4px;
-    background: var(--el-bg-color-overlay);
-    box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.3);
-    font-size: 12px;
-    font-weight: 400;
-    position: absolute;
-    list-style-type: none;
-    z-index: 3000;
-    cursor: pointer;
-    li {
-        margin: 0;
-        padding: 7px 16px;
-        color: var(--el-text-color-regular);
-        svg {
-            fill: var(--el-text-color-regular);
-            margin-right: 5px;
+        .scroll-pane {
+            .ghost {
+                opacity: 0.2;
+            }
         }
-        &:hover {
-            background: var(--el-color-primary-light-9);
-            color: var(--el-color-primary);
-            svg {
-                fill: var(--el-color-primary);
+
+        .contextmenu {
+            padding: 5px 0;
+            border-radius: 4px;
+            background: var(--el-bg-color-overlay);
+            box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.3);
+            font-size: 12px;
+            font-weight: 400;
+            position: absolute;
+            list-style-type: none;
+            z-index: 3000;
+            cursor: pointer;
+
+            li {
+                margin: 0;
+                padding: 7px 16px;
+                color: var(--el-text-color-regular);
+
+                svg {
+                    fill: var(--el-text-color-regular);
+                    margin-right: 5px;
+                }
+
+                &:hover {
+                    background: var(--el-color-primary-light-9);
+                    color: var(--el-color-primary);
+
+                    svg {
+                        fill: var(--el-color-primary);
+                    }
+                }
             }
         }
     }
-  }
-}
 </style>

@@ -49,17 +49,17 @@ export default {
       }).then(() => {
         this.Logout()
         this.$router.push("/login")
-      }).catch(() => {})
+      }).catch(() => { })
     },
   },
 };
 </script>
 
 <style scoped>
-.user-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  box-sizing: border-box;
-}
+  .user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    box-sizing: border-box;
+  }
 </style>
