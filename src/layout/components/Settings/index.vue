@@ -2,9 +2,6 @@
   <el-drawer class="drawer-container" size="360" title="系统设置" append-to-body>
     <hr>
     <el-scrollbar style="height:calc(100% - 52.8px)">
-      <el-divider>主题设置</el-divider>
-      <br>
-      <el-divider>系统设置</el-divider>
     </el-scrollbar>
     <div class="footer">
       <el-button plain type="primary" @click="save">
