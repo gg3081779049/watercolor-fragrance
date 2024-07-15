@@ -33,6 +33,7 @@ export const useUserStore = defineStore('user', {
                         state.token = ''
                         state.name = ''
                         state.avatar = ''
+                        state.roles = []
                     })
                     removeToken()
                     resolve()
