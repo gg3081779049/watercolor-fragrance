@@ -41,5 +41,8 @@ export const useSettingsStore = defineStore('settings', {
         mode(val) {
             document.documentElement.className = `${this.theme} ${val}`
         }
+    },
+    persist: {
+        storage: sessionStorage,
     }
 })

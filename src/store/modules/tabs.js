@@ -27,5 +27,9 @@ export const useTabsStore = defineStore('tabs', {
                 }
             }
         }
+    },
+    persist: {
+        storage: sessionStorage,
+        paths: ["tabs"]
     }
 })

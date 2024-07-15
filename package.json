@@ -20,6 +20,7 @@
     "jsencrypt": "^3.3.2",
     "nprogress": "^0.2.0",
     "pinia": "^2.1.7",
+    "pinia-plugin-persistedstate": "^3.2.1",
     "screenfull": "5.0.2",
     "vue": "^3.2.13",
     "vue-cropper": "^0.6.5",
