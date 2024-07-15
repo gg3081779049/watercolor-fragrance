@@ -1,7 +1,7 @@
 <template>
     <div class="tabs-container" :style="{ height: `${TabsHeight}px` }">
         <ScrollPane ref="scrollPane" class="scroll-pane" @scroll="closeMenu">
-            <TabLink
+            <TabLink 
                 ref="tab"
                 v-for="tab in tabs"
                 :key="tab"
@@ -195,7 +195,6 @@ export default {
 .tabs-container {
   width: 100%;
   height: 34px;
-  background: var(--tabs-bg);
   position: relative;
 
   .scroll-pane {
