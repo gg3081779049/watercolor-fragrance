@@ -39,5 +39,8 @@ export default {
 .tab {
     text-decoration: none;
     cursor: pointer;
+    svg {
+        vertical-align: middle;
+    }
 }
 </style>

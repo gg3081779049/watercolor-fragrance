@@ -73,7 +73,7 @@ export default {
     },
     mounted() {
         this.init()
-        this.addTabs(this.$route)
+        this.addTab(this.$route)
         this.draggableInstance = useDraggable(this.$refs.scrollPane.$el.querySelector(".el-scrollbar__view"), this.tabs, {
             animation: 150,
             ghostClass: "ghost"
@@ -85,7 +85,7 @@ export default {
         document.body.removeEventListener("click", this.closeMenu)
     },
     methods: {
-        ...mapActions(useTabsStore, ["init", "addTabs", "delTab", "delLeftTabs", "delRightTabs", "delOtherTabs", "delAllTabs"]),
+        ...mapActions(useTabsStore, ["init", "addTab", "delTabs"]),
         openMenu(e, tab) {
             this.left = Math.min(e.clientX - this.$el.getBoundingClientRect().left + 15, this.$el.offsetWidth - 105)
             this.top = e.clientY - 50
@@ -142,7 +142,7 @@ export default {
         closeTab(tab) {
             let currentTabIndex = this.currentTabIndex
             let tabIndex = this.tabs.findIndex(t => t.path === tab.path)
-            this.delTab(tabIndex)
+            this.delTabs((tab, i) => i === tabIndex)
             if (currentTabIndex === tabIndex) {
                 this.toLastTab()
             }
@@ -150,7 +150,7 @@ export default {
         closeOthersTabs() {
             let currentTabIndex = this.currentTabIndex
             let selectedTabIndex = this.selectedTabIndex
-            this.delOtherTabs(selectedTabIndex)
+            this.delTabs((tab, i) => i !== tabIndex)
             if (currentTabIndex !== selectedTabIndex) {
                 this.toLastTab()
             }
@@ -158,7 +158,7 @@ export default {
         closeLeftTabs() {
             let currentTabIndex = this.currentTabIndex
             let selectedTabIndex = this.selectedTabIndex
-            this.delLeftTabs(selectedTabIndex)
+            this.delTabs((tab, i) => i < selectedTabIndex)
             if (currentTabIndex < selectedTabIndex) {
                 this.toLastTab()
             }
@@ -166,28 +166,24 @@ export default {
         closeRightTabs() {
             let currentTabIndex = this.currentTabIndex
             let selectedTabIndex = this.selectedTabIndex
-            this.delRightTabs(selectedTabIndex)
+            this.delTabs((tab, i) => i > selectedTabIndex)
             if (currentTabIndex > selectedTabIndex) {
                 this.toLastTab()
             }
         },
         closeAllTabs() {
-            this.delAllTabs()
+            this.delTabs(() => true)
             this.toLastTab()
         }
     },
     watch: {
         $route() {
-            this.addTabs(this.$route)
+            this.addTab(this.$route)
             this.moveToCurrentTab()
         },
         draggable(val) {
             if (this.draggableInstance) {
-                if (val) {
-                    this.draggableInstance.start()
-                } else {
-                    this.draggableInstance.pause()
-                }
+                this.draggableInstance[val ? 'start' : 'pause']()
             }
         }
     }
@@ -195,8 +191,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-@import url('@/styles/tabs.scss');
 
 .tabs-container {
   width: 100%;

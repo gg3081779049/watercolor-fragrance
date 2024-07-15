@@ -13,27 +13,19 @@ export const useTabsStore = defineStore('tabs', {
     },
     actions: {
         init() {
-            this.addTabs(router.getRoutes().find(route => route.name === this.defaultTab))
+            this.addTab(router.getRoutes().find(route => route.name === this.defaultTab))
         },
-        addTabs(tab) {
-            if (!this.tabs.some(t => t.path === tab.path)) {
-                this.tabs.push(tab)
+        addTab({ path, fullPath, name, meta }) {
+            if (!this.tabs.some(t => t.path === path)) {
+                this.tabs.push({ path, fullPath, name, meta })
             }
         },
-        delTab(index) {
-            this.tabs = this.tabs.filter((tab, i) => i !== index || tab.name === this.defaultTab)
-        },
-        delLeftTabs(index) {
-            this.tabs = this.tabs.filter((tab, i) => i >= index || tab.name === this.defaultTab)
-        },
-        delRightTabs(index) {
-            this.tabs = this.tabs.filter((tab, i) => i <= index || tab.name === this.defaultTab)
-        },
-        delOtherTabs(index) {
-            this.tabs = this.tabs.filter((tab, i) => i === index || tab.name === this.defaultTab)
-        },
-        delAllTabs() {
-            this.tabs = this.tabs.filter((tab, i) => tab.name === this.defaultTab)
-        },
+        delTabs(condition) {
+            for (let i = this.tabs.length - 1; i >= 0; i--) {
+                if (condition(this.tabs[i], i) && this.tabs[i].name !== this.defaultTab) {
+                    this.tabs.splice(i, 1)
+                }
+            }
+        }
     }
 })

@@ -93,8 +93,6 @@ export default {
             --el-menu-text-color: var(--sidebar-text-color);
             --el-menu-active-color: var(--sidebar-text-color-active);
             --el-menu-border-color: var(--sidebar-menu-bg);
-            
-            border-right: none;
 
             .el-menu {
                 --el-menu-bg-color: var(--sidebar-sub-menu-bg);
