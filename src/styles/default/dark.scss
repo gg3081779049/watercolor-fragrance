@@ -5,16 +5,15 @@ html.default.dark {
     --logo-title-color: none;
     /* sidebar */
     --sidebar-text-color: hsl(0, 0%, 83%);
-    --sidebar-menu-bg: hsl(0, 0%, 12%);
-    --sidebar-menu-bg-hover: hsl(0, 0%, 10%);
-    --sidebar-sub-menu-bg: hsl(0, 0%, 8%);
+    --sidebar-menu-bg: hsl(0, 0%, 10%);
+    --sidebar-menu-bg-hover: hsl(0, 0%, 8%);
+    --sidebar-sub-menu-bg: hsl(0, 0%, 6%);
     --sidebar-sub-menu-bg-hover: hsl(0, 0%, 4%);
-    --sidebar-menu-bg-active: hsl(47, 50%, 4%);
+    --sidebar-menu-bg-active: hsla(47, 50%, 50%, 0.08);
     --sidebar-text-color-active: hsl(47, 50%, 50%);
     /* navbar */
     --navbar-bg: hsl(0, 0%, 8%);
     --navbar-icon-fill-color: hsl(0, 0%, 83%);
-    --navbar-icon-bg-hover: hsl(0, 0%, 100%, 0.06);
     /* tabs */
     --tabs-bg: hsl(0, 0%, 8%);
     --tabs-tag--bg: hsl(0, 0%, 12%);
@@ -23,10 +22,10 @@ html.default.dark {
     --tabs-tag-text-color-active: hsl(47, 50%, 50%);
     /* element */
     --el-color-primary: hsl(47, 50%, 50%);
-    --el-color-primary-light-3: none;
-    --el-color-primary-light-5: none;
-    --el-color-primary-light-7: none;
-    --el-color-primary-light-8: none;
-    --el-color-primary-light-9: none;
-    --el-color-primary-dark-2: none;
+    --el-color-primary-light-3: hsl(47, 50%, 40.75%);
+    --el-color-primary-light-5: hsl(47, 50%, 31.5%);
+    --el-color-primary-light-7: hsl(47, 50%, 22.25%);
+    --el-color-primary-light-8: hsl(47, 50%, 17.6%);
+    --el-color-primary-light-9: hsl(47, 50%, 12%);
+    --el-color-primary-dark-2: hsl(47, 50%, 57.5%);
 }

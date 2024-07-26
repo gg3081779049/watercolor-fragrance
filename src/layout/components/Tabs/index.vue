@@ -195,6 +195,7 @@ export default {
 .tabs-container {
   width: 100%;
   height: 34px;
+  background: var(--tabs-bg);
   position: relative;
 
   &::before {
@@ -208,8 +209,8 @@ export default {
     }
 
   .scroll-pane {
-    .el-scrollbar__view {
-        padding: 0 8px;
+    &::v-deep .el-scrollbar__view {
+        padding: 0 3px;
         .tab {
             height: 26px;
             margin-left: 2px;
@@ -252,6 +253,11 @@ export default {
 
                 svg {
                     fill: var(--tabs-tag-text-color-active);
+
+                    &.close-icon:hover {
+                        background: var(--el-color-primary-light-3);
+                        box-shadow: 0 0 0 1px var(--el-color-primary-light-3);
+                    }
                 }
             }
         }
