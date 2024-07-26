@@ -1,6 +1,7 @@
 <template>
     <router-link :class="['tab', { 'is-active': route.path === $route.path }]"
-        :to="{ path: route.path, query: route.query, fullPath: route.fullPath }" @click.middle="close">
+        :to="{ path: route.path, query: route.query, fullPath: route.fullPath }"
+        @click.middle="close">
         <svg-icon :icon="route.meta.icon.at(-1)" v-if="showIcon && route.meta.icon" />
         <span>{{ route.meta.title.at(-1) }}</span>
         <svg-icon class="close-icon" icon="close" v-if="showClose" @click.prevent.stop="close" />
@@ -35,17 +36,11 @@ export default {
 </script>
 
 <style lang="css" scoped>
-    .tab {
-        text-decoration: none;
-        cursor: pointer;
-
-        svg {
-            vertical-align: middle;
-        }
-
-        span {
-            font-size: 14px;
-            margin: 0 5px;
-        }
+.tab {
+    text-decoration: none;
+    cursor: pointer;
+    svg {
+        vertical-align: middle;
     }
+}
 </style>

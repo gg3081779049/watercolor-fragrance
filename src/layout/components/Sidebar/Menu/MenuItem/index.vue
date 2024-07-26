@@ -29,20 +29,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .menu-item {
+.menu-item {
     display: flex;
     align-items: center;
-
     svg {
-      width: 1em;
-      height: 1em;
-      margin-right: 15px;
-      fill: var(--sidebar-text-color);
+        width: 1em;
+        height: 1em;
+        margin-right: 15px;
+        fill: var(--sidebar-text-color);
     }
 
-    +span {
+    + span {
       overflow: hidden;
       text-overflow: ellipsis;
     }
-  }
+}
 </style>

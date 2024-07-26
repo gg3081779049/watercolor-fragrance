@@ -26,10 +26,10 @@ export default {
 </script>
 
 <style scoped>
-  svg {
-    width: 1em;
-    height: 1em;
-    fill: var(--navbar-icon-fill-color);
-    cursor: pointer;
-  }
+svg {
+  width: 1em;
+  height: 1em;
+  fill: var(--navbar-icon-fill-color);
+  cursor: pointer;
+}
 </style>

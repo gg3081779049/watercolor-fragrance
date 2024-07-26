@@ -5,6 +5,9 @@ export default {
     // 浅色模式
     mode: 'light',
 
+    // 系统布局
+    layout: 'vertical',
+
     // 系统语言
     language: 'zh',
 

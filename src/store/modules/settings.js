@@ -7,6 +7,7 @@ export const useSettingsStore = defineStore('settings', {
         return {
             theme: storageSettings.theme ?? defaultSettings.theme,
             mode: storageSettings.mode ?? defaultSettings.mode,
+            layout: storageSettings.layout ?? defaultSettings.layout,
             language: storageSettings.language ?? defaultSettings.language,
             headerHeight: storageSettings.headerHeight ?? defaultSettings.headerHeight,
             fixedHeader: storageSettings.fixedHeader ?? defaultSettings.fixedHeader,

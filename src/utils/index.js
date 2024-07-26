@@ -32,3 +32,14 @@ export function resetForm(refName) {
         this.$refs[refName].resetFields()
     }
 }
+
+// 函数防抖
+export function debounce(func, duration = 300) {
+    let timer
+    return function (...args) {
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+            func.apply(this, args)
+        }, duration)
+    }
+}

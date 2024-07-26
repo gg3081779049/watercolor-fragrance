@@ -24,6 +24,9 @@ const router = createRouter({
         name: 'Page404',
         component: () => import('@/views/error/404.vue'),
     }, {
+        path: '/:pathMatch(.*)*',
+        redirect: '404',
+    }, {
         path: '',
         name: 'Layout',
         component: Layout,

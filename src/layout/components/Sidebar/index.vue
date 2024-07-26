@@ -120,8 +120,8 @@ export default {
                 cursor: pointer;
 
                 &:hover {
-                    background: var(--navbar-icon-bg-hover);
-                    box-shadow: 0 0 0 6px var(--navbar-icon-bg-hover);
+                    background: rgba(128, 128, 128, 0.122);
+                    box-shadow: 0 0 0 6px rgba(128, 128, 128, 0.122);
                 }
             }
         }
