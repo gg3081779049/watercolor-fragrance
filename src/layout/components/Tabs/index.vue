@@ -202,7 +202,7 @@ export default {
         content: '';
         width: 100%;
         height: 0;
-        border-bottom: 1px solid var(--el-border-color-lighter);
+        border-bottom: 1px solid var(--el-border-color-light);
         position: absolute;
         left: 0;
         bottom: 0;
