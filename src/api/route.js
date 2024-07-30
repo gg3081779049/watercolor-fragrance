@@ -24,6 +24,9 @@ export function getRoutes() {
                 children: [{
                     path: 'bulletin',
                     meta: { icon: 'bulletin', title: '消息公告' },
+                }, {
+                    path: 'complaints',
+                    meta: { icon: 'complaints', title: '投诉' },
                 }]
             }, {
                 path: 'system',
