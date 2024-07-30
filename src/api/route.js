@@ -29,6 +29,9 @@ export function getRoutes() {
                 path: 'system',
                 meta: { icon: 'system', title: '系统管理' },
                 children: [{
+                    path: 'emp',
+                    meta: { icon: 'emp', title: '员工管理' }
+                }, {
                     path: 'dept',
                     meta: { icon: 'dept', title: '部门管理' }
                 }, {
