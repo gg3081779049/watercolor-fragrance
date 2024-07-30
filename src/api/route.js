@@ -44,8 +44,8 @@ export function getRoutes() {
                     path: 'project',
                     meta: { icon: 'project', title: '项目管理' }
                 }, {
-                    path: 'permission',
-                    meta: { icon: 'permission', title: '权限管理' },
+                    path: 'menu',
+                    meta: { icon: 'menu', title: '菜单管理' },
                 }, {
                     path: 'branchStore',
                     meta: { icon: 'branchStore', title: '分店管理' }

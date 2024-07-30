@@ -8,6 +8,7 @@
       <NavbarSearch />
       <Screenfull />
       <DataScreen />
+      <LangSwitch />
       <ThemeSwitch />
       <el-divider direction="vertical" />
       <AvatarBox>
@@ -32,12 +33,13 @@ import Breadcrumb from "@/components/Breadcrumb"
 import NavbarSearch from "@/components/NavbarSearch"
 import Screenfull from "@/components/Screenfull"
 import DataScreen from "@/components/DataScreen"
+import LangSwitch from "@/components/LangSwitch"
 import ThemeSwitch from "@/components/ThemeSwitch"
 import AvatarBox from "@/components/AvatarBox"
 
 export default {
   name: "Navbar",
-  components: { Hamburger, Breadcrumb, NavbarSearch, Screenfull, DataScreen, ThemeSwitch, AvatarBox },
+  components: { Hamburger, Breadcrumb, NavbarSearch, Screenfull, DataScreen, LangSwitch, ThemeSwitch, AvatarBox },
   computed: {
     ...mapState(useSettingsStore, ["headerHeight", "showBreadcrumb"])
   }

@@ -210,7 +210,7 @@ export default {
 
   .scroll-pane {
     &::v-deep .el-scrollbar__view {
-        padding: 0 3px;
+        padding: 0 4px;
         .tab {
             height: 26px;
             margin-left: 2px;

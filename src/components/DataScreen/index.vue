@@ -15,8 +15,7 @@ export default {
 
 <style scoped>
     svg {
-        width: 1em;
-        height: 1em;
+        font-size: 18px;
         fill: var(--navbar-icon-fill-color);
         cursor: pointer;
     }
