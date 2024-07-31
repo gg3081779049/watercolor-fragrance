@@ -1,5 +1,3 @@
-import request from '@/utils/request'
-
 // 登录方法
 export function login(username, password, code, uuid) {
     return new Promise((res, rej) => {
@@ -27,7 +25,7 @@ export function getInfo() {
             roles: ["admin"],
             user: {
                 avatar: "",
-                username: 'admin',
+                username: 'Admin',
                 password: ''
             },
         })

@@ -13,6 +13,9 @@ export default {
     return {
       // 遮罩层
       loading: false,
+      // 总条数
+      total: 0,
+      // 表格数据
       list: []
     }
   },

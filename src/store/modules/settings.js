@@ -41,6 +41,9 @@ export const useSettingsStore = defineStore('settings', {
         },
         mode(val) {
             document.documentElement.className = `${this.theme} ${val}`
+        },
+        language(val) {
+            this.$i18n.locale = val
         }
     },
     persist: {
