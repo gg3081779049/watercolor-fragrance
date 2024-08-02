@@ -4,9 +4,7 @@
 
     </el-table>
     <br>
-    <div style="width: 460px">
-      <IconSelect v-model:activeIcon="icon" />
-    </div>
+    <IconSelect v-model="icon" />
   </div>
 </template>
 

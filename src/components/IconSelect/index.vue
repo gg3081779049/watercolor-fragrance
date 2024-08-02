@@ -1,25 +1,33 @@
 <template>
-    <div class="icon-select">
-        <el-input class="icon-search" v-model="name" clearable placeholder="请输入图标名称" @clear="filterIcons"
-            @input="filterIcons">
-            <template #suffix>
-                <svg-icon icon="search" />
-            </template>
-        </el-input>
-        <div style="height: 200px">
-            <el-scrollbar>
-                <div class="icon-container">
-                    <div class="icon-item-wrapper" v-for="(icon, index) in icons" :key="index">
-                        <div :class="['icon-item', { active: activeIcon === icon }]"
-                            @click="$emit('update:activeIcon', icon)">
-                            <svg-icon :icon="icon" />
-                            <span :title="icon">{{ icon }}</span>
+    <el-popover width="460" trigger="click" :hide-after="0">
+        <template #reference>
+            <el-input placeholder="点击选择图标" readonly :modelValue="modelValue">
+                <template #prefix>
+                    <svg-icon :icon="modelValue" fill="var(--el-text-color-regular)" />
+                </template>
+            </el-input>
+        </template>
+        <div class="icon-select">
+            <el-input class="icon-search" v-model="name" clearable placeholder="请输入图标名称" @clear="filterIcons"
+                @input="filterIcons">
+                <template #suffix>
+                    <svg-icon icon="search" />
+                </template>
+            </el-input>
+            <div style="height: 200px">
+                <el-scrollbar>
+                    <div class="icon-container">
+                        <div class="icon-item-wrapper" v-for="(icon, index) in icons" :key="index">
+                            <div :class="['icon-item', { active: modelValue === icon }]" @click="selectedIcon(icon)">
+                                <svg-icon :icon="icon" />
+                                <span :title="icon">{{ icon }}</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </el-scrollbar>
+                </el-scrollbar>
+            </div>
         </div>
-    </div>
+    </el-popover>
 </template>
 
 <script>
@@ -29,8 +37,9 @@ const icons = require.context('@/icons/svg/menu', false, /\.svg$/).keys().map(i 
 export default {
     name: 'IconSelect',
     props: {
-        activeIcon: {
-            type: String
+        modelValue: {
+            type: String,
+            default: ''
         }
     },
     data() {
@@ -45,6 +54,10 @@ export default {
             if (this.name) {
                 this.icons = this.icons.filter(i => i.includes(this.name))
             }
+        },
+        selectedIcon(name) {
+            this.$emit('update:modelValue', name)
+            document.body.click()
         }
     }
 }
