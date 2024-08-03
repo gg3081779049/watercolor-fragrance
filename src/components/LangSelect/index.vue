@@ -5,8 +5,8 @@
         </span>
         <template #dropdown>
             <el-dropdown-menu>
-                <el-dropdown-item @click="settingsStore.language = 'zh'">简体中文</el-dropdown-item>
-                <el-dropdown-item @click="settingsStore.language = 'en'">English</el-dropdown-item>
+                <el-dropdown-item @click="language = 'zh'">简体中文</el-dropdown-item>
+                <el-dropdown-item @click="language = 'en'">English</el-dropdown-item>
             </el-dropdown-menu>
         </template>
     </el-dropdown>
@@ -14,11 +14,11 @@
 
 <script>
 import { useSettingsStore } from '@/store/modules/settings'
-import { mapStores } from 'pinia'
+import { mapWritableState } from 'pinia'
 
 export default {
     name: 'LangSwitch',
-    computed: { ...mapStores(useSettingsStore) }
+    computed: { ...mapWritableState(useSettingsStore, ['language']) }
 }
 </script>
 

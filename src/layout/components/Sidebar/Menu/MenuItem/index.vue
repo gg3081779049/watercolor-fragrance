@@ -1,11 +1,11 @@
 <template>
-  <el-menu-item v-if="!item.children || item.children.length === 0" :index="'/' + item.path">
+  <el-menu-item v-if="!item.children || item.children.length === 0" v-show="!item.meta.hidden" :index="`/${item.path}`">
     <div class="menu-item">
       <SvgIcon :icon="item.meta.icon" />
     </div>
     <span>{{ item.meta.title }}</span>
   </el-menu-item>
-  <el-sub-menu v-else :index="item.path">
+  <el-sub-menu v-else v-show="!item.meta.hidden" :index="item.path">
     <template #title>
       <div class="menu-item">
         <SvgIcon :icon="item.meta.icon" />
@@ -29,19 +29,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.menu-item {
+  .menu-item {
     display: flex;
     align-items: center;
+
     svg {
-        width: 1em;
-        height: 1em;
-        margin-right: 15px;
-        fill: var(--sidebar-text-color);
+      width: 1em;
+      height: 1em;
+      margin-right: 15px;
+      fill: var(--sidebar-text-color);
     }
 
-    + span {
+    +span {
       overflow: hidden;
       text-overflow: ellipsis;
     }
-}
+  }
 </style>

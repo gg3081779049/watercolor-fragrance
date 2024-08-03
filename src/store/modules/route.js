@@ -42,8 +42,13 @@ function getSidebarRouteList(routes, parentList = []) {
             return acc.concat({
                 path: route.path,
                 name: component && component.default ? component.default.name || (component.default.name = route.path) : route.path,
-                meta: { title: list.map(r => r.meta.title), icon: list.map(r => r.meta.icon) },
-                component: async () => component
+                component: async () => component,
+                meta: {
+                    title: list.map(r => r.meta.title),
+                    icon: list.map(r => r.meta.icon),
+                    hidden: route.meta.hidden,
+                    noCache: route.meta.noCache
+                }
             })
         }
     }, [])
