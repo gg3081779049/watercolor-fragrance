@@ -46,7 +46,6 @@ function getSidebarRouteList(routes, parentList = []) {
                 meta: {
                     title: list.map(r => r.meta.title),
                     icon: list.map(r => r.meta.icon),
-                    hidden: route.meta.hidden,
                     noCache: route.meta.noCache
                 }
             })

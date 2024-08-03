@@ -8,7 +8,7 @@ export const useTabsStore = defineStore('tabs', {
     }),
     getters: {
         cachesTabs() {
-            return this.tabs.map(tab => tab.name)
+            return this.tabs.filter(tab => !tab.meta.noCache).map(tab => tab.name)
         }
     },
     actions: {
