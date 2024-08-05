@@ -22,7 +22,7 @@ export const useRouteStore = defineStore('route', {
 })
 
 function getSidebarRouteTree(routes, parentPath = '') {
-    return routes.map(route => {
+    return routes.filter(route => !route.meta.disabled).map(route => {
         const currentPath = `${parentPath}${route.path}`.replace('//', '/')
         const newRoute = { ...route, path: currentPath }
         if (route.children) {
@@ -42,12 +42,8 @@ function getSidebarRouteList(routes, parentList = []) {
             return acc.concat({
                 path: route.path,
                 name: component && component.default ? component.default.name || (component.default.name = route.path) : route.path,
-                component: async () => component,
-                meta: {
-                    title: list.map(r => r.meta.title),
-                    icon: list.map(r => r.meta.icon),
-                    noCache: route.meta.noCache
-                }
+                meta: { ...route.meta, title: list.map(r => r.meta.title), icon: list.map(r => r.meta.icon) },
+                component: async () => component
             })
         }
     }, [])
