@@ -1,11 +1,5 @@
 <template>
-  <el-menu-item v-if="!item.children || item.children.length === 0" :index="`/${item.path}`">
-    <div class="menu-item">
-      <SvgIcon :icon="item.meta.icon" />
-    </div>
-    <span>{{ item.meta.title }}</span>
-  </el-menu-item>
-  <el-sub-menu v-else :index="item.path">
+  <el-sub-menu v-if="item.hasOwnProperty('children')" :index="item.path">
     <template #title>
       <div class="menu-item">
         <SvgIcon :icon="item.meta.icon" />
@@ -14,6 +8,12 @@
     </template>
     <MenuItem v-for="item in item.children" :key="item.path" :item="item" />
   </el-sub-menu>
+  <el-menu-item v-else :index="`/${item.path}`">
+    <div class="menu-item">
+      <SvgIcon :icon="item.meta.icon" />
+    </div>
+    <span>{{ item.meta.title }}</span>
+  </el-menu-item>
 </template>
 
 <script>

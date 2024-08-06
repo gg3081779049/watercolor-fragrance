@@ -1,20 +1,3 @@
-.el-button {
-    svg {
-        margin-right: 5px;
-        fill: var(--el-button-text-color)
-    }
-
-    &:hover svg {
-        fill: var(--el-button-hover-text-color)
-    }
-
-    &.is-disabled {
-        svg {
-            fill: var(--el-color-info-light-5);
-        }
-    }
-}
-
 .el-dropdown__popper li {
     svg {
         fill: var(--el-text-color-regular);
