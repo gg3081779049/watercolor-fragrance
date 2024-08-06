@@ -1,7 +1,31 @@
 <template>
   <div class="app-container">
-    <el-table :data="list" :default-expand-all="isExpandAll" v-loading="loading">
-
+    <el-table v-loading="loading" :data="list" row-key="path" :default-expand-all="isExpandAll">
+      <el-table-column prop="title" label="菜单名称" width="160"></el-table-column>
+      <el-table-column prop="icon" label="图标" width="100">
+        <template #default="scope">
+          <svg-icon :icon="scope.row.icon" />
+        </template>
+      </el-table-column>
+      <el-table-column prop="path" label="路径"></el-table-column>
+      <el-table-column label="状态"></el-table-column>
+      <el-table-column prop="createTime" label="创建时间" align="center">
+        <template #default="scope">
+          <span>{{ scope.row.createTime }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" width="240" align="center">
+        <template #default="scope">
+          <el-button>
+            <svg-icon icon="edit" />
+            <span>修改</span>
+          </el-button>
+          <el-button>
+            <svg-icon icon="delete" />
+            <span>删除</span>
+          </el-button>
+        </template>
+      </el-table-column>
     </el-table>
     <!-- 添加或修改菜单对话框 -->
     <el-dialog v-model="open" :title="title" width="680px" append-to-body>
@@ -11,6 +35,7 @@
 </template>
 
 <script>
+import { getList } from '@/api/system/menu'
 
 export default {
   name: 'Menu',
@@ -34,6 +59,10 @@ export default {
   methods: {
     getList() {
       this.loading = true
+      getList().then(res => {
+        this.list = res.data
+        this.loading = false
+      })
     }
   }
 }

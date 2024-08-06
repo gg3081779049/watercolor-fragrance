@@ -15,7 +15,7 @@ export function getRoutes() {
                 }]
             }, {
                 path: 'finance',
-                meta: { icon: 'finance', title: '财务管理', disabled: true }
+                meta: { icon: 'finance', title: '财务管理', disabled: false }
             }, {
                 path: 'news',
                 meta: { icon: 'news', title: '消息管理' },
