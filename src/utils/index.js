@@ -43,3 +43,26 @@ export function debounce(func, duration = 300) {
         }, duration)
     }
 }
+
+// 扁平化数组转树形结构数组
+export function arrayToTree(items, idKey = 'id', parentIdKey = 'parentId', childrenKey = 'children') {
+    let tree = []
+    let map = {}
+    let hasOwnProperty = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop)
+
+    for (const item of items) {
+        const newItem = map[item[idKey]] = {
+            ...item,
+            [childrenKey]: hasOwnProperty(map, item[idKey]) ? map[item[idKey]][childrenKey] : []
+        }
+        if (item[parentIdKey]) {
+            if (!hasOwnProperty(map, item[parentIdKey])) {
+                map[item[parentIdKey]] = { [childrenKey]: [] }
+            }
+            map[item[parentIdKey]].children.push(newItem)
+        } else {
+            tree.push(newItem)
+        }
+    }
+    return tree
+}

@@ -1,3 +1,5 @@
+import { arrayToTree } from '@/utils/index.js'
+
 let data = [
     { id: 1, parentId: null, path: 'home', icon: 'home', title: '首页', noCache: false, hidden: false, disabled: false, createTime: "2023-08-21 16:14:10" },
     { id: 2, parentId: null, path: 'room', icon: 'room', title: '房间管理', hidden: false, disabled: false, createTime: "2023-08-21 16:14:10" },
@@ -21,6 +23,6 @@ let data = [
 // 查询菜单列表
 export function getList() {
     return new Promise((res, rej) => {
-        res({ code: 200, msg: '操作成功', data })
+        res({ code: 200, msg: '操作成功', data: arrayToTree(data) })
     })
 }

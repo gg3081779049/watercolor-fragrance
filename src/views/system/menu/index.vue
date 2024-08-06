@@ -78,6 +78,7 @@ export default {
     getList() {
       this.loading = true
       getList().then(res => {
+        this.list = res.data
         this.loading = false
       })
     }
