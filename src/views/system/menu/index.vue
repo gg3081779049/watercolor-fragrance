@@ -4,7 +4,7 @@
       <el-table-column prop="title" label="菜单名称" width="160"></el-table-column>
       <el-table-column prop="icon" label="图标" width="100">
         <template #default="scope">
-          <svg-icon :icon="scope.row.icon" />
+          <svg-icon :icon="scope.row.icon" fill="var(--el-text-color-regular)" />
         </template>
       </el-table-column>
       <el-table-column prop="path" label="路径"></el-table-column>
