@@ -19,15 +19,15 @@
       </el-table-column>
       <el-table-column label="操作" width="240" align="center">
         <template #default="scope">
-          <el-button link>
+          <el-button type="text">
             <svg-icon icon="plus" />
             <span>新增</span>
           </el-button>
-          <el-button link>
+          <el-button type="text">
             <svg-icon icon="edit" />
             <span>修改</span>
           </el-button>
-          <el-button link>
+          <el-button type="text">
             <svg-icon icon="delete" />
             <span>删除</span>
           </el-button>

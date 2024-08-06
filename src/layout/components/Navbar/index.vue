@@ -82,6 +82,10 @@ export default {
       align-items: center;
       gap: 16px;
 
+      svg {
+        fill: var(--navbar-icon-fill-color);
+      }
+
       .el-divider {
         height: 22px;
         margin: 0 -6px;
