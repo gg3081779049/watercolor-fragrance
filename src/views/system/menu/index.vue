@@ -6,7 +6,7 @@
       <el-table-column prop="title" label="菜单名称" width="160" show-overflow-tooltip />
       <el-table-column prop="icon" label="图标" width="100" align="center">
         <template #default="scope">
-          <svg-icon :icon="scope.row.icon" fill="var(--el-text-color-regular)" />
+          <svg-icon :icon="scope.row.icon" />
         </template>
       </el-table-column>
       <el-table-column prop="path" label="路径">
@@ -78,7 +78,6 @@ export default {
     getList() {
       this.loading = true
       getList().then(res => {
-        this.list = res.data
         this.loading = false
       })
     }
