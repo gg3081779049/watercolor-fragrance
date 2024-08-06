@@ -6,7 +6,7 @@
       </div>
       <span>{{ item.meta.title }}</span>
     </template>
-    <MenuItem v-for="item in item.children" :key="item.path" :item="item" />
+    <MenuItem v-for="item in item.children" :key="item.path" :item="item" v-show="!item.meta.hidden" />
   </el-sub-menu>
   <el-menu-item v-else :index="`/${item.path}`">
     <div class="menu-item">

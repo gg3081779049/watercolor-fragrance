@@ -8,17 +8,17 @@ export function getRoutes() {
                 meta: { icon: 'home', title: '首页', noCache: false, hidden: false, disabled: false }
             }, {
                 path: 'room',
-                meta: { icon: 'room', title: '房间管理' },
+                meta: { icon: 'room', title: '房间管理', hidden: false, disabled: false },
                 children: [{
                     path: 'state',
                     meta: { icon: 'state', title: '房态', noCache: false, hidden: false, disabled: false }
                 }]
             }, {
                 path: 'finance',
-                meta: { icon: 'finance', title: '财务管理', disabled: false }
+                meta: { icon: 'finance', title: '财务管理', hidden: false, disabled: false }
             }, {
                 path: 'news',
-                meta: { icon: 'news', title: '消息管理' },
+                meta: { icon: 'news', title: '消息管理', hidden: false, disabled: false },
                 children: [{
                     path: 'bulletin',
                     meta: { icon: 'bulletin', title: '消息公告', noCache: false, hidden: false, disabled: false }
@@ -28,7 +28,7 @@ export function getRoutes() {
                 }]
             }, {
                 path: 'system',
-                meta: { icon: 'system', title: '系统管理' },
+                meta: { icon: 'system', title: '系统管理', hidden: false, disabled: false },
                 children: [{
                     path: 'emp',
                     meta: { icon: 'emp', title: '员工管理', noCache: false, hidden: false, disabled: false }
@@ -49,7 +49,7 @@ export function getRoutes() {
                     meta: { icon: 'branchStore', title: '分店管理', noCache: false, hidden: false, disabled: false }
                 }, {
                     path: 'log',
-                    meta: { icon: 'log', title: '日志管理' },
+                    meta: { icon: 'log', title: '日志管理', hidden: false, disabled: false },
                     children: [{
                         path: 'operate',
                         meta: { icon: 'operate', title: '操作日志', noCache: false, hidden: false, disabled: false }

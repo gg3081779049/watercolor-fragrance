@@ -1,6 +1,6 @@
 <template>
     <el-menu :default-active="$route.path" :collapse="collapse" :unique-opened="uniqueOpened" router>
-        <MenuItem v-for="route in sidebarRouteTree" :key="route.path" :item="route" />
+        <MenuItem v-for="route in sidebarRouteTree" :key="route.path" :item="route" v-show="!route.meta.hidden" />
     </el-menu>
 </template>
 

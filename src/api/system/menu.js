@@ -10,10 +10,11 @@ let data = [{
     path: 'room',
     icon: 'room',
     title: '房间管理',
+    hidden: false,
     disabled: false,
     createTime: "2023-08-21 16:14:10",
     children: [{
-        path: 'state',
+        path: 'room/state',
         icon: 'state',
         title: '房态',
         noCache: false,
@@ -25,16 +26,19 @@ let data = [{
     path: 'finance',
     icon: 'finance',
     title: '财务管理',
+    hidden: true,
     disabled: false,
-    createTime: "2023-08-21 16:14:10"
+    createTime: "2023-08-21 16:14:10",
+    children: []
 }, {
     path: 'news',
     icon: 'news',
     title: '消息管理',
+    hidden: false,
     disabled: false,
     createTime: "2023-08-21 16:14:10",
     children: [{
-        path: 'bulletin',
+        path: 'news/bulletin',
         icon: 'bulletin',
         title: '消息公告',
         noCache: false,
@@ -42,7 +46,7 @@ let data = [{
         disabled: false,
         createTime: "2023-08-21 16:14:10"
     }, {
-        path: 'complaints',
+        path: 'news/complaints',
         icon: 'complaints',
         title: '投诉',
         noCache: false,
@@ -54,10 +58,11 @@ let data = [{
     path: 'system',
     icon: 'system',
     title: '系统管理',
+    hidden: false,
     disabled: false,
     createTime: "2023-08-21 16:14:10",
     children: [{
-        path: 'emp',
+        path: 'system/emp',
         icon: 'emp',
         title: '员工管理',
         noCache: false,
@@ -65,7 +70,7 @@ let data = [{
         disabled: false,
         createTime: "2023-08-21 16:14:10"
     }, {
-        path: 'dept',
+        path: 'system/dept',
         icon: 'dept',
         title: '部门管理',
         noCache: false,
@@ -73,7 +78,7 @@ let data = [{
         disabled: false,
         createTime: "2023-08-21 16:14:10"
     }, {
-        path: 'role',
+        path: 'system/role',
         icon: 'role',
         title: '角色管理',
         noCache: false,
@@ -81,15 +86,15 @@ let data = [{
         disabled: false,
         createTime: "2023-08-21 16:14:10"
     }, {
-        path: 'project',
+        path: 'system/project',
         icon: 'project',
         title: '项目管理',
         noCache: false,
         hidden: false,
-        disabled: false,
+        disabled: true,
         createTime: "2023-08-21 16:14:10"
     }, {
-        path: 'menu',
+        path: 'system/menu',
         icon: 'menu',
         title: '菜单管理',
         noCache: false,
@@ -97,7 +102,7 @@ let data = [{
         disabled: false,
         createTime: "2023-08-21 16:14:10"
     }, {
-        path: 'branchStore',
+        path: 'system/branchStore',
         icon: 'branchStore',
         title: '分店管理',
         noCache: false,
@@ -105,13 +110,14 @@ let data = [{
         disabled: false,
         createTime: "2023-08-21 16:14:10"
     }, {
-        path: 'log',
+        path: 'system/log',
         icon: 'log',
         title: '日志管理',
+        hidden: false,
         disabled: false,
         createTime: "2023-08-21 16:14:10",
         children: [{
-            path: 'operate',
+            path: 'system/log/operate',
             icon: 'operate',
             title: '操作日志',
             noCache: false,
@@ -119,7 +125,7 @@ let data = [{
             disabled: false,
             createTime: "2023-08-21 16:14:10"
         }, {
-            path: 'login',
+            path: 'system/log/login',
             icon: 'login',
             title: '登录日志',
             noCache: false,

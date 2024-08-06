@@ -1,3 +1,9 @@
+.el-button {
+    svg {
+        margin-right: 5px;
+    }
+}
+
 .el-dropdown__popper li {
     svg {
         fill: var(--el-text-color-regular);
