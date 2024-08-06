@@ -10,6 +10,7 @@ let data = [{
     path: 'room',
     icon: 'room',
     title: '房间管理',
+    disabled: false,
     createTime: "2023-08-21 16:14:10",
     children: [{
         path: 'state',
@@ -30,6 +31,7 @@ let data = [{
     path: 'news',
     icon: 'news',
     title: '消息管理',
+    disabled: false,
     createTime: "2023-08-21 16:14:10",
     children: [{
         path: 'bulletin',
@@ -52,6 +54,7 @@ let data = [{
     path: 'system',
     icon: 'system',
     title: '系统管理',
+    disabled: false,
     createTime: "2023-08-21 16:14:10",
     children: [{
         path: 'emp',
@@ -105,6 +108,7 @@ let data = [{
         path: 'log',
         icon: 'log',
         title: '日志管理',
+        disabled: false,
         createTime: "2023-08-21 16:14:10",
         children: [{
             path: 'operate',

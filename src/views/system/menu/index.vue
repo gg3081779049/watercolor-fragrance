@@ -1,14 +1,17 @@
 <template>
   <div class="app-container">
     <el-table v-loading="loading" :data="list" row-key="path" :default-expand-all="isExpandAll">
-      <el-table-column prop="title" label="菜单名称" width="160"></el-table-column>
+      <el-table-column prop="title" label="菜单名称" width="160" show-overflow-tooltip></el-table-column>
       <el-table-column prop="icon" label="图标" width="100">
         <template #default="scope">
           <svg-icon :icon="scope.row.icon" fill="var(--el-text-color-regular)" />
         </template>
       </el-table-column>
       <el-table-column prop="path" label="路径"></el-table-column>
-      <el-table-column label="状态"></el-table-column>
+      <el-table-column label="状态">
+        <template #default="scope">
+        </template>
+      </el-table-column>
       <el-table-column prop="createTime" label="创建时间" align="center">
         <template #default="scope">
           <span>{{ scope.row.createTime }}</span>
