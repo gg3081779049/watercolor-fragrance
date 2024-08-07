@@ -26,13 +26,6 @@ export function tansParams(params) {
     return result
 }
 
-// 表单重置
-export function resetForm(refName) {
-    if (this.$refs[refName]) {
-        this.$refs[refName].resetFields()
-    }
-}
-
 // 函数防抖
 export function debounce(func, duration = 300) {
     let timer
