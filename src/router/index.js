@@ -24,9 +24,6 @@ const router = createRouter({
         name: 'Page404',
         component: () => import('@/views/error/404.vue'),
     }, {
-        path: '/:pathMatch(.*)*',
-        redirect: '404',
-    }, {
         path: '',
         name: 'Layout',
         component: Layout,
@@ -35,12 +32,12 @@ const router = createRouter({
             path: 'home',
             name: 'Home',
             component: () => import('@/views/home/index.vue'),
-            meta: { title: ['首页'], icon: ['home'] },
+            meta: { title: ['首页'], icon: ['home'], noCache: false, hidden: false },
         }, {
             path: 'user',
             name: 'User',
             component: () => import('@/views/user/index.vue'),
-            meta: { title: ['个人中心'], icon: ['user'] },
+            meta: { title: ['个人中心'], icon: ['user'], noCache: false, hidden: true },
         }]
     }]
 });

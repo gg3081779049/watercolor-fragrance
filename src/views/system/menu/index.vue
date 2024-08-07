@@ -9,11 +9,7 @@
           <svg-icon :icon="scope.row.icon" />
         </template>
       </el-table-column>
-      <el-table-column prop="path" label="路径">
-        <template #default="scope">
-          {{ scope.row.path.split("/").at(-1) }}
-        </template>
-      </el-table-column>
+      <el-table-column prop="path" label="路由" />
       <el-table-column label="状态" width="100" align="center">
         <template #default="{ row: { disabled, hidden } }">
           <el-tag :type="disabled ? 'danger' : hidden ? 'info' : 'success'">
@@ -28,15 +24,15 @@
       </el-table-column>
       <el-table-column label="操作" width="240" align="center">
         <template #default="scope">
-          <el-button type="text" :disabled="!scope.row.hasOwnProperty('children')">
+          <el-button type="primary" link :disabled="!scope.row.hasOwnProperty('children')">
             <svg-icon icon="plus" />
             <span>新增</span>
           </el-button>
-          <el-button type="text">
+          <el-button type="primary" link>
             <svg-icon icon="edit" />
             <span>修改</span>
           </el-button>
-          <el-button type="text">
+          <el-button type="primary" link>
             <svg-icon icon="delete" />
             <span>删除</span>
           </el-button>
@@ -52,6 +48,7 @@
 
 <script>
 import { getList } from '@/api/system/menu'
+import { arrayToTree } from '@/utils'
 
 export default {
   name: 'Menu',
@@ -78,7 +75,7 @@ export default {
     getList() {
       this.loading = true
       getList().then(res => {
-        this.list = res.data
+        this.list = arrayToTree(res.data)
         this.loading = false
       })
     }
