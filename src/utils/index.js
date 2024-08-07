@@ -51,15 +51,14 @@ export function arrayToTree(items, idKey = 'id', parentIdKey = 'parentId', child
     let hasOwnProperty = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop)
 
     for (const item of items) {
-        const newItem = map[item[idKey]] = {
-            ...item,
-            [childrenKey]: hasOwnProperty(map, item[idKey]) ? map[item[idKey]][childrenKey] : []
-        }
+        map[item[idKey]] = { ...item, [childrenKey]: hasOwnProperty(map, item[idKey]) ? map[item[idKey]][childrenKey] : [] }
+        const newItem = map[item[idKey]]
         if (item[parentIdKey]) {
-            if (!hasOwnProperty(map, item[parentIdKey])) {
-                map[item[parentIdKey]] = { [childrenKey]: [] }
+            if (hasOwnProperty(map, item[parentIdKey])) {
+                map[item[parentIdKey]][childrenKey].push(newItem)
+            } else {
+                map[item[parentIdKey]] = { [childrenKey]: [newItem] }
             }
-            map[item[parentIdKey]].children.push(newItem)
         } else {
             tree.push(newItem)
         }
