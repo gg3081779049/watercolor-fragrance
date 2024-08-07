@@ -1,7 +1,6 @@
 <template>
   <div class="app-container">
-    <el-table v-loading="loading" :data="list" row-key="path" :default-expand-all="isExpandAll"
-      :tree-props="{ children: 'children', hasChildren: 'hasChildren' }">
+    <el-table v-loading="loading" :data="list" row-key="id" :default-expand-all="isExpandAll">
       <el-table-column type="selection" width="40" align="center" />
       <el-table-column prop="title" label="菜单名称" width="160" show-overflow-tooltip />
       <el-table-column prop="icon" label="图标" width="100" align="center">
@@ -24,7 +23,7 @@
       </el-table-column>
       <el-table-column label="操作" width="240" align="center">
         <template #default="scope">
-          <el-button type="primary" link :disabled="!scope.row.hasOwnProperty('children')">
+          <el-button type="primary" link>
             <svg-icon icon="plus" />
             <span>新增</span>
           </el-button>
@@ -58,6 +57,8 @@ export default {
       loading: true,
       // 菜单树表格数据
       list: [],
+      // 选中的数据
+      selection: [],
       // 是否展开，默认全部折叠
       isExpandAll: false,
       // 是否显示弹出层
@@ -76,13 +77,15 @@ export default {
     getList() {
       this.loading = true
       getList().then(res => {
-        this.list = arrayToTree(res.data)
         this.loading = false
+        this.list = arrayToTree(res.data, null, item => {
+          if (item.children && item.children.length === 0 && item.hasChild) item.children.length = 1
+        })
       })
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
-
+      this.selection = selection
     },
     /** 删除按钮操作 */
     handleDelete(row) {

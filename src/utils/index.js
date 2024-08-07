@@ -44,18 +44,21 @@ export function debounce(func, duration = 300) {
     }
 }
 
-// 扁平化数组转树形结构数组
-export function arrayToTree(items, idKey = 'id', parentIdKey = 'parentId', childrenKey = 'children') {
+// 数组转树
+export function arrayToTree(items, config, func) {
     let tree = []
     let map = {}
+    let { idKey = 'id', parentIdKey = 'parentId', childrenKey = 'children', orderKey = 'order' } = config ?? {}
     let hasOwnProperty = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop)
 
     for (const item of items) {
         map[item[idKey]] = { ...item, [childrenKey]: hasOwnProperty(map, item[idKey]) ? map[item[idKey]][childrenKey] : [] }
-        const newItem = map[item[idKey]]
+        let newItem = map[item[idKey]]
+        if (typeof func === 'function') func(newItem)
         if (item[parentIdKey]) {
             if (hasOwnProperty(map, item[parentIdKey])) {
                 map[item[parentIdKey]][childrenKey].push(newItem)
+                map[item[parentIdKey]][childrenKey].sort((a, b) => a[orderKey] - b[orderKey])
             } else {
                 map[item[parentIdKey]] = { [childrenKey]: [newItem] }
             }
@@ -63,5 +66,5 @@ export function arrayToTree(items, idKey = 'id', parentIdKey = 'parentId', child
             tree.push(newItem)
         }
     }
-    return tree
+    return tree.sort((a, b) => a[orderKey] - b[orderKey])
 }
