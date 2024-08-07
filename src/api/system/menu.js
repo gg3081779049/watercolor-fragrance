@@ -21,6 +21,21 @@ let data = [
 // 查询菜单列表
 export function getList() {
     return new Promise((res, rej) => {
-        res({ code: 200, msg: '操作成功', data })
+        res({ code: 200, msg: '操作成功', data: JSON.parse(JSON.stringify(data)) })
+    })
+}
+
+// 查询菜单详情
+export function getItem(id) {
+    return new Promise((res, rej) => {
+        res({ code: 200, msg: '操作成功', data: JSON.parse(JSON.stringify(data.find(item => item.id === id))) })
+    })
+}
+
+// 删除菜单
+export function deleteItem(ids) {
+    data = data.filter(item => !ids.includes(item.id))
+    return new Promise((res, rej) => {
+        res({ code: 200, msg: '操作成功' })
     })
 }

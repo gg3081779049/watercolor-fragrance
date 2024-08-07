@@ -31,6 +31,7 @@ router.beforeEach((to, from, next) => {
                     useRouteStore().GenerateRoutes().then((accessRoutes) => {
                         // 动态添加可访问路由表
                         accessRoutes.forEach(route => router.addRoute('Layout', route))
+                        router.addRoute('Layout', { path: '/:pathMatch(.*)*', redirect: '404' })
                         next({ ...to, replace: true })
                     })
                 }).catch(err => {

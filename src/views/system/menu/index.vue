@@ -32,7 +32,7 @@
             <svg-icon icon="edit" />
             <span>修改</span>
           </el-button>
-          <el-button type="primary" link>
+          <el-button type="primary" link @click="handleDelete([scope.row])">
             <svg-icon icon="delete" />
             <span>删除</span>
           </el-button>
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { getList } from '@/api/system/menu'
+import { getList, deleteItem } from '@/api/system/menu'
 import { arrayToTree } from '@/utils'
 
 export default {
@@ -72,12 +72,30 @@ export default {
     this.getList()
   },
   methods: {
+    /** 查询菜单列表 */
     getList() {
       this.loading = true
       getList().then(res => {
         this.list = arrayToTree(res.data)
         this.loading = false
       })
+    },
+    // 多选框选中数据
+    handleSelectionChange(selection) {
+
+    },
+    /** 删除按钮操作 */
+    handleDelete(row) {
+      this.$confirm(`是否确认删除名称为"${row.map(({ title }) => title)}"的菜单项?`, '系统提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        return deleteItem(row.map(({ id }) => id))
+      }).then(() => {
+        this.getList()
+        this.$message.success('删除成功')
+      }).catch(() => { })
     }
   }
 }
