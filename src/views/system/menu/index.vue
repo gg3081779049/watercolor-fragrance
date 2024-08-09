@@ -41,13 +41,80 @@
     <!-- 添加或修改菜单对话框 -->
     <el-dialog v-model="open" :title="title" width="680px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
-        <el-form-item label="上级菜单" prop="parentId">
-          <el-tree-select v-model="form.parentId" :data="dirTree" value-key="id" placeholder="选择上级菜单">
+        <el-form-item label="菜单名称" prop="title">
+          <el-input v-model="form.title" placeholder="请输入菜单名称" />
+        </el-form-item>
+        <el-form-item label="菜单路由" prop="path">
+          <el-input v-model="form.path" placeholder="请输入菜单路由" />
+        </el-form-item>
+        <el-form-item label="上级目录" prop="parentId">
+          <el-tree-select v-model="form.parentId" :data="dirTree" placeholder="选择上级目录"
+            :props="{ value: 'id', label: 'title', class: () => 'el-tree-select-node' }"
+            :filter-node-method="(val, node) => node.hasChild && node.title.includes(val)" check-strictly filterable
+            highlight-current>
             <template #default="{ data }">
-              <span>{{ data.title }}</span>
+              {{ data.title }}
+              <span v-if="data.hasChild">({{ data.children.length }})</span>
             </template>
           </el-tree-select>
         </el-form-item>
+        <el-form-item label="菜单图标" prop="icon">
+          <IconSelect v-model="form.icon" />
+        </el-form-item>
+        <el-form-item label="显示排序" prop="order">
+          <el-input-number v-model="form.order" controls-position="right" :min="0" />
+        </el-form-item>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="菜单类型" prop="hasChild">
+              <el-radio-group v-model="form.hasChild" style="margin-left: 12px">
+                <el-radio :value="true">目录</el-radio>
+                <el-radio :value="false">菜单</el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item prop="noCache">
+              <template #label>
+                <el-tooltip content="选择是则会被`keep-alive`缓存，需要匹配组件的`name`和地址保持一致" placement="top">
+                  是否缓存
+                </el-tooltip>
+              </template>
+              <el-radio-group v-model="form.noCache" style="margin-left: 12px">
+                <el-radio :value="true">缓存</el-radio>
+                <el-radio :value="false">不缓存</el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item prop="hidden">
+              <template #label>
+                <el-tooltip content="选择隐藏则路由将不会出现在侧边栏，但仍然可以访问" placement="top">
+                  是否隐藏
+                </el-tooltip>
+              </template>
+              <el-radio-group v-model="form.hidden" style="margin-left: 12px">
+                <el-radio :value="true">隐藏</el-radio>
+                <el-radio :value="false">不隐藏</el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item prop="disabled">
+              <template #label>
+                <el-tooltip content="选择停用则路由将不会出现在侧边栏，也不能被访问" placement="top">
+                  菜单状态
+                </el-tooltip>
+              </template>
+              <el-radio-group v-model="form.disabled" style="margin-left: 12px">
+                <el-radio :value="false">正常</el-radio>
+                <el-radio :value="true">停用</el-radio>
+              </el-radio-group>
+            </el-form-item>
+          </el-col>
+        </el-row>
       </el-form>
       <template #footer>
         <el-button>取 消</el-button>
@@ -59,7 +126,7 @@
 
 <script>
 import { getList, getItem, deleteItem } from '@/api/system/menu'
-import { arrayToTree, filterTree } from '@/utils'
+import { arrayToTree } from '@/utils'
 
 import IconSelect from '@/components/IconSelect'
 
@@ -85,7 +152,14 @@ export default {
       // 表单参数
       form: {},
       // 表单校验
-      rules: {}
+      rules: {
+        title: [
+          { required: true, message: "菜单名称不能为空", trigger: "blur" }
+        ],
+        path: [
+          { required: true, message: "路由地址不能为空", trigger: "blur" }
+        ]
+      }
     }
   },
   created() {
@@ -101,14 +175,7 @@ export default {
       })
     },
     getDirTree() {
-      this.dirTree = [{
-        id: 0,
-        title: '根目录',
-        hasChild: true,
-        children: filterTree(JSON.parse(JSON.stringify(this.tree)), item => {
-          return item.hasChild
-        })
-      }]
+      this.dirTree = [{ id: 0, title: '根目录', hasChild: true, children: JSON.parse(JSON.stringify(this.tree)) }]
     },
     // 表单重置
     reset() {
@@ -145,4 +212,12 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+  .el-tree-select-node {
+    .el-select-dropdown__item {
+      span {
+        opacity: 0.6;
+      }
+    }
+  }
+</style>

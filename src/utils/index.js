@@ -73,5 +73,5 @@ export function handleTree(tree, func) {
 
 // 过滤树
 export function filterTree(tree, func) {
-    return tree.filter(item => (item.children = filterTree(item.children, func)) && func(item))
+    return tree.filter(item => func(item) && (item.children = filterTree(item.children, func)))
 }
