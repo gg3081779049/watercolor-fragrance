@@ -38,7 +38,7 @@ export function debounce(func, duration = 300) {
 }
 
 // 数组转树
-export function arrayToTree(items, config, func) {
+export function arrayToTree(items, config) {
     let tree = []
     let map = {}
     let { idKey = 'id', parentIdKey = 'parentId', childrenKey = 'children', orderKey = 'order' } = config ?? {}
@@ -47,7 +47,6 @@ export function arrayToTree(items, config, func) {
     for (const item of items) {
         map[item[idKey]] = { ...item, [childrenKey]: hasOwnProperty(map, item[idKey]) ? map[item[idKey]][childrenKey] : [] }
         let newItem = map[item[idKey]]
-        if (typeof func === 'function') func(newItem)
         if (item[parentIdKey]) {
             if (hasOwnProperty(map, item[parentIdKey])) {
                 map[item[parentIdKey]][childrenKey].push(newItem)
@@ -60,4 +59,19 @@ export function arrayToTree(items, config, func) {
         }
     }
     return tree.sort((a, b) => a[orderKey] - b[orderKey])
+}
+
+// 遍历树
+export function handleTree(tree, func) {
+    tree.forEach(ele => {
+        func(ele)
+        if (ele.children) {
+            handleTree(ele.children, func)
+        }
+    })
+}
+
+// 过滤树
+export function filterTree(tree, func) {
+    return tree.filter(item => (item.children = filterTree(item.children, func)) && func(item))
 }
