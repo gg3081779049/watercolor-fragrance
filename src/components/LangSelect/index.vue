@@ -5,8 +5,9 @@
         </span>
         <template #dropdown>
             <el-dropdown-menu>
-                <el-dropdown-item @click="language = 'zh'">简体中文</el-dropdown-item>
-                <el-dropdown-item @click="language = 'en'">English</el-dropdown-item>
+                <el-dropdown-item v-for="lang in languageMap" :key="item" @click="language = lang.key">
+                    {{ lang.val }}
+                </el-dropdown-item>
             </el-dropdown-menu>
         </template>
     </el-dropdown>
@@ -18,6 +19,18 @@ import { mapWritableState } from 'pinia'
 
 export default {
     name: 'LangSwitch',
+    data() {
+        const context = require.context('@/locales/lang', false, /\.js$/)
+        return {
+            languageMap: context.keys().map(key => {
+                let k = key.replace(/^\.\/(.*)\.\w+$/, '$1')
+                return {
+                    key: k,
+                    val: context(key).default.lang ?? k
+                }
+            })
+        }
+    },
     computed: { ...mapWritableState(useSettingsStore, ['language']) }
 }
 </script>

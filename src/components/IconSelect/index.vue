@@ -1,5 +1,5 @@
 <template>
-    <el-popover width="460" trigger="click" :hide-after="0">
+    <el-popover width="460" trigger="click" :hide-after="0" @show="reset">
         <template #reference>
             <el-input placeholder="点击选择图标" readonly :modelValue="modelValue">
                 <template #prefix>
@@ -58,6 +58,10 @@ export default {
         selectedIcon(name) {
             this.$emit('update:modelValue', name)
             document.body.click()
+        },
+        reset() {
+            this.name = ''
+            this.icons = icons
         }
     }
 }

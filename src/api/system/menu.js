@@ -39,3 +39,11 @@ export function deleteItem(ids) {
         res({ code: 200, msg: '操作成功' })
     })
 }
+
+// 修改菜单
+export function updateItem(form) {
+    data = data.map(item => item.id === form.id ? Object.assign({}, item, form) : item)
+    return new Promise((res, rej) => {
+        res({ code: 200, msg: '操作成功' })
+    })
+}

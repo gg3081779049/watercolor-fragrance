@@ -23,7 +23,7 @@
       </el-table-column>
       <el-table-column label="操作" width="240" align="center">
         <template #default="scope">
-          <el-button type="primary" link>
+          <el-button type="primary" link @click="handleAdd(scope.row)">
             <svg-icon icon="plus" />
             <span>新增</span>
           </el-button>
@@ -62,70 +62,60 @@
           <IconSelect v-model="form.icon" />
         </el-form-item>
         <el-form-item label="显示排序" prop="order">
-          <el-input-number v-model="form.order" controls-position="right" :min="0" />
+          <el-input-number v-model="form.order" controls-position="right" :min="1" />
         </el-form-item>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="菜单类型" prop="hasChild">
-              <el-radio-group v-model="form.hasChild" style="margin-left: 12px">
-                <el-radio :value="true">目录</el-radio>
-                <el-radio :value="false">菜单</el-radio>
-              </el-radio-group>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item prop="noCache">
-              <template #label>
-                <el-tooltip content="选择是则会被`keep-alive`缓存，需要匹配组件的`name`和地址保持一致" placement="top">
-                  是否缓存
-                </el-tooltip>
-              </template>
-              <el-radio-group v-model="form.noCache" style="margin-left: 12px">
-                <el-radio :value="true">缓存</el-radio>
-                <el-radio :value="false">不缓存</el-radio>
-              </el-radio-group>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item prop="hidden">
-              <template #label>
-                <el-tooltip content="选择隐藏则路由将不会出现在侧边栏，但仍然可以访问" placement="top">
-                  是否隐藏
-                </el-tooltip>
-              </template>
-              <el-radio-group v-model="form.hidden" style="margin-left: 12px">
-                <el-radio :value="true">隐藏</el-radio>
-                <el-radio :value="false">不隐藏</el-radio>
-              </el-radio-group>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item prop="disabled">
-              <template #label>
-                <el-tooltip content="选择停用则路由将不会出现在侧边栏，也不能被访问" placement="top">
-                  菜单状态
-                </el-tooltip>
-              </template>
-              <el-radio-group v-model="form.disabled" style="margin-left: 12px">
-                <el-radio :value="false">正常</el-radio>
-                <el-radio :value="true">停用</el-radio>
-              </el-radio-group>
-            </el-form-item>
-          </el-col>
-        </el-row>
+        <div style="display:flex;flex-wrap:wrap">
+          <el-form-item label="菜单类型" prop="hasChild" style="width: 50%">
+            <el-radio-group v-model="form.hasChild" style="margin-left: 10px">
+              <el-radio :value="true">目录</el-radio>
+              <el-radio :value="false">菜单</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item prop="noCache" style="width: 50%">
+            <template #label>
+              <el-tooltip content="选择是则会被`keep-alive`缓存，需要匹配组件的`name`和地址保持一致" placement="top" :show-after="300">
+                是否缓存
+              </el-tooltip>
+            </template>
+            <el-radio-group v-model="form.noCache" style="margin-left: 10px">
+              <el-radio :value="true">缓存</el-radio>
+              <el-radio :value="false">不缓存</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item prop="hidden" style="width: 50%">
+            <template #label>
+              <el-tooltip content="选择隐藏则路由将不会出现在侧边栏，但仍然可以访问" placement="top" :show-after="300">
+                是否隐藏
+              </el-tooltip>
+            </template>
+            <el-radio-group v-model="form.hidden" style="margin-left: 10px">
+              <el-radio :value="true">隐藏</el-radio>
+              <el-radio :value="false">不隐藏</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item prop="disabled" style="width: 50%">
+            <template #label>
+              <el-tooltip content="选择停用则路由将不会出现在侧边栏，也不能被访问" placement="top" :show-after="300">
+                菜单状态
+              </el-tooltip>
+            </template>
+            <el-radio-group v-model="form.disabled" style="margin-left: 10px">
+              <el-radio :value="false">正常</el-radio>
+              <el-radio :value="true">停用</el-radio>
+            </el-radio-group>
+          </el-form-item>
+        </div>
       </el-form>
       <template #footer>
-        <el-button>取 消</el-button>
-        <el-button type="primary">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">确 定</el-button>
       </template>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { getList, getItem, deleteItem } from '@/api/system/menu'
+import { getList, getItem, deleteItem, updateItem } from '@/api/system/menu'
 import { arrayToTree } from '@/utils'
 
 import IconSelect from '@/components/IconSelect'
@@ -179,11 +169,40 @@ export default {
     },
     // 表单重置
     reset() {
-
+      if (this.$refs['form']) {
+        this.$refs['form'].resetFields()
+      }
+    },
+    // 取消按钮
+    cancel() { },
+    // 提交按钮
+    submitForm() {
+      this.$refs["form"].validate(valid => {
+        if (valid) {
+          if (this.form.id) {
+            // 修改
+            updateItem(this.form).then(() => {
+              this.$message.success("修改成功")
+              this.open = false
+              this.getTree()
+            })
+          } else {
+            // 新增
+          }
+        }
+      })
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.selection = selection
+    },
+    // 新增按钮操作
+    handleAdd(row) {
+      this.reset()
+      this.getDirTree()
+      if (row) {
+
+      }
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
