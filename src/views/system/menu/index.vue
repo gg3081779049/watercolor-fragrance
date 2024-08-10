@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-table v-loading="loading" :data="tree" row-key="id" :default-expand-all="isExpandAll">
+    <el-table v-if="refreshTable" v-loading="loading" :data="tree" row-key="id" :default-expand-all="isExpandAll">
       <el-table-column type="selection" width="40" align="center" />
       <el-table-column prop="title" label="菜单名称" width="160" show-overflow-tooltip />
       <el-table-column prop="icon" label="图标" width="100" align="center">
@@ -39,7 +39,7 @@
       </el-table-column>
     </el-table>
     <!-- 添加或修改菜单对话框 -->
-    <el-dialog v-model="open" :title="title" width="680px" append-to-body>
+    <el-dialog v-model="open" :title="title" width="680px" append-to-body @closed="cancel">
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="菜单名称" prop="title">
           <el-input v-model="form.title" placeholder="请输入菜单名称" />
@@ -115,7 +115,7 @@
 </template>
 
 <script>
-import { getList, getItem, deleteItem, updateItem } from '@/api/system/menu'
+import { getList, getItem, addItem, deleteItem, updateItem } from '@/api/system/menu'
 import { arrayToTree } from '@/utils'
 
 import IconSelect from '@/components/IconSelect'
@@ -129,6 +129,8 @@ export default {
       loading: true,
       // 是否展开，默认全部折叠
       isExpandAll: false,
+      // 重新渲染表格状态
+      refreshTable: true,
       // 是否显示弹出层
       open: false,
       // 弹出层标题
@@ -169,40 +171,39 @@ export default {
     },
     // 表单重置
     reset() {
-      if (this.$refs['form']) {
-        this.$refs['form'].resetFields()
+      this.$refs['form'] && this.$refs['form'].resetFields()
+      this.form = {
+        parentId: 0,
+        title: '',
+        path: '',
+        icon: '',
+        order: 1,
+        id: undefined,
+        hasChild: false,
+        noCache: false,
+        hidden: false,
+        disabled: false
       }
-    },
-    // 取消按钮
-    cancel() { },
-    // 提交按钮
-    submitForm() {
-      this.$refs["form"].validate(valid => {
-        if (valid) {
-          if (this.form.id) {
-            // 修改
-            updateItem(this.form).then(() => {
-              this.$message.success("修改成功")
-              this.open = false
-              this.getTree()
-            })
-          } else {
-            // 新增
-          }
-        }
-      })
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.selection = selection
     },
+    // 展开/折叠操作
+    expandChange() {
+      this.refreshTable = false
+      this.isExpandAll ^= true
+      this.$nextTick(() => {
+        this.refreshTable = true
+      })
+    },
     // 新增按钮操作
     handleAdd(row) {
       this.reset()
       this.getDirTree()
-      if (row) {
-
-      }
+      this.form.parentId = row ? row.id : 0
+      this.title = "添加菜单"
+      this.open = true
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
@@ -210,8 +211,8 @@ export default {
       this.getDirTree()
       getItem(row.id).then(res => {
         this.form = res.data
-        this.open = true
         this.title = "修改菜单"
+        this.open = true
       })
     },
     /** 删除按钮操作 */
@@ -226,7 +227,34 @@ export default {
         this.getTree()
         this.$message.success('删除成功')
       }).catch(() => { })
-    }
+    },
+    // 取消按钮
+    cancel() {
+      this.reset()
+      this.open = false
+    },
+    // 提交按钮
+    submitForm() {
+      this.$refs["form"].validate(valid => {
+        if (valid) {
+          if (this.form.id === undefined) {
+            // 新增
+            addItem(this.form).then(() => {
+              this.$message.success('新增成功')
+              this.open = false
+              this.getTree()
+            })
+          } else {
+            // 修改
+            updateItem(this.form).then(() => {
+              this.$message.success("修改成功")
+              this.open = false
+              this.getTree()
+            })
+          }
+        }
+      })
+    },
   }
 }
 </script>

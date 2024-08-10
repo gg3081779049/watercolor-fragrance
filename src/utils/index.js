@@ -37,6 +37,23 @@ export function debounce(func, duration = 300) {
     }
 }
 
+// 日期格式化
+export function parseTime(date, pattern = '{y}-{m}-{d} {h}:{i}:{s}') {
+    if (date) {
+        return pattern.replace(/{(y|m|d|h|i|s|a)}/g, (_, key) => {
+            return {
+                y: date.getFullYear(),
+                m: (date.getMonth() + 1).toString().padStart(2, '0'),
+                d: (date.getDate()).toString().padStart(2, '0'),
+                h: (date.getHours()).toString().padStart(2, '0'),
+                i: (date.getMinutes()).toString().padStart(2, '0'),
+                s: (date.getSeconds()).toString().padStart(2, '0'),
+                a: (date.getDay())
+            }[key]
+        })
+    }
+}
+
 // 数组转树
 export function arrayToTree(items, config) {
     let tree = []

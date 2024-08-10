@@ -1,3 +1,5 @@
+import { parseTime } from '@/utils'
+
 let data = [
     { id: 1, parentId: 0, order: 1, hasChild: false, path: 'home', icon: 'home', title: '首页', noCache: false, hidden: false, disabled: false, createTime: "2023-08-21 16:14:10" },
     { id: 2, parentId: 0, order: 2, hasChild: true, path: 'room', icon: 'room', title: '房间管理', hidden: false, disabled: false, createTime: "2023-08-21 16:14:10" },
@@ -29,6 +31,15 @@ export function getList() {
 export function getItem(id) {
     return new Promise((res, rej) => {
         res({ code: 200, msg: '操作成功', data: JSON.parse(JSON.stringify(data.find(item => item.id === id))) })
+    })
+}
+
+// 新增菜单
+export function addItem(form) {
+    let minId = data.map(item => item.id).sort((a, b) => a - b).findIndex((item, i) => item !== i + 1) + 1
+    data.push({ ...form, id: minId, createTime: parseTime(new Date()) })
+    return new Promise((res, rej) => {
+        res({ code: 200, msg: '操作成功' })
     })
 }
 
