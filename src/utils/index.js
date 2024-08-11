@@ -56,9 +56,9 @@ export function parseTime(date, pattern = '{y}-{m}-{d} {h}:{i}:{s}') {
 
 // 数组转树
 export function arrayToTree(items, config) {
+    let { idKey = 'id', parentIdKey = 'parentId', childrenKey = 'children', orderKey = 'order' } = config ?? {}
     let tree = []
     let map = {}
-    let { idKey = 'id', parentIdKey = 'parentId', childrenKey = 'children', orderKey = 'order' } = config ?? {}
     let hasOwnProperty = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop)
 
     for (const item of items) {
@@ -76,6 +76,22 @@ export function arrayToTree(items, config) {
         }
     }
     return tree.sort((a, b) => a[orderKey] - b[orderKey])
+}
+
+export function treeToArray(tree) {
+    let array = []
+    let childrenKey = 'children'
+    function traverse(node) {
+        let newNode = { ...node }
+        delete newNode[childrenKey]
+        array.push(newNode)
+        if (node[childrenKey]) {
+            node[childrenKey].forEach(traverse)
+        }
+    }
+
+    tree.forEach(traverse)
+    return array
 }
 
 // 遍历树
