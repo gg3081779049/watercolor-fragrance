@@ -1,6 +1,23 @@
 <template>
   <div class="app-container">
-    <el-table v-if="refreshTable" v-loading="loading" :data="tree" row-key="id" :default-expand-all="isExpandAll">
+
+    <div class="button-group">
+      <el-button type="primary" size="small" plain @click="handleAdd">
+        <SvgIcon icon="plus" />
+        <span>新增</span>
+      </el-button>
+      <el-button type="danger" size="small" plain @click="handleDelete(selection)">
+        <SvgIcon icon="delete" />
+        <span>删除</span>
+      </el-button>
+      <el-button type="info" size="small" plain @click="expandChange">
+        <svg-icon icon="sort" />
+        <span>{{ isExpandAll ? '折叠' : '展开' }}</span>
+      </el-button>
+    </div>
+
+    <el-table ref="tableRef" v-if="refreshTable" v-loading="loading" :data="tree" row-key="id"
+      :default-expand-all="isExpandAll" @select="handleSelect">
       <el-table-column type="selection" width="40" align="center" />
       <el-table-column prop="title" label="菜单名称" width="160" show-overflow-tooltip />
       <el-table-column prop="icon" label="图标" width="100" align="center">
@@ -186,7 +203,7 @@ export default {
       }
     },
     // 多选框选中数据
-    handleSelectionChange(selection) {
+    handleSelect(selection) {
       this.selection = selection
     },
     // 展开/折叠操作
@@ -217,6 +234,7 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(rows) {
+      if (rows.length === 0) return
       this.$confirm(`是否确认删除"${rows.map(({ title }) => title)}"?`, '系统提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -265,6 +283,12 @@ export default {
       span {
         opacity: 0.6;
       }
+    }
+  }
+
+  .app-container {
+    .button-group {
+      padding-bottom: 10px;
     }
   }
 </style>
