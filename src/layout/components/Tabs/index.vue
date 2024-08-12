@@ -1,16 +1,9 @@
 <template>
     <div class="tabs-container" :style="{ height: `${TabsHeight}px` }">
         <ScrollPane ref="scrollPane" class="scroll-pane" @scroll="closeMenu">
-            <TabLink
-                ref="tab"
-                v-for="tab in tabs"
-                :key="tab"
-                :route="tab"
-                :draggable="draggable"
-                :show-icon="showTabsIcon"
-                :show-close="tab.name !== defaultTab"
-                @contextmenu.prevent="openMenu($event, tab)"
-                @close="closeTab(tab)" />
+            <TabLink ref="tab" v-for="tab in tabs" :key="tab" :route="tab" :draggable="draggable"
+                :show-icon="showTabsIcon" :show-close="tab.name !== defaultTab"
+                @contextmenu.prevent="openMenu($event, tab)" @close="closeTab(tab)" />
         </ScrollPane>
         <ul class="contextmenu" v-show="visible" :style="{ left: left + 'px', top: top + 'px' }">
             <li @click="closeTab(selectedTab)" v-if="showCloseTab"><svg-icon icon="close" />关闭当前</li>
@@ -192,109 +185,114 @@ export default {
 
 <style lang="scss" scoped>
 
-.tabs-container {
-  width: 100%;
-  height: 34px;
-  background: var(--tabs-bg);
-  position: relative;
-
-  &::before {
-        content: '';
+    .tabs-container {
         width: 100%;
-        height: 0;
-        border-bottom: 1px solid var(--el-border-color-light);
-        position: absolute;
-        left: 0;
-        bottom: 0;
-    }
+        height: 34px;
+        background: var(--tabs-bg);
+        position: relative;
 
-  .scroll-pane {
-    &::v-deep .el-scrollbar__view {
-        padding: 0 4px;
-        .tab {
-            height: 26px;
-            margin-left: 2px;
-            margin-right: 2px;
-            margin-top: 5px;
-            padding: 2px 8px;
-            border: 1px solid var(--el-border-color-light);
-            background: var(--tabs-tag--bg);
-            display: inline-block;
-            color: var(--tabs-tag-text-color);
+        &::before {
+            content: '';
+            width: 100%;
+            height: 0;
+            border-bottom: 1px solid var(--el-border-color-light);
+            position: absolute;
+            left: 0;
+            bottom: 0;
+        }
+
+        .scroll-pane {
+            &::v-deep .el-scrollbar__view {
+                padding-left: 6px;
+                display: flex;
+                align-items: end;
+                gap: 4px;
+
+                .tab {
+                    height: 26px;
+                    padding: 2px 8px;
+                    border: 1px solid var(--el-border-color-light);
+                    background: var(--tabs-tag--bg);
+                    display: inline-block;
+                    color: var(--tabs-tag-text-color);
+                    cursor: pointer;
+
+                    span {
+                        font-size: 14px;
+                        line-height: 26px;
+                        margin: 0 6px;
+                    }
+
+                    svg {
+                        width: 12px;
+                        height: 12px;
+                        fill: var(--tabs-tag-text-color);
+
+                        &.close-icon {
+                            border-radius: 10%;
+                            transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+
+                            &:hover {
+                                background: var(--el-text-color-placeholder);
+                                box-shadow: 0 0 0 1px var(--el-text-color-placeholder);
+                                fill: var(--el-bg-color);
+                            }
+                        }
+                    }
+
+                    &.is-active {
+                        border-bottom-color: var(--tabs-tag--bg-active);
+                        background: var(--tabs-tag--bg-active);
+                        color: var(--tabs-tag-text-color-active);
+
+                        svg {
+                            fill: var(--tabs-tag-text-color-active);
+
+                            &.close-icon:hover {
+                                background: var(--el-color-primary-light-3);
+                                box-shadow: 0 0 0 1px var(--el-color-primary-light-3);
+                            }
+                        }
+                    }
+                }
+            }
+
+            .ghost {
+                opacity: 0.2;
+            }
+        }
+
+        .contextmenu {
+            padding: 5px 0;
+            border-radius: 4px;
+            background: var(--el-bg-color-overlay);
+            box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.3);
+            font-size: 12px;
+            font-weight: 400;
+            position: absolute;
+            list-style-type: none;
+            z-index: 3000;
             cursor: pointer;
 
-            span {
-                font-size: 14px;
-                line-height: 26px;
-                margin: 0 6px;
-            }
-
-            svg {
-                width: 12px;
-                height: 12px;
-                fill: var(--tabs-tag-text-color);
-
-                &.close-icon {
-                    border-radius: 10%;
-                    transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-
-                    &:hover {
-                        background: var(--el-text-color-placeholder);
-                        box-shadow: 0 0 0 1px var(--el-text-color-placeholder);
-                        fill: var(--el-bg-color);
-                    }
-                }
-            }
-
-            &.is-active {
-                border-bottom-color: var(--tabs-tag--bg-active);
-                background: var(--tabs-tag--bg-active);
-                color: var(--tabs-tag-text-color-active);
+            li {
+                margin: 0;
+                padding: 7px 16px;
+                color: var(--el-text-color-regular);
 
                 svg {
-                    fill: var(--tabs-tag-text-color-active);
+                    fill: var(--el-text-color-regular);
+                    margin-right: 5px;
+                }
 
-                    &.close-icon:hover {
-                        background: var(--el-color-primary-light-3);
-                        box-shadow: 0 0 0 1px var(--el-color-primary-light-3);
+                &:hover {
+                    background: var(--el-color-primary-light-9);
+                    color: var(--el-color-primary);
+
+                    svg {
+                        fill: var(--el-color-primary);
                     }
                 }
             }
         }
     }
-
-    .ghost {
-      opacity: 0.2;
-    }
-  }
-
-  .contextmenu {
-    padding: 5px 0;
-    border-radius: 4px;
-    background: var(--el-bg-color-overlay);
-    box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.3);
-    font-size: 12px;
-    font-weight: 400;
-    position: absolute;
-    list-style-type: none;
-    z-index: 3000;
-    cursor: pointer;
-    li {
-        margin: 0;
-        padding: 7px 16px;
-        color: var(--el-text-color-regular);
-        svg {
-            fill: var(--el-text-color-regular);
-            margin-right: 5px;
-        }
-        &:hover {
-            background: var(--el-color-primary-light-9);
-            color: var(--el-color-primary);
-            svg {
-                fill: var(--el-color-primary);
-            }
-        }
-    }
-  }
-}
 </style>
