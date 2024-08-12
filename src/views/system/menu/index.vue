@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form ref="queryForm" class="query-form" :model="queryParams">
+    <el-form ref="queryForm" class="query-form" :model="queryParams" v-if="showSearch">
 
     </el-form>
 
@@ -17,6 +17,7 @@
         <svg-icon icon="sort" />
         <span>{{ isExpandAll ? '折叠' : '展开' }}</span>
       </el-button>
+      <right-toolbar v-model.showSearch="showSearch" @queryTable="reflesh" />
     </div>
 
     <el-table ref="tableRef" v-if="refreshTable" v-loading="loading" :data="tree" row-key="id"
@@ -147,6 +148,8 @@ export default {
     return {
       // 遮罩层
       loading: true,
+      // 显示搜索栏
+      showSearch: true,
       // 是否展开，默认全部折叠
       isExpandAll: false,
       // 重新渲染表格状态
@@ -208,6 +211,10 @@ export default {
         hidden: false,
         disabled: false
       }
+    },
+    // 刷新按钮操作
+    reflesh() {
+      this.getTree()
     },
     // 多选框选中数据
     handleSelect(selection) {

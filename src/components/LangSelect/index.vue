@@ -5,7 +5,7 @@
         </span>
         <template #dropdown>
             <el-dropdown-menu>
-                <el-dropdown-item v-for="lang in languageMap" :key="item" @click="language = lang.key">
+                <el-dropdown-item v-for="lang in languageMap" :key="lang" @click="language = lang.key">
                     {{ lang.val }}
                 </el-dropdown-item>
             </el-dropdown-menu>
