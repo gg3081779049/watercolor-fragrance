@@ -1,5 +1,8 @@
 <template>
   <div class="app-container">
+    <el-form ref="queryForm" class="query-form" :model="queryParams">
+
+    </el-form>
 
     <div class="button-group">
       <el-button type="primary" size="small" plain @click="handleAdd">
@@ -25,7 +28,7 @@
           <svg-icon :icon="scope.row.icon" />
         </template>
       </el-table-column>
-      <el-table-column prop="path" label="路由" />
+      <el-table-column prop="path" label="路由名称" />
       <el-table-column label="状态" width="100" align="center">
         <template #default="{ row: { disabled, hidden } }">
           <el-tag :type="disabled ? 'danger' : hidden ? 'info' : 'success'">
@@ -158,6 +161,10 @@ export default {
       selection: [],
       // 目录树
       dirTree: [],
+      // 查询参数
+      queryParams: {
+        title: undefined
+      },
       // 表单参数
       form: {},
       // 表单校验
@@ -287,6 +294,11 @@ export default {
   }
 
   .app-container {
+    .query-form {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
     .button-group {
       padding-bottom: 10px;
     }

@@ -19,6 +19,7 @@ import { download } from '@/utils/request'
 
 // 全局组件
 import SvgIcon from '@/components/SvgIcon'
+import RightToolbar from '@/components/RightToolbar'
 
 const app = createApp(App)
 
@@ -29,6 +30,7 @@ app.config.globalProperties.$model = model
 app.config.globalProperties.$download = download
 
 app.component(SvgIcon.name || 'SvgIcon', SvgIcon)
+app.component(RightToolbar.name || 'RightToolbar', RightToolbar)
 
 app.use(store)
 app.use(router)
