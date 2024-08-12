@@ -17,7 +17,7 @@
         <svg-icon icon="sort" />
         <span>{{ isExpandAll ? '折叠' : '展开' }}</span>
       </el-button>
-      <right-toolbar v-model.showSearch="showSearch" @queryTable="reflesh" />
+      <right-toolbar v-model:showSearch="showSearch" @queryTable="reflesh" />
     </div>
 
     <el-table ref="tableRef" v-if="refreshTable" v-loading="loading" :data="tree" row-key="id"
