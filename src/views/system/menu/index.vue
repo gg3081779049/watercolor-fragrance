@@ -1,79 +1,83 @@
 <template>
   <div class="app-container">
-    <el-form ref="queryForm" class="query-form" :model="queryParams" inline v-if="showSearch">
-      <el-form-item label="菜单名称" prop="title">
-        <el-input v-model="queryParams.title" placeholder="请输入菜单名称" clearable @keyup.enter="getTree" />
-      </el-form-item>
-      <el-form-item label="路由名称" prop="path">
-        <el-input v-model="queryParams.path" placeholder="请输入路由名称" clearable @keyup.enter="getTree" />
-      </el-form-item>
-      <el-form-item>
-        <el-button @click="getTree">
-          <svg-icon icon="search" />
-          <span>查询</span>
-        </el-button>
-        <el-button @click="resetQuery">
-          <svg-icon icon="refresh" />
-          <span>重置</span>
-        </el-button>
-      </el-form-item>
-    </el-form>
+    <div class="app-card">
+      <el-collapse-transition>
+        <el-form ref="queryForm" class="query-form" :model="queryParams" v-if="showSearch" inline>
+          <el-form-item label="菜单名称" prop="title">
+            <el-input v-model="queryParams.title" placeholder="请输入菜单名称" clearable @keyup.enter="getTree" />
+          </el-form-item>
+          <el-form-item label="路由名称" prop="path">
+            <el-input v-model="queryParams.path" placeholder="请输入路由名称" clearable @keyup.enter="getTree" />
+          </el-form-item>
+          <el-form-item>
+            <el-button @click="getTree">
+              <svg-icon icon="search" />
+              <span>查询</span>
+            </el-button>
+            <el-button @click="resetQuery">
+              <svg-icon icon="refresh" />
+              <span>重置</span>
+            </el-button>
+          </el-form-item>
+        </el-form>
+      </el-collapse-transition>
 
-    <div class="button-group">
-      <el-button type="primary" size="small" plain @click="handleAdd">
-        <SvgIcon icon="plus" />
-        <span>新增</span>
-      </el-button>
-      <el-button type="danger" size="small" plain @click="handleDelete(selection)">
-        <SvgIcon icon="delete" />
-        <span>删除</span>
-      </el-button>
-      <el-button type="info" size="small" plain @click="expandChange">
-        <svg-icon icon="sort" />
-        <span>{{ isExpandAll ? '折叠' : '展开' }}</span>
-      </el-button>
-      <right-toolbar v-model:showSearch="showSearch" @refresh="reflesh" />
+      <div class="button-group">
+        <el-button type="primary" size="small" plain @click="handleAdd">
+          <SvgIcon icon="plus" />
+          <span>新增</span>
+        </el-button>
+        <el-button type="danger" size="small" plain @click="handleDelete(selection)">
+          <SvgIcon icon="delete" />
+          <span>删除</span>
+        </el-button>
+        <el-button type="info" size="small" plain @click="expandChange">
+          <svg-icon icon="sort" />
+          <span>{{ isExpandAll ? '折叠' : '展开' }}</span>
+        </el-button>
+        <right-toolbar v-model:showSearch="showSearch" @refresh="reflesh" />
+      </div>
+
+      <el-table ref="tableRef" v-if="refreshTable" v-loading="loading" :data="tree" row-key="id"
+        :default-expand-all="isExpandAll" @select="handleSelect">
+        <el-table-column type="selection" width="40" align="center" />
+        <el-table-column prop="title" label="菜单名称" width="160" show-overflow-tooltip />
+        <el-table-column prop="icon" label="图标" width="100" align="center">
+          <template #default="scope">
+            <svg-icon :icon="scope.row.icon" />
+          </template>
+        </el-table-column>
+        <el-table-column prop="path" label="路由名称" />
+        <el-table-column label="状态" width="100" align="center">
+          <template #default="{ row: { disabled, hidden } }">
+            <el-tag :type="disabled ? 'danger' : hidden ? 'info' : 'success'">
+              {{ disabled ? '停用' : hidden ? '隐藏' : '正常' }}
+            </el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column prop="createTime" label="创建时间" width="240" align="center">
+          <template #default="scope">
+            <span>{{ scope.row.createTime }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="240" align="center">
+          <template #default="scope">
+            <el-button type="primary" link @click="handleAdd(scope.row)">
+              <svg-icon icon="plus" />
+              <span>新增</span>
+            </el-button>
+            <el-button type="primary" link @click="handleUpdate(scope.row)">
+              <svg-icon icon="edit" />
+              <span>修改</span>
+            </el-button>
+            <el-button type="primary" link @click="handleDelete([scope.row])">
+              <svg-icon icon="delete" />
+              <span>删除</span>
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
     </div>
-
-    <el-table ref="tableRef" v-if="refreshTable" v-loading="loading" :data="tree" row-key="id"
-      :default-expand-all="isExpandAll" @select="handleSelect">
-      <el-table-column type="selection" width="40" align="center" />
-      <el-table-column prop="title" label="菜单名称" width="160" show-overflow-tooltip />
-      <el-table-column prop="icon" label="图标" width="100" align="center">
-        <template #default="scope">
-          <svg-icon :icon="scope.row.icon" />
-        </template>
-      </el-table-column>
-      <el-table-column prop="path" label="路由名称" />
-      <el-table-column label="状态" width="100" align="center">
-        <template #default="{ row: { disabled, hidden } }">
-          <el-tag :type="disabled ? 'danger' : hidden ? 'info' : 'success'">
-            {{ disabled ? '停用' : hidden ? '隐藏' : '正常' }}
-          </el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column prop="createTime" label="创建时间" width="240" align="center">
-        <template #default="scope">
-          <span>{{ scope.row.createTime }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作" width="240" align="center">
-        <template #default="scope">
-          <el-button type="primary" link @click="handleAdd(scope.row)">
-            <svg-icon icon="plus" />
-            <span>新增</span>
-          </el-button>
-          <el-button type="primary" link @click="handleUpdate(scope.row)">
-            <svg-icon icon="edit" />
-            <span>修改</span>
-          </el-button>
-          <el-button type="primary" link @click="handleDelete([scope.row])">
-            <svg-icon icon="delete" />
-            <span>删除</span>
-          </el-button>
-        </template>
-      </el-table-column>
-    </el-table>
     <!-- 添加或修改菜单对话框 -->
     <el-dialog v-model="open" :title="title" width="680px" append-to-body @closed="cancel">
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
@@ -326,10 +330,18 @@ export default {
   }
 
   .app-container {
+    .app-card {
+      background: var(--el-bg-color);
+      box-shadow: var(--el-box-shadow-lighter);
+    }
+
     .query-form {
+      padding: 14px 14px 0 14px;
+
       .el-form-item {
         width: 300px;
         margin-right: 0;
+        margin-bottom: 14px;
 
         .el-input {
           width: 200px;
@@ -338,7 +350,9 @@ export default {
     }
 
     .button-group {
-      padding-bottom: 18px;
+      padding: 14px;
+      border-top: 0.8px solid var(--el-border-color-lighter);
+      border-bottom: 0.8px solid var(--el-border-color-lighter);
     }
   }
 </style>
