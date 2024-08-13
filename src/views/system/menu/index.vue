@@ -1,7 +1,22 @@
 <template>
   <div class="app-container">
-    <el-form ref="queryForm" class="query-form" :model="queryParams" v-if="showSearch">
-
+    <el-form ref="queryForm" class="query-form" :model="queryParams" inline v-if="showSearch">
+      <el-form-item label="菜单名称" prop="title">
+        <el-input v-model="queryParams.title" placeholder="请输入菜单名称" clearable @keyup.enter="getTree" />
+      </el-form-item>
+      <el-form-item label="路由名称" prop="path">
+        <el-input v-model="queryParams.path" placeholder="请输入路由名称" clearable @keyup.enter="getTree" />
+      </el-form-item>
+      <el-form-item>
+        <el-button @click="getTree">
+          <svg-icon icon="search" />
+          <span>查询</span>
+        </el-button>
+        <el-button @click="resetQuery">
+          <svg-icon icon="refresh" />
+          <span>重置</span>
+        </el-button>
+      </el-form-item>
     </el-form>
 
     <div class="button-group">
@@ -166,7 +181,8 @@ export default {
       dirTree: [],
       // 查询参数
       queryParams: {
-        title: undefined
+        title: undefined,
+        path: undefined
       },
       // 表单参数
       form: {},
@@ -188,13 +204,15 @@ export default {
     /** 查询菜单树 */
     getTree() {
       this.loading = true
-      getList().then(res => {
+      getList(this.queryParams).then(res => {
         this.loading = false
         this.tree = arrayToTree(res.data)
       })
     },
     getDirTree() {
-      this.dirTree = [{ id: 0, title: '根目录', hasChild: true, children: JSON.parse(JSON.stringify(this.tree)) }]
+      getList().then(res => {
+        this.dirTree = [{ id: 0, title: '根目录', hasChild: true, children: arrayToTree(res.data) }]
+      })
     },
     // 表单重置
     reset() {
@@ -211,6 +229,13 @@ export default {
         hidden: false,
         disabled: false
       }
+    },
+    /** 重置按钮操作 */
+    resetQuery() {
+      this.$refs['queryForm'] && this.$refs['queryForm'].resetFields()
+      this.queryParams.title = undefined
+      this.queryParams.path = undefined
+      this.getTree()
     },
     // 刷新按钮操作
     reflesh() {
@@ -302,12 +327,18 @@ export default {
 
   .app-container {
     .query-form {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      .el-form-item {
+        width: 300px;
+        margin-right: 0;
+
+        .el-input {
+          width: 200px;
+        }
+      }
     }
 
     .button-group {
-      padding-bottom: 10px;
+      padding-bottom: 18px;
     }
   }
 </style>

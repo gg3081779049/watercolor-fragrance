@@ -21,9 +21,10 @@ let data = [
 ]
 
 // 查询菜单列表
-export function getList() {
+export function getList(params) {
+    let Data = params ? data.filter(item => !(params.title || params.path) || item.title.includes(params.title) || item.path.includes(params.path)) : data
     return new Promise((res, rej) => {
-        res({ code: 200, msg: '操作成功', data: JSON.parse(JSON.stringify(data)) })
+        res({ code: 200, msg: '操作成功', data: JSON.parse(JSON.stringify(Data)) })
     })
 }
 

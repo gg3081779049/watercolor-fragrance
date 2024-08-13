@@ -5,7 +5,7 @@
         </span>
         <template #dropdown>
             <el-dropdown-menu>
-                <el-dropdown-item v-for="lang in languageMap" :key="lang" @click="language = lang.key">
+                <el-dropdown-item v-for="lang in langArray" :key="lang" @click="language = lang.key">
                     {{ lang.val }}
                 </el-dropdown-item>
             </el-dropdown-menu>
@@ -22,7 +22,7 @@ export default {
     data() {
         const context = require.context('@/locales/lang', false, /\.js$/)
         return {
-            languageMap: context.keys().map(key => {
+            langArray: context.keys().map(key => {
                 let k = key.replace(/^\.\/(.*)\.\w+$/, '$1')
                 return {
                     key: k,

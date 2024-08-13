@@ -26,7 +26,8 @@ export default {
 
 <style lang="scss" scoped>
   .app-container {
-    box-sizing: border-box;
     padding: 20px;
+    background: var(--base-bg);
+    box-sizing: border-box;
   }
 </style>
