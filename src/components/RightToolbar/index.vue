@@ -27,7 +27,7 @@ export default {
             this.$emit("update:showSearch", !this.showSearch)
         },
         refresh() {
-            this.$emit("queryTable")
+            this.$emit("refresh")
             this.$refs.refresh.$el.animate(
                 { transform: `rotate(-180deg)` },
                 { duration: 500, easing: "ease-out" }
