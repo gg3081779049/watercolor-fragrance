@@ -47,13 +47,17 @@ export default {
         overflow: hidden;
 
         .el-button {
-            width: 32px;
+            width: 36px;
             height: 24px;
             margin: 0;
             border-right-width: 0;
             border-top-width: 0;
             border-bottom-width: 0;
             border-radius: 0;
+
+            &:active {
+                border-color: var(--el-color-primary-light-7);
+            }
 
             &:first-child {
                 border-left-width: 0;
