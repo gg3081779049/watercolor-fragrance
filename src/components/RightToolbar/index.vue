@@ -1,6 +1,6 @@
 <template>
     <div class="right-toolbar">
-        <el-tooltip :content="`${showSearch ? '隐藏' : '显示'}搜索`" placement="top" effect="light" :hide-after="0">
+        <el-tooltip :content="`${showSearch ? '隐藏' : '显示'}搜索栏`" placement="top" effect="light" :hide-after="0">
             <el-button @click="showSearchChange">
                 <svg-icon :icon="`${showSearch ? 'zoom-out' : 'zoom-in'}`" />
             </el-button>

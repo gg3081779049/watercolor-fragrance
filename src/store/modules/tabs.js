@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { useRouteStore } from '@/store/modules/route'
 import router from '@/router'
 
 export const useTabsStore = defineStore('tabs', {
@@ -14,6 +15,8 @@ export const useTabsStore = defineStore('tabs', {
     actions: {
         init() {
             this.addTab(router.getRoutes().find(route => route.name === this.defaultTab))
+            let tabs = useRouteStore().sidebarRouteList.map(item => `/${item.path}`)
+            this.delTabs(tab => !tabs.includes(tab.path))
         },
         addTab({ path, fullPath, name, meta }) {
             if (!this.tabs.some(t => t.path === path)) {

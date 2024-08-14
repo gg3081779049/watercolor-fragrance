@@ -252,7 +252,7 @@ export default {
     // 展开/折叠操作
     expandChange() {
       this.refreshTable = false
-      this.isExpandAll ^= true
+      this.isExpandAll = !this.isExpandAll
       this.$nextTick(() => {
         this.refreshTable = true
       })
@@ -333,26 +333,26 @@ export default {
     .app-card {
       background: var(--el-bg-color);
       box-shadow: var(--el-box-shadow-lighter);
-    }
 
-    .query-form {
-      padding: 14px 14px 0 14px;
+      .query-form {
+        padding: 14px 14px 0 14px;
 
-      .el-form-item {
-        width: 300px;
-        margin-right: 0;
-        margin-bottom: 14px;
+        .el-form-item {
+          width: 300px;
+          margin-right: 0;
+          margin-bottom: 14px;
 
-        .el-input {
-          width: 200px;
+          .el-input {
+            width: 200px;
+          }
         }
       }
-    }
 
-    .button-group {
-      padding: 14px;
-      border-top: 0.8px solid var(--el-border-color-lighter);
-      border-bottom: 0.8px solid var(--el-border-color-lighter);
+      .button-group {
+        padding: 14px;
+        border-top: 0.8px solid var(--el-border-color-lighter);
+        border-bottom: 0.8px solid var(--el-border-color-lighter);
+      }
     }
   }
 </style>
