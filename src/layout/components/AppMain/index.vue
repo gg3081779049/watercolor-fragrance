@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <section class="app-main">
     <router-view v-slot="{ Component }">
       <transition name="fade">
         <keep-alive :include="showTabs ? cachesTabs : []">
@@ -25,9 +25,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .app-container {
-    padding: 20px;
+  .app-main {
     background: var(--base-bg);
-    box-sizing: border-box;
+
+    .app-container {
+      padding: 20px;
+      background: var(--base-bg);
+      box-sizing: border-box;
+    }
   }
 </style>
