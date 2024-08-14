@@ -12,7 +12,7 @@
           <el-form-item>
             <el-button @click="getTree">
               <svg-icon icon="search" />
-              <span>查询</span>
+              <span>搜索</span>
             </el-button>
             <el-button @click="resetQuery">
               <svg-icon icon="refresh" />
@@ -55,7 +55,7 @@
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" label="创建时间" width="240" align="center">
+        <el-table-column prop="createTime" label="创建时间" width="200" align="center">
           <template #default="scope">
             <span>{{ scope.row.createTime }}</span>
           </template>
@@ -338,7 +338,7 @@ export default {
         padding: 14px 14px 0 14px;
 
         .el-form-item {
-          width: 300px;
+          min-width: 300px;
           margin-right: 0;
           margin-bottom: 14px;
 

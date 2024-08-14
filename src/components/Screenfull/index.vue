@@ -1,5 +1,5 @@
 <template>
-  <svg-icon :icon="isFullscreen ? 'nav-exit-fullscreen' : 'nav-fullscreen'" @click="toggle" />
+  <svg-icon :icon="isFullscreen ? 'nav-exit-fullscreen' : 'nav-fullscreen'" @click="fullscreen" />
 </template>
 
 <script>
@@ -9,18 +9,26 @@ export default {
   name: "Screenfull",
   data() {
     return {
-      isFullscreen: false,
+      isFullscreen: screenfull.isFullscreen,
     }
   },
+  mounted() {
+    screenfull.on('change', this.changeIcon)
+  },
+  unmounted() {
+    screenfull.off('change', this.changeIcon)
+  },
   methods: {
-    toggle() {
+    fullscreen() {
       if (screenfull.isEnabled) {
         screenfull.toggle()
-        this.isFullscreen ^= true
       } else {
         this.$message({ message: "你的浏览器不支持全屏", type: "warning" })
       }
     },
+    changeIcon() {
+      this.isFullscreen = screenfull.isFullscreen
+    }
   },
 };
 </script>
