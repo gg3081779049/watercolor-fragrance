@@ -30,7 +30,7 @@ export default {
       this.isFullscreen = screenfull.isFullscreen
     }
   },
-};
+}
 </script>
 
 <style scoped>
