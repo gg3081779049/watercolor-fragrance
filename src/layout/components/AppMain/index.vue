@@ -1,5 +1,5 @@
 <template>
-  <section :style="{ marginTop }">
+  <section>
     <router-view v-slot="{ Component }">
       <transition name="fade">
         <keep-alive :include="showTabs ? cachesTabs : []">
@@ -19,10 +19,7 @@ export default {
   name: "AppMain",
   computed: {
     ...mapState(useTabsStore, ["cachesTabs"]),
-    ...mapState(useSettingsStore, ["headerHeight", "fixedHeader", "TabsHeight", "showTabs"]),
-    marginTop() {
-      return `${this.fixedHeader * (this.headerHeight + this.showTabs * this.TabsHeight)}px`
-    }
+    ...mapState(useSettingsStore, ["showTabs"])
   }
 }
 </script>
@@ -30,6 +27,7 @@ export default {
 <style lang="scss" scoped>
   .app-container {
     padding: 20px;
+    background: var(--base-bg);
     box-sizing: border-box;
   }
 </style>

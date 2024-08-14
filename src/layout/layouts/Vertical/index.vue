@@ -9,7 +9,7 @@
                     <Navbar />
                     <Tabs v-if="showTabs" />
                 </div>
-                <AppMain />
+                <AppMain :style="{ marginTop: `${fixedHeader * (headerHeight + showTabs * TabsHeight)}px` }" />
             </el-scrollbar>
         </el-main>
     </el-container>
@@ -28,7 +28,7 @@ export default {
     name: 'Vertical',
     components: { Sidebar, Navbar, Tabs, AppMain },
     computed: {
-        ...mapState(useSettingsStore, ["fixedHeader", "showTabs"])
+        ...mapState(useSettingsStore, ["headerHeight", "fixedHeader", "TabsHeight", "showTabs"]),
     }
 }
 </script>
