@@ -34,28 +34,4 @@ export default {
       box-sizing: border-box;
     }
   }
-
-  .fullscreen {
-    overflow-y: scroll;
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    z-index: 9999;
-
-    &::-webkit-scrollbar {
-      width: 6px;
-
-      &-thumb {
-        border-radius: 3px;
-        background: var(--el-color-info-light-7);
-        cursor: pointer;
-
-        &:hover {
-          background: var(--el-color-info-light-5);
-        }
-      }
-    }
-  }
 </style>

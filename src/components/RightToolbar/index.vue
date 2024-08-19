@@ -5,11 +5,6 @@
                 <svg-icon :icon="`${showSearch ? 'zoom-out' : 'zoom-in'}`" />
             </el-button>
         </el-tooltip>
-        <el-tooltip :content="isFullscreen ? '还原' : '最大化'" placement="top" effect="light">
-            <el-button @click="fullscreen">
-                <svg-icon :icon="isFullscreen ? 'exit-fullscreen' : 'fullscreen'" />
-            </el-button>
-        </el-tooltip>
         <el-tooltip content="刷新" placement="top" effect="light">
             <el-button @click="refresh">
                 <svg-icon ref="refresh" icon="refresh" />
@@ -27,18 +22,9 @@ export default {
             default: true
         }
     },
-    data() {
-        return {
-            isFullscreen: false
-        }
-    },
     methods: {
         showSearchChange() {
             this.$emit("update:showSearch", !this.showSearch)
-        },
-        fullscreen() {
-            document.querySelector("section.app-main").classList.toggle("fullscreen")
-            this.isFullscreen = !this.isFullscreen
         },
         refresh() {
             this.$emit("refresh")
