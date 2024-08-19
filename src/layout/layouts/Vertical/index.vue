@@ -4,12 +4,16 @@
             <Sidebar />
         </el-aside>
         <el-main>
+            <div v-if="fixedHeader">
+                <Navbar />
+                <Tabs v-if="showTabs" />
+            </div>
             <el-scrollbar class="main-scrollbar">
-                <div :style="{ position: fixedHeader ? 'absolute' : '' }">
+                <div v-if="!fixedHeader">
                     <Navbar />
                     <Tabs v-if="showTabs" />
                 </div>
-                <AppMain :style="{ marginTop: `${fixedHeader * (headerHeight + showTabs * TabsHeight)}px` }" />
+                <AppMain />
             </el-scrollbar>
         </el-main>
     </el-container>
@@ -28,7 +32,7 @@ export default {
     name: 'Vertical',
     components: { Sidebar, Navbar, Tabs, AppMain },
     computed: {
-        ...mapState(useSettingsStore, ["headerHeight", "fixedHeader", "TabsHeight", "showTabs"]),
+        ...mapState(useSettingsStore, ["fixedHeader", "showTabs"]),
     }
 }
 </script>
@@ -48,8 +52,11 @@ export default {
 
         .el-main {
             padding: 0;
+            display: flex;
+            flex-direction: column;
 
             .main-scrollbar {
+
                 .el-scrollbar__view>div {
                     width: 100%;
                     right: 0;
