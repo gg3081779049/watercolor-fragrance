@@ -6,5 +6,6 @@ export const useAppStore = defineStore('app', {
         device: navigator.userAgent.toLowerCase(),
         collapse: false,
         showSettings: false,
+        tabFullscreen: false,
     })
 })

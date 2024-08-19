@@ -5,6 +5,11 @@
                 <svg-icon :icon="`${showSearch ? 'zoom-out' : 'zoom-in'}`" />
             </el-button>
         </el-tooltip>
+        <el-tooltip :content="tabFullscreen ? '还原' : '最大化'" placement="top" effect="light">
+            <el-button @click="tabFullscreen = !tabFullscreen">
+                <svg-icon :icon="tabFullscreen ? 'exit-fullscreen' : 'fullscreen'" />
+            </el-button>
+        </el-tooltip>
         <el-tooltip content="刷新" placement="top" effect="light">
             <el-button @click="refresh">
                 <svg-icon ref="refresh" icon="refresh" />
@@ -14,6 +19,9 @@
 </template>
 
 <script>
+import { useAppStore } from '@/store/modules/app'
+import { mapWritableState } from 'pinia'
+
 export default {
     name: 'RightToolbar',
     props: {
@@ -21,6 +29,9 @@ export default {
             type: Boolean,
             default: true
         }
+    },
+    computed: {
+        ...mapWritableState(useAppStore, ["tabFullscreen"])
     },
     methods: {
         showSearchChange() {

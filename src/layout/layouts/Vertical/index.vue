@@ -1,15 +1,15 @@
 <template>
     <el-container>
-        <el-aside>
+        <el-aside v-show="!tabFullscreen">
             <Sidebar />
         </el-aside>
         <el-main>
-            <div v-if="fixedHeader">
+            <div v-if="fixedHeader" v-show="!tabFullscreen">
                 <Navbar />
                 <Tabs v-if="showTabs" />
             </div>
             <el-scrollbar class="main-scrollbar">
-                <div v-if="!fixedHeader">
+                <div v-if="!fixedHeader" v-show="!tabFullscreen">
                     <Navbar />
                     <Tabs v-if="showTabs" />
                 </div>
@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import { useAppStore } from '@/store/modules/app'
 import { useSettingsStore } from '@/store/modules/settings'
 import { mapState } from 'pinia'
 
@@ -32,6 +33,7 @@ export default {
     name: 'Vertical',
     components: { Sidebar, Navbar, Tabs, AppMain },
     computed: {
+        ...mapState(useAppStore, ["tabFullscreen"]),
         ...mapState(useSettingsStore, ["fixedHeader", "showTabs"]),
     }
 }
