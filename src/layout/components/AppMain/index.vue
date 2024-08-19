@@ -27,11 +27,5 @@ export default {
 <style lang="scss" scoped>
   .app-main {
     background: var(--base-bg);
-
-    .app-container {
-      padding: 20px;
-      background: var(--base-bg);
-      box-sizing: border-box;
-    }
   }
 </style>
