@@ -50,7 +50,7 @@
         <el-table-column prop="path" label="路由名称" />
         <el-table-column label="状态" width="100" align="center">
           <template #default="{ row: { disabled, hidden } }">
-            <el-tag :type="disabled ? 'danger' : hidden ? 'info' : 'success'">
+            <el-tag :type="disabled ? 'danger' : hidden ? 'info' : 'success'" disable-transitions>
               {{ disabled ? '停用' : hidden ? '隐藏' : '正常' }}
             </el-tag>
           </template>
