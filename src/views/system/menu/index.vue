@@ -34,7 +34,7 @@
         <svg-icon icon="sort" />
         <span>{{ isExpandAll ? '折叠' : '展开' }}</span>
       </el-button>
-      <right-toolbar v-model:showSearch="showSearch" @refresh="reflesh" />
+      <right-toolbar v-model:showSearch="showSearch" @refresh="getTree" />
     </div>
 
     <el-table ref="tableRef" v-if="refreshTable" v-loading="loading" :data="tree" row-key="id"
@@ -237,10 +237,6 @@ export default {
       this.$refs['queryForm'] && this.$refs['queryForm'].resetFields()
       this.queryParams.title = undefined
       this.queryParams.path = undefined
-      this.getTree()
-    },
-    // 刷新按钮操作
-    reflesh() {
       this.getTree()
     },
     // 多选框选中数据
