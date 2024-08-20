@@ -12,10 +12,10 @@
       <ThemeSwitch />
       <el-divider direction="vertical" />
       <AvatarBox>
-        <template #default="obj">
+        <template #default="{ src, username }">
           <div class="avatar-wrapper">
-            <img :src="obj.src" alt="avatar">
-            <span>{{ obj.username }}</span>
+            <img :src="src" alt="avatar">
+            <span>{{ username }}</span>
             <svg-icon icon="arrow-right" />
           </div>
         </template>

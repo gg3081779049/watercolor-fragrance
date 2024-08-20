@@ -8,7 +8,14 @@ let data = [
 
 export function getList(params) {
     return new Promise((res, rej) => {
-        res()
+        res({
+            code: 200,
+            msg: '操作成功',
+            data: {
+                rows: JSON.parse(JSON.stringify(data)),
+                total: data.length
+            }
+        })
     })
 }
 

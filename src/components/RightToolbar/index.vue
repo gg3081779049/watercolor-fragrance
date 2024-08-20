@@ -53,7 +53,6 @@ export default {
         border: 1px solid var(--el-border-color);
         border-radius: var(--el-border-radius-base);
         box-sizing: border-box;
-        float: right;
         display: flex;
         overflow: hidden;
 
