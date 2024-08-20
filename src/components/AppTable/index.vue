@@ -25,7 +25,7 @@
             <slot name="table" />
         </el-table>
 
-        <div class="pagination" v-if="showPagination">
+        <div class="pagination" v-if="total !== undefined">
             <el-pagination background :total="total" v-show="total > 0" layout="->, prev, pager, next"
                 @current-change="$emit('getList')">
             </el-pagination>
@@ -46,10 +46,6 @@ export default {
             default: 0
         },
         showTable: {
-            type: Boolean,
-            default: true
-        },
-        showPagination: {
             type: Boolean,
             default: true
         }
