@@ -22,20 +22,18 @@
     </el-collapse-transition>
 
     <div class="button-group">
-      <div>
-        <el-button type="primary" size="small" plain @click="handleAdd">
-          <SvgIcon icon="plus" />
-          <span>新增</span>
-        </el-button>
-        <el-button type="danger" size="small" plain @click="handleDelete(selection)">
-          <SvgIcon icon="delete" />
-          <span>删除</span>
-        </el-button>
-        <el-button type="info" size="small" plain @click="expandChange">
-          <svg-icon icon="sort" />
-          <span>{{ isExpandAll ? '折叠' : '展开' }}</span>
-        </el-button>
-      </div>
+      <el-button type="primary" size="small" plain @click="handleAdd">
+        <SvgIcon icon="plus" />
+        <span>新增</span>
+      </el-button>
+      <el-button type="danger" size="small" plain @click="handleDelete(selection)">
+        <SvgIcon icon="delete" />
+        <span>删除</span>
+      </el-button>
+      <el-button type="info" size="small" plain @click="expandChange">
+        <svg-icon icon="sort" />
+        <span>{{ isExpandAll ? '折叠' : '展开' }}</span>
+      </el-button>
       <right-toolbar v-model:showSearch="showSearch" @refresh="getTree" />
     </div>
 
@@ -345,7 +343,6 @@ export default {
       border-top: 0.8px solid var(--el-border-color-lighter);
       border-bottom: 0.8px solid var(--el-border-color-lighter);
       display: flex;
-      justify-content: space-between;
     }
   }
 </style>

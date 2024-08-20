@@ -17,9 +17,7 @@
         </el-collapse-transition>
 
         <div class="button-group">
-            <div>
-                <slot name="buttonGroup"></slot>
-            </div>
+            <slot name="buttonGroup"></slot>
             <right-toolbar v-model:showSearch="showSearch" @refresh="$emit('getList')" />
         </div>
 
@@ -99,7 +97,6 @@ export default {
             border-top: 0.8px solid var(--el-border-color-lighter);
             border-bottom: 0.8px solid var(--el-border-color-lighter);
             display: flex;
-            justify-content: space-between;
         }
 
         .pagination {
