@@ -30,6 +30,7 @@
 
 <script>
 import { useAppStore } from '@/store/modules/app'
+import { useTabsStore } from '@/store/modules/tabs'
 import { useUserStore } from '@/store/modules/user'
 import { mapState, mapWritableState, mapActions } from 'pinia'
 
@@ -38,6 +39,7 @@ export default {
   computed: {
     ...mapState(useUserStore, ["name", "avatar"]),
     ...mapWritableState(useAppStore, ["showSettings"]),
+    ...mapWritableState(useTabsStore, ["tabs"]),
   },
   methods: {
     ...mapActions(useUserStore, ["Logout"]),
@@ -47,12 +49,13 @@ export default {
         cancelButtonText: "取消",
         type: "warning",
       }).then(() => {
-        this.Logout()
         this.$router.push("/login")
+        this.Logout()
+        this.tabs = []
       }).catch(() => { })
     },
   },
-};
+}
 </script>
 
 <style scoped>
