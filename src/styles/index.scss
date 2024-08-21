@@ -19,7 +19,27 @@
 }
 
 .app-card {
-    margin: 20px;
     background: var(--el-bg-color);
     box-shadow: var(--el-box-shadow-lighter);
+}
+
+.query-form {
+    padding: 14px 14px 0 14px;
+
+    .el-form-item {
+        min-width: 300px;
+        margin-right: 0;
+        margin-bottom: 14px;
+
+        .el-input {
+            width: 200px;
+        }
+    }
+}
+
+.button-group {
+    padding: 14px;
+    border-top: 0.8px solid var(--el-border-color-lighter);
+    border-bottom: 0.8px solid var(--el-border-color-lighter);
+    display: flex;
 }
