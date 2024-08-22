@@ -1,7 +1,7 @@
 <template>
     <el-popover width="460" trigger="click" :hide-after="0" @show="reset">
         <template #reference>
-            <el-input placeholder="点击选择图标" readonly :modelValue="modelValue">
+            <el-input :modelValue="modelValue" placeholder="点击选择图标" readonly>
                 <template #prefix v-if="modelValue">
                     <svg-icon :icon="modelValue" fill="var(--el-text-color-regular)" />
                 </template>
