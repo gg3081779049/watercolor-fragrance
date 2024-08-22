@@ -30,6 +30,7 @@
 
 <script>
 import { useAppStore } from '@/store/modules/app'
+import { useTabsStore } from '@/store/modules/tabs'
 import { useUserStore } from '@/store/modules/user'
 import { mapState, mapWritableState, mapActions } from 'pinia'
 
@@ -48,6 +49,7 @@ export default {
         type: "warning",
       }).then(() => {
         this.$router.push("/login")
+        useTabsStore().$reset()
         this.Logout()
       }).catch(() => { })
     },
