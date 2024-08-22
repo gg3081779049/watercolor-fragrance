@@ -49,8 +49,8 @@ export default {
         type: "warning",
       }).then(() => {
         this.$router.push("/login")
-        useTabsStore().$reset()
         this.Logout()
+        useTabsStore().$reset()
       }).catch(() => { })
     },
   },
