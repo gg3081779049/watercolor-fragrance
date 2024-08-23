@@ -2,6 +2,8 @@
   <el-drawer class="drawer-container" size="320" title="系统设置" append-to-body>
     <el-scrollbar style="height:calc(100% - 52.8px)">
       <el-collapse>
+        <el-collapse-item title="布局">
+        </el-collapse-item>
         <el-collapse-item title="系统">
           <div class="settings-item">
             <span>模式</span>
