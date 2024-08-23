@@ -5,7 +5,7 @@
 
 <script>
 import { useAppStore } from '@/store/modules/app'
-import { mapStores  } from 'pinia'
+import { mapStores } from 'pinia'
 
 export default {
     name: 'Hamburger',
@@ -16,9 +16,9 @@ export default {
 </script>
 
 <style scoped>
-.hamburger {
-  width: 20px;
-  height: 20px;
-  fill: var(--navbar-icon-fill-color);
-}
+    .hamburger {
+        width: 20px;
+        height: 20px;
+        fill: var(--navbar-icon-fill-color);
+    }
 </style>

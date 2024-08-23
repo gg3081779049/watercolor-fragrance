@@ -112,6 +112,7 @@ export default {
           }
           useUserStore().Login(this.loginForm).then(() => {
             this.$router.push({ path: this.$route.query && this.$route.query.redirect || "/" }).catch(() => { })
+            this.$notify.success({ title: '登录成功', message: `欢迎回来，${this.loginForm.username} !` })
           }).catch(() => {
             this.loading = false
             if (this.captcha) {
@@ -153,6 +154,7 @@ export default {
         justify-content: center;
         align-items: center;
         gap: 6px;
+
         img {
           height: 24px;
           transform: translateY(1px);

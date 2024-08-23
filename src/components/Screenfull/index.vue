@@ -1,5 +1,6 @@
 <template>
-  <svg-icon :icon="isFullscreen ? 'nav-exit-fullscreen' : 'nav-fullscreen'" @click="fullscreen" />
+  <svg-icon className="fullscreen" :icon="isFullscreen ? 'nav-exit-fullscreen' : 'nav-fullscreen'"
+    @click="fullscreen" />
 </template>
 
 <script>
@@ -34,7 +35,7 @@ export default {
 </script>
 
 <style scoped>
-  svg {
+  .fullscreen {
     width: 1em;
     height: 1em;
     fill: var(--navbar-icon-fill-color);

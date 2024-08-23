@@ -1,5 +1,5 @@
 <template>
-    <svg-icon icon="screen" @click="handleClick" />
+    <svg-icon className="screen" icon="screen" @click="handleClick" />
 </template>
 
 <script>
@@ -14,8 +14,9 @@ export default {
 </script>
 
 <style scoped>
-    svg {
-        font-size: 18px;
+    .screen {
+        width: 18px;
+        height: 18px;
         fill: var(--navbar-icon-fill-color);
         cursor: pointer;
     }

@@ -5,11 +5,7 @@
       <Breadcrumb v-if="showBreadcrumb" />
     </div>
     <div class="right-side">
-      <NavbarSearch />
-      <Screenfull />
-      <DataScreen />
-      <LangSelect />
-      <ThemeSwitch />
+      <NavToolbar />
       <el-divider direction="vertical" />
       <AvatarBox>
         <template #default="{ src, username }">
@@ -30,16 +26,12 @@ import { mapState } from 'pinia'
 
 import Hamburger from "@/components/Hamburger"
 import Breadcrumb from "@/components/Breadcrumb"
-import NavbarSearch from "@/components/NavbarSearch"
-import Screenfull from "@/components/Screenfull"
-import DataScreen from "@/components/DataScreen"
-import LangSelect from "@/components/LangSelect"
-import ThemeSwitch from "@/components/ThemeSwitch"
+import NavToolbar from '@/layout/components/Navbar/NavToolbar'
 import AvatarBox from "@/components/AvatarBox"
 
 export default {
   name: "Navbar",
-  components: { Hamburger, Breadcrumb, NavbarSearch, Screenfull, DataScreen, LangSelect, ThemeSwitch, AvatarBox },
+  components: { Hamburger, Breadcrumb, NavToolbar, AvatarBox },
   computed: {
     ...mapState(useSettingsStore, ["headerHeight", "showBreadcrumb"])
   }
@@ -81,10 +73,6 @@ export default {
       display: flex;
       align-items: center;
       gap: 16px;
-
-      svg {
-        fill: var(--navbar-icon-fill-color);
-      }
 
       .el-divider {
         height: 22px;

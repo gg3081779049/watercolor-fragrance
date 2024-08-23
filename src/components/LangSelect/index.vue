@@ -1,7 +1,7 @@
 <template>
     <el-dropdown trigger="click">
         <span>
-            <svg-icon class="lang-icon" icon="lang" />
+            <svg-icon className="lang-icon" icon="lang" />
         </span>
         <template #dropdown>
             <el-dropdown-menu>
@@ -37,7 +37,8 @@ export default {
 
 <style scoped>
     .lang-icon {
-        font-size: 18px;
+        width: 18px;
+        height: 18px;
         fill: var(--navbar-icon-fill-color);
         cursor: pointer;
     }
