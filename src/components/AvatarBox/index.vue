@@ -5,7 +5,7 @@
     </slot>
     <template #dropdown>
       <el-dropdown-menu>
-        <el-dropdown-item @click="$router.push('user')">
+        <el-dropdown-item @click="$router.push('User')">
           <span>
             <svg-icon icon="user" />
             个人中心
@@ -43,9 +43,9 @@ export default {
   methods: {
     ...mapActions(useUserStore, ["Logout"]),
     async logout() {
-      this.$confirm("确定要退出系统吗？", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm("确定要退出系统吗？", this.$t('common.tip'), {
+        confirmButtonText: this.$t('common.confirm'),
+        cancelButtonText: this.$t('common.cancel'),
         type: "warning",
       }).then(() => {
         this.$router.push("/login")

@@ -1,8 +1,7 @@
 <template>
   <div class="navbar-container" :style="{ height: `${headerHeight}px` }">
     <div class="left-side">
-      <Hamburger class="hamburger" />
-      <Breadcrumb v-if="showBreadcrumb" />
+      <slot />
     </div>
     <div class="right-side">
       <NavToolbar />
@@ -24,16 +23,14 @@
 import { useSettingsStore } from '@/store/modules/settings'
 import { mapState } from 'pinia'
 
-import Hamburger from "@/components/Hamburger"
-import Breadcrumb from "@/components/Breadcrumb"
 import NavToolbar from '@/layout/components/Navbar/NavToolbar'
 import AvatarBox from "@/components/AvatarBox"
 
 export default {
   name: "Navbar",
-  components: { Hamburger, Breadcrumb, NavToolbar, AvatarBox },
+  components: { NavToolbar, AvatarBox },
   computed: {
-    ...mapState(useSettingsStore, ["headerHeight", "showBreadcrumb"])
+    ...mapState(useSettingsStore, ["headerHeight"])
   }
 }
 </script>
@@ -44,6 +41,7 @@ export default {
     height: 50px;
     box-sizing: border-box;
     background: var(--navbar-bg);
+    box-shadow: var(--el-box-shadow-lighter);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -52,24 +50,18 @@ export default {
     z-index: 1;
 
     .left-side {
+      width: 100%;
+      height: 100%;
       display: flex;
       align-items: center;
-
-      .hamburger {
-        margin: 0 15px;
-        cursor: pointer;
-
-        &:hover {
-          background: rgba(128, 128, 128, 0.122);
-          box-shadow: 0 0 0 6px rgba(128, 128, 128, 0.122);
-        }
-      }
     }
 
     .right-side {
-      padding-right: 12px;
       height: 100%;
+      margin-left: 12px;
+      padding-right: 12px;
       line-height: 50px;
+      flex-shrink: 0;
       display: flex;
       align-items: center;
       gap: 16px;

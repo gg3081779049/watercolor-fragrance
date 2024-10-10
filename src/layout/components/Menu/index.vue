@@ -1,12 +1,15 @@
 <template>
-    <el-menu :default-active="$route.path" :collapse="collapse" :unique-opened="uniqueOpened" router>
-        <MenuItem v-for="route in sidebarRouteTree" :key="route.path" :item="route" v-show="!route.meta.hidden" />
+    <el-menu :default-active="$route.path" :collapse="collapse" :unique-opened="uniqueOpened">
+        <MenuItem v-for="route in data" :key="route.path" :item="route" v-show="route.meta && !route.meta.hidden">
+        <template #default="{ meta }">
+            <slot :meta="meta" />
+        </template>
+        </MenuItem>
     </el-menu>
 </template>
 
 <script>
 import { useAppStore } from '@/store/modules/app'
-import { useRouteStore } from '@/store/modules/route'
 import { useSettingsStore } from '@/store/modules/settings'
 import { mapState } from 'pinia'
 
@@ -15,9 +18,14 @@ import MenuItem from "./MenuItem"
 export default {
     name: 'Menu',
     components: { MenuItem },
+    props: {
+        data: {
+            type: Array,
+            default: []
+        }
+    },
     computed: {
         ...mapState(useAppStore, ["collapse"]),
-        ...mapState(useRouteStore, ["sidebarRouteTree"]),
         ...mapState(useSettingsStore, ["uniqueOpened"])
     }
 }

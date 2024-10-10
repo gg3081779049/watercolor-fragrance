@@ -25,11 +25,10 @@ export default {
 
 <style lang="scss" scoped>
   .scroll-container {
-    width: 100%;
     height: inherit;
     white-space: nowrap;
-    position: relative;
     overflow: hidden;
+    position: relative;
 
     ::v-deep {
       .el-scrollbar__bar {
@@ -42,6 +41,8 @@ export default {
         .el-scrollbar__view {
           height: inherit;
           display: flex;
+          align-items: end;
+          gap: 4px;
         }
       }
     }

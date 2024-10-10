@@ -2,7 +2,7 @@
   <div class="app-container">
     <div class="app-card">
       <el-collapse-transition>
-        <el-form ref="queryForm" class="query-form" :model="queryParams" v-if="showSearch" inline>
+        <el-form ref="queryForm" class="query-form" :model="queryParams" v-if="show.search" inline>
           <el-form-item label="菜单名称" prop="title">
             <el-input v-model="queryParams.title" placeholder="请输入菜单名称" clearable @keyup.enter="getTree" />
           </el-form-item>
@@ -35,7 +35,7 @@
           <svg-icon icon="sort" />
           <span>{{ isExpandAll ? '折叠' : '展开' }}</span>
         </el-button>
-        <right-toolbar v-model:showSearch="showSearch" @refresh="getTree" />
+        <right-toolbar :show="show" @refresh="getTree" />
       </div>
 
       <el-table ref="tableRef" v-if="refreshTable" v-loading="loading" :data="tree" row-key="id"
@@ -167,8 +167,20 @@ export default {
     return {
       // 遮罩层
       loading: true,
-      // 显示搜索栏
-      showSearch: true,
+      // 显示
+      show: {
+        // 显示搜索栏
+        search: true,
+        // 列设置
+        columns: {
+          title: { label: '菜单名称', value: true },
+          icon: { label: '图标', value: true },
+          path: { label: '路由名称', value: true },
+          state: { label: '状态', value: true },
+          createTime: { label: '创建时间', value: true },
+          operate: { label: '操作', value: true },
+        }
+      },
       // 是否展开，默认全部折叠
       isExpandAll: false,
       // 重新渲染表格状态

@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import i18n from '@/locales'
 import defaultSettings from '@/settings'
 
 export const useSettingsStore = defineStore('settings', {
@@ -9,17 +10,20 @@ export const useSettingsStore = defineStore('settings', {
             mode: storageSettings.mode ?? defaultSettings.mode,
             layout: storageSettings.layout ?? defaultSettings.layout,
             language: storageSettings.language ?? defaultSettings.language,
+            pageAnimateType: storageSettings.pageAnimateType ?? defaultSettings.pageAnimateType,
             headerHeight: storageSettings.headerHeight ?? defaultSettings.headerHeight,
             fixedHeader: storageSettings.fixedHeader ?? defaultSettings.fixedHeader,
             showBreadcrumb: storageSettings.showBreadcrumb ?? defaultSettings.showBreadcrumb,
             showBreadcrumbIcon: storageSettings.showBreadcrumbIcon ?? defaultSettings.showBreadcrumbIcon,
-            TabsHeight: storageSettings.TabsHeight ?? defaultSettings.TabsHeight,
+            tabsHeight: storageSettings.tabsHeight ?? defaultSettings.tabsHeight,
+            tabsStyle: storageSettings.tabsStyle ?? defaultSettings.tabsStyle,
             showTabs: storageSettings.showTabs ?? defaultSettings.showTabs,
             showTabsIcon: storageSettings.showTabsIcon ?? defaultSettings.showTabsIcon,
             draggable: storageSettings.draggable ?? defaultSettings.draggable,
             sidebarWidth: storageSettings.sidebarWidth ?? defaultSettings.sidebarWidth,
             uniqueOpened: storageSettings.uniqueOpened ?? defaultSettings.uniqueOpened,
             watermark: storageSettings.watermark ?? defaultSettings.watermark,
+            navToolbar: storageSettings.navToolbar ?? defaultSettings.navToolbar,
         }
     },
     actions: {
@@ -43,10 +47,19 @@ export const useSettingsStore = defineStore('settings', {
             document.documentElement.className = `${this.theme} ${val}`
         },
         language(val) {
-            this.$i18n.locale = val
+            i18n.global.locale = val
         }
     },
     persist: {
         storage: sessionStorage,
     }
 })
+
+export const settingsOptions = {
+    theme: ['default'],
+    mode: ['light', 'dark'],
+    layout: ['vertical', 'vertical-mix', 'horizontal', 'horizontal-mix'],
+    language: ['zh', 'en'],
+    pageAnimateType: ['fade', 'none'],
+    tabsStyle: ['card', 'button', 'line']
+}

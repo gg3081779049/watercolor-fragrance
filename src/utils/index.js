@@ -78,6 +78,7 @@ export function arrayToTree(items, config) {
     return tree.sort((a, b) => a[orderKey] - b[orderKey])
 }
 
+// 树转数组
 export function treeToArray(tree) {
     let array = []
     let childrenKey = 'children'
@@ -107,4 +108,14 @@ export function handleTree(tree, func) {
 // 过滤树
 export function filterTree(tree, func) {
     return tree.filter(item => func(item) && (item.children = filterTree(item.children, func)))
+}
+
+// 短横线转大驼峰
+export function dashToCamel(str) {
+    return `-${str}`.replace(/-[a-zA-Z]/g, s => s.at(-1).toUpperCase())
+}
+
+// 判断是否为外部链接
+export function isExternal(url) {
+    return /^(http|https):\/\/[^"']+$/.test(url)
 }

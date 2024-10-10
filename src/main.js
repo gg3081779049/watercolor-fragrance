@@ -34,7 +34,7 @@ app.component(RightToolbar.name || 'RightToolbar', RightToolbar)
 
 app.use(store)
 app.use(router)
-app.use(ElementPlus)
 app.use(i18n)
+app.use(ElementPlus)
 
 app.mount('#app')

@@ -32,6 +32,7 @@
 
 <script>
 
+// 获取所有图标名称
 const icons = require.context('@/icons/svg/menu', false, /\.svg$/).keys().map(i => i.match(/\.\/(.*)\.svg/)[1])
 
 export default {
