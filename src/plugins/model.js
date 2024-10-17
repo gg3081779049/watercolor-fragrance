@@ -11,6 +11,6 @@ export default {
         })
     },
     closeLoading() {
-        loadingInstance.close();
+        loadingInstance.close()
     },
 }

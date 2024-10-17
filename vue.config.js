@@ -7,16 +7,32 @@ module.exports = defineConfig({
         open: true,
         client: {
             overlay: false
-        },
+        }
     },
     configureWebpack: {
-        name: process.env.VUE_APP_TITLE
+        name: process.env.VUE_APP_TITLE,
+        resolve: {
+            alias: {
+                '@root': path.resolve(__dirname),
+            }
+        }
     },
     chainWebpack: config => {
         // 让 svg-sprite-loader 处理 icons 目录下的 svg
-        config.module.rule('svg').exclude.add(path.resolve(__dirname, 'src/icons')).end()
-        config.module.rule('icons').test(/\.svg$/).include.add(path.resolve(__dirname, 'src/icons')).end()
-            .use('svg-sprite-loader').loader('svg-sprite-loader').options({
+        config.module
+            .rule('svg')
+            .exclude
+            .add(path.resolve(__dirname, 'src/icons'))
+            .end()
+        config.module
+            .rule('icons')
+            .test(/\.svg$/)
+            .include
+            .add(path.resolve(__dirname, 'src/icons'))
+            .end()
+            .use('svg-sprite-loader')
+            .loader('svg-sprite-loader')
+            .options({
                 symbolId: 'icon-[name]'
             })
     }

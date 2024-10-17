@@ -1,11 +1,11 @@
 <template>
   <section class="app-main">
-    <router-view v-slot="{ Component }">
-      <transition name="fade">
-        <keep-alive :include="showTabs ? cachesTabs : []">
-          <component :is="Component" />
+    <router-view v-slot="{ Component, route }">
+      <Transition mode="out-in" :name="route.meta?.transition || pageAnimateType || ''">
+        <keep-alive :include="cachesTabs">
+          <component :is="Component" :key="route.path" />
         </keep-alive>
-      </transition>
+      </Transition>
     </router-view>
   </section>
 </template>
@@ -18,14 +18,16 @@ import { mapState } from 'pinia'
 export default {
   name: "AppMain",
   computed: {
-    ...mapState(useTabsStore, ["cachesTabs"]),
-    ...mapState(useSettingsStore, ["showTabs"])
+    ...mapState(useSettingsStore, ["pageAnimateType"]),
+    ...mapState(useTabsStore, ["cachesTabs"])
   }
 }
 </script>
 
 <style lang="scss" scoped>
   .app-main {
+    width: 100%;
+    height: 100%;
     background: var(--base-bg);
   }
 </style>

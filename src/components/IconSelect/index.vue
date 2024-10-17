@@ -1,15 +1,15 @@
 <template>
     <el-popover width="460" trigger="click" :hide-after="0" @show="reset">
         <template #reference>
-            <el-input :modelValue="modelValue" placeholder="点击选择图标" readonly>
+            <el-input :modelValue="modelValue" :placeholder="$t('placeholder.selectIcon')" readonly>
                 <template #prefix v-if="modelValue">
                     <svg-icon :icon="modelValue" fill="var(--el-text-color-regular)" />
                 </template>
             </el-input>
         </template>
         <div class="icon-select">
-            <el-input class="icon-search" v-model="name" clearable placeholder="请输入图标名称" @clear="filterIcons"
-                @input="filterIcons">
+            <el-input class="icon-search" v-model="name" clearable :placeholder="$t('placeholder.enterIconName')"
+                @clear="filterIcons" @input="filterIcons">
                 <template #suffix>
                     <svg-icon icon="search" />
                 </template>
@@ -32,6 +32,7 @@
 
 <script>
 
+// 获取所有图标名称
 const icons = require.context('@/icons/svg/menu', false, /\.svg$/).keys().map(i => i.match(/\.\/(.*)\.svg/)[1])
 
 export default {

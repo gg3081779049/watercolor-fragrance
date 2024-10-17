@@ -1,0 +1,52 @@
+.tabs-container.card {
+    &::before {
+        content: '';
+        width: 100%;
+        height: 0;
+        border-bottom: 1px solid var(--el-border-color-light);
+        position: absolute;
+        left: 0;
+        bottom: 0;
+    }
+
+    .scroll-pane .el-scrollbar__view {
+        padding-left: 6px;
+
+        .tab {
+            height: 30px;
+            padding: 0 8px;
+            border: 1px solid var(--el-border-color-light);
+            background: var(--tabs-tag--bg);
+            color: var(--tabs-tag-text-color);
+
+            svg {
+                fill: var(--tabs-tag-text-color);
+
+                &.close-icon {
+                    border-radius: 10%;
+
+                    &:hover {
+                        background: var(--el-text-color-placeholder);
+                        box-shadow: 0 0 0 1px var(--el-text-color-placeholder);
+                        fill: var(--el-bg-color);
+                    }
+                }
+            }
+
+            &.is-active {
+                border-bottom-color: var(--tabs-tag--bg-active);
+                background: var(--tabs-tag--bg-active);
+                color: var(--tabs-tag-text-color-active);
+
+                svg {
+                    fill: var(--tabs-tag-text-color-active);
+
+                    &.close-icon:hover {
+                        background: var(--el-color-primary-light-3);
+                        box-shadow: 0 0 0 1px var(--el-color-primary-light-3);
+                    }
+                }
+            }
+        }
+    }
+}

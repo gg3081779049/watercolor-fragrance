@@ -1,5 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import Layout from '@/layout';
+import { createRouter, createWebHistory } from 'vue-router'
+import Layout from '@/layout'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -40,6 +40,6 @@ const router = createRouter({
             meta: { title: ['个人中心'], icon: ['user'], noCache: false, hidden: true },
         }]
     }]
-});
+})
 
-export default router;
+export default router

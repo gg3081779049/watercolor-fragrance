@@ -1,6 +1,7 @@
+@import url('./theme/default/light.scss');
+@import url('./theme/default/dark.scss');
 @import url('./element-ui.scss');
-@import url('./default/light.scss');
-@import url('./default/dark.scss');
+@import url('./transition.scss');
 
 * {
     margin: 0;
@@ -14,8 +15,28 @@
     transform: translate(-50%, -50%);
 }
 
+.menu-icon {
+    width: 1em;
+    height: 1em;
+    margin-right: 6px;
+
+    +span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+.main-scrollbar {
+    width: 100%;
+
+    .el-scrollbar__wrap .el-scrollbar__view {
+        min-height: 100%;
+    }
+}
+
 .app-container {
     padding: 20px;
+    overflow: hidden;
 }
 
 .app-card {
@@ -25,6 +46,7 @@
 
 .query-form {
     padding: 14px 14px 0 14px;
+    border-bottom: 0.8px solid var(--el-border-color-lighter);
 
     .el-form-item {
         min-width: 300px;
@@ -39,7 +61,5 @@
 
 .button-group {
     padding: 14px;
-    border-top: 0.8px solid var(--el-border-color-lighter);
-    border-bottom: 0.8px solid var(--el-border-color-lighter);
     display: flex;
 }
