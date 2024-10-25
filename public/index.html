@@ -9,10 +9,78 @@
   <title>
     <%= webpackConfig.name %>
   </title>
-  <style>
+  <style lang="scss">
     * {
       margin: 0;
       padding: 0;
+    }
+
+    #loader-wrapper {
+      width: 100vw;
+      height: 100vh;
+      background: ghostwhite;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .loader {
+      --size: 16px;
+      display: flex;
+      gap: var(--size);
+
+      .leaf {
+        width: calc(2 * var(--size));
+        height: calc(6 * var(--size));
+        background-color: hsl(47, 50%, 50%);
+        opacity: 0.2;
+        transform: translateX(calc(-1 * var(--size))) rotate(-30deg);
+        animation: opacity 1.2s infinite;
+
+        &:nth-child(1) {
+          clip-path: polygon(0% 70%, 100% 70%, 100% 100%, 0% 81%);
+          animation-delay: 0s;
+        }
+
+        &:nth-child(2) {
+          clip-path: polygon(0% 35%, 100% 35%, 100% 100%, 0% 81%);
+          animation-delay: 0.4s;
+        }
+
+        &:nth-child(3) {
+          clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 81%);
+          animation-delay: 0.8s;
+        }
+      }
+    }
+
+    .load-title {
+      font-style: italic;
+      color: hsl(47, 50%, 37.5%);
+
+      .dot {
+        opacity: 0.4;
+        animation: opacity 1.2s infinite;
+
+        &:nth-child(1) {
+          animation-delay: 0s;
+        }
+
+        &:nth-child(2) {
+          animation-delay: 0.4s;
+        }
+
+        &:nth-child(3) {
+          animation-delay: 0.8s;
+        }
+      }
+    }
+
+    @keyframes opacity {
+      from {
+        opacity: 1;
+      }
     }
   </style>
 </head>
@@ -22,7 +90,21 @@
     <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
         Please enable it to continue.</strong>
   </noscript>
-  <div id="app"></div>
+  <div id="app">
+    <div id="loader-wrapper">
+      <div class="loader">
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+        <div class="leaf"></div>
+      </div>
+      <div class="load-title">
+        正在加载系统资源，请耐心等待
+        <span class="dot">.</span>
+        <span class="dot">.</span>
+        <span class="dot">.</span>
+      </div>
+    </div>
+  </div>
   <!-- built files will be auto injected -->
 </body>
 

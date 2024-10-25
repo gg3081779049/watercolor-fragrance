@@ -1,10 +1,11 @@
 import { defineStore } from 'pinia'
 import { getRoutes } from '@/api/route'
+import { isExternal, arrayToTree, treeToArray } from '@/utils'
 
 export const useRouteStore = defineStore('route', {
     state: () => ({
-        sidebarRouteList: [],
-        sidebarRouteTree: []
+        treeRoutes: [],
+        listRoutes: [],
     }),
     actions: {
         // 生成路由
@@ -12,53 +13,69 @@ export const useRouteStore = defineStore('route', {
             return new Promise(resolve => {
                 // 向后端请求路由数据
                 getRoutes().then(res => {
-                    this.sidebarRouteTree = getSidebarRouteTree(JSON.parse(JSON.stringify(res.data)))
-                    this.sidebarRouteList = getSidebarRouteList(JSON.parse(JSON.stringify(this.sidebarRouteTree)))
-                    resolve(this.sidebarRouteList)
+                    this.treeRoutes = convertArrayToTree(res.data)
+                    this.listRoutes = convertTreeToArray(this.treeRoutes)
+                    resolve(createRoutes(this.listRoutes))
                 })
             })
         }
     }
 })
 
-function getSidebarRouteTree(routes, parentPath = '') {
-    return routes.filter(route => !route.meta.disabled).map(route => {
-        const currentPath = `${parentPath}${route.path}`.replace('//', '/')
-        const newRoute = { ...route, path: currentPath }
-        if (route.children) {
-            newRoute.children = getSidebarRouteTree(route.children, currentPath + '/')
+function convertArrayToTree(list) {
+    return arrayToTree(list, ({ icon, title, noCache, hidden, disabled, ...node }, parentNodes) => {
+        let nodes = parentNodes.concat(node)
+        let path = isExternal(node.path) ? node.path : nodes.map(node => node.path).join('/')
+        return {
+            ...node,
+            path,
+            meta: { icon, title, noCache, hidden, disabled }
         }
-        return newRoute
     })
 }
 
-function getSidebarRouteList(routes, parentList = []) {
-    return routes.reduce((acc, route) => {
-        if (route.children) {
-            return acc.concat(getSidebarRouteList(route.children, [...parentList, route]))
-        } else {
-            const list = parentList.concat(route)
-            const component = loadView(route.path)
-            return acc.concat({
-                path: route.path,
-                name: component && component.default ? component.default.name || (component.default.name = route.path) : route.path,
-                meta: { ...route.meta, title: list.map(r => r.meta.title), icon: list.map(r => r.meta.icon) },
-                component: async () => component
-            })
+function convertTreeToArray(tree) {
+    return treeToArray(tree, (node, parentNodes) => {
+        let nodes = parentNodes.concat(node)
+        return {
+            ...node,
+            meta: {
+                ...node.meta,
+                title: nodes.map(({ meta }) => meta.title),
+                icon: nodes.map(({ meta }) => meta.icon),
+            },
         }
-    }, [])
+    }).filter(route => !route.hasChild)
 }
 
-function loadView(path) {
-    try {
-        if (process.env.NODE_ENV === 'development') {
-            // 开发环境使用 require 立即加载
-            return require(`@/views/${path}/index.vue`)
-        } else {
-            // 生产环境使用 import 路由懒加载, 优化应用性能
-            return import(`@/views/${path}/index.vue`)
+function createRoutes(list) {
+    return list.filter(route => !isExternal(route.path)).map(route => {
+        let { path, meta, component } = route
+        return {
+            path,
+            name: path,
+            meta: {
+                ...meta,
+                title: meta.title.at(-1),
+                icon: meta.icon.at(-1)
+            },
+            component: async () => {
+                if (isExternal(component)) {
+                    let AppIframe = require('@/layout/components/AppIframe/index.vue').default
+                    AppIframe.name = path
+                    return <AppIframe src={component} />
+                } else {
+                    try {
+                        let view = process.env.NODE_ENV === 'development'
+                            ? require(`@/${component}/index.vue`)
+                            : await import(`@/${component}/index.vue`)
+                        view.default.name = path
+                        return view
+                    } catch {
+                        return require(`@/views/error/404.vue`)
+                    }
+                }
+            }
         }
-    } catch (e) {
-        // 加载失败
-    }
+    })
 }

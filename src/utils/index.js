@@ -8,8 +8,7 @@ export function blobValidate(data) {
 */
 export function tansParams(params) {
     let result = ''
-    for (const propName of Object.keys(params)) {
-        const value = params[propName]
+    for (const [propName, value] of Object.entries(params)) {
         let part = encodeURIComponent(propName) + "="
         if (value !== null && value !== "" && typeof (value) !== "undefined") {
             if (typeof value === 'object') {
@@ -39,8 +38,8 @@ export function debounce(func, duration = 300) {
 
 // 日期格式化
 export function parseTime(date, pattern = '{y}-{m}-{d} {h}:{i}:{s}') {
-    if (date) {
-        return pattern.replace(/{(y|m|d|h|i|s|a)}/g, (_, key) => {
+    if (date instanceof Date) {
+        return pattern?.replace(/{(y|m|d|h|i|s|a)}/g, (_, key) => {
             return {
                 y: date.getFullYear(),
                 m: (date.getMonth() + 1).toString().padStart(2, '0'),
@@ -55,51 +54,73 @@ export function parseTime(date, pattern = '{y}-{m}-{d} {h}:{i}:{s}') {
 }
 
 // 数组转树
-export function arrayToTree(items, config) {
-    let { idKey = 'id', parentIdKey = 'parentId', childrenKey = 'children', orderKey = 'order' } = config ?? {}
+export function arrayToTree(array, func, config) {
     let tree = []
     let map = {}
-    let hasOwnProperty = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop)
+    const {
+        idKey = 'id',
+        parentIdKey = 'parentId',
+        childrenKey = 'children',
+        orderKey = 'order',
+        hasChildKey = 'hasChild'
+    } = config ?? {}
 
-    for (const item of items) {
-        map[item[idKey]] = { ...item, [childrenKey]: hasOwnProperty(map, item[idKey]) ? map[item[idKey]][childrenKey] : [] }
-        let newItem = map[item[idKey]]
-        if (item[parentIdKey]) {
-            if (hasOwnProperty(map, item[parentIdKey])) {
-                map[item[parentIdKey]][childrenKey].push(newItem)
-                map[item[parentIdKey]][childrenKey].sort((a, b) => a[orderKey] - b[orderKey])
+    for (const item of array) {
+        let newItem = { ...item }
+        if (newItem[hasChildKey]) newItem[childrenKey] = map[newItem[idKey]]?.[childrenKey] || []
+        map[newItem[idKey]] = newItem
+        if (newItem[parentIdKey]) {
+            let parentItem = map[newItem[parentIdKey]]
+            if (parentItem) {
+                parentItem[childrenKey] ||= []
+                parentItem[childrenKey].push(newItem)
+                parentItem[childrenKey].sort((a, b) => a[orderKey] - b[orderKey])
             } else {
-                map[item[parentIdKey]] = { [childrenKey]: [newItem] }
+                parentItem = { [childrenKey]: [newItem] }
             }
         } else {
             tree.push(newItem)
         }
     }
-    return tree.sort((a, b) => a[orderKey] - b[orderKey])
-}
 
-export function treeToArray(tree) {
-    let array = []
-    let childrenKey = 'children'
-    function traverse(node) {
-        let newNode = { ...node }
-        delete newNode[childrenKey]
-        array.push(newNode)
-        if (node[childrenKey]) {
-            node[childrenKey].forEach(traverse)
+    tree = tree.sort((a, b) => a[orderKey] - b[orderKey])
+
+    if (func instanceof Function) {
+        function buildTree(node, parentNodes = []) {
+            let _node = { ...node }
+            let newNode = func(_node, [...parentNodes])
+            if (node[childrenKey] instanceof Array) {
+                newNode[childrenKey] = node[childrenKey].map(child => buildTree(child, [...parentNodes, node]))
+            }
+            return newNode
         }
+        tree = tree.map(node => buildTree(node, []))
     }
 
-    tree.forEach(traverse)
+    return tree
+}
+
+// 树转数组
+export function treeToArray(tree, func) {
+    let array = []
+    let childrenKey = 'children'
+    function traverse(node, parentNodes) {
+        let newNode = { ...node }
+        delete newNode[childrenKey]
+        let newNodeMap = func ? func?.(newNode, [...parentNodes]) : newNode
+        array.push(newNodeMap)
+        node[childrenKey]?.forEach(child => traverse(child, [...parentNodes, node]))
+    }
+    tree.forEach(node => traverse(node, []))
     return array
 }
 
 // 遍历树
 export function handleTree(tree, func) {
-    tree.forEach(ele => {
-        func(ele)
-        if (ele.children) {
-            handleTree(ele.children, func)
+    tree.forEach(node => {
+        func(node)
+        if (node.children) {
+            handleTree(node.children, func)
         }
     })
 }
@@ -107,4 +128,14 @@ export function handleTree(tree, func) {
 // 过滤树
 export function filterTree(tree, func) {
     return tree.filter(item => func(item) && (item.children = filterTree(item.children, func)))
+}
+
+// 短横线转大驼峰
+export function dashToCamel(str) {
+    return `-${str}`.replace(/-[a-zA-Z]/g, s => s.at(-1).toUpperCase())
+}
+
+// 判断是否为外部链接
+export function isExternal(url) {
+    return /^(http|https):\/\/[^"']+$/.test(url)
 }

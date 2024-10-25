@@ -1,16 +1,32 @@
 <template>
-    <div class="tabs-container" :style="{ height: `${TabsHeight}px` }">
+    <div :class="['tabs-container', tabsStyle]" :style="{ height: `${tabsHeight}px` }">
         <ScrollPane ref="scrollPane" class="scroll-pane" @scroll="closeMenu">
             <TabLink ref="tab" v-for="tab in tabs" :key="tab" :route="tab" :draggable="draggable"
                 :show-icon="showTabsIcon" :show-close="tab.name !== defaultTab"
                 @contextmenu.prevent="openMenu($event, tab)" @close="closeTab(tab)" />
         </ScrollPane>
+        <TabsToolbar />
         <ul class="contextmenu" v-show="visible" :style="{ left: left + 'px', top: top + 'px' }">
-            <li @click="closeTab(selectedTab)" v-if="showCloseTab"><svg-icon icon="close" />关闭当前</li>
-            <li @click="closeOthersTabs" v-if="showCloseOthersTabs"><svg-icon icon="close" />关闭其他</li>
-            <li @click="closeLeftTabs" v-if="showCloseLeftTabs"><svg-icon icon="left-arrow" />关闭左侧</li>
-            <li @click="closeRightTabs" v-if="showCloseRightTabs"><svg-icon icon="right-arrow" />关闭右侧</li>
-            <li @click="closeAllTabs" v-if="showCloseAllTabs"><svg-icon icon="circle-close" />全部关闭</li>
+            <li @click="closeTab(selectedTab)" v-if="showCloseTab">
+                <svg-icon icon="close" />
+                {{ $t('operation.closeCurrent') }}
+            </li>
+            <li @click="closeOthersTabs" v-if="showCloseOthersTabs">
+                <svg-icon icon="close" />
+                {{ $t('operation.closeOthers') }}
+            </li>
+            <li @click="closeLeftTabs" v-if="showCloseLeftTabs">
+                <svg-icon icon="left-arrow" />
+                {{ $t('operation.closeLeft') }}
+            </li>
+            <li @click="closeRightTabs" v-if="showCloseRightTabs">
+                <svg-icon icon="right-arrow" />
+                {{ $t('operation.closeRight') }}
+            </li>
+            <li @click="closeAllTabs" v-if="showCloseAllTabs">
+                <svg-icon icon="circle-close" />
+                {{ $t('operation.closeAll') }}
+            </li>
         </ul>
     </div>
 </template>
@@ -23,21 +39,21 @@ import { useDraggable } from "vue-draggable-plus"
 
 import ScrollPane from "./ScrollPane"
 import TabLink from "./TabLink"
+import TabsToolbar from "./TabsToolbar"
 
 export default {
     name: 'Tabs',
-    components: { ScrollPane, TabLink },
+    components: { ScrollPane, TabLink, TabsToolbar },
     data() {
         return {
             left: 0,
             top: 0,
             visible: false,
             selectedTab: {},
-            draggableInstance: {}
         }
     },
     computed: {
-        ...mapState(useSettingsStore, ["TabsHeight", "showTabsIcon", "draggable"]),
+        ...mapState(useSettingsStore, ["tabsHeight", "tabsStyle", "showTabsIcon", "draggable"]),
         ...mapState(useTabsStore, ["tabs", "defaultTab"]),
         currentTabIndex() {
             return this.tabs.findIndex(t => t.path === this.$route.path)
@@ -143,7 +159,7 @@ export default {
         closeOthersTabs() {
             let currentTabIndex = this.currentTabIndex
             let selectedTabIndex = this.selectedTabIndex
-            this.delTabs((tab, i) => i !== tabIndex)
+            this.delTabs((tab, i) => i !== currentTabIndex)
             if (currentTabIndex !== selectedTabIndex) {
                 this.toLastTab()
             }
@@ -170,96 +186,33 @@ export default {
         }
     },
     watch: {
-        $route() {
-            this.addTab(this.$route)
+        $route(route) {
+            this.addTab(route)
             this.moveToCurrentTab()
         },
         draggable(val) {
-            if (this.draggableInstance) {
-                this.draggableInstance[val ? 'start' : 'pause']()
-            }
+            this.draggableInstance?.[val ? 'start' : 'pause']()
         }
     }
 }
 </script>
 
 <style lang="scss" scoped>
+    @import url("@/styles/tabs/card.scss");
+    @import url("@/styles/tabs/button.scss");
+    @import url("@/styles/tabs/line.scss");
 
     .tabs-container {
         width: 100%;
         height: 34px;
         background: var(--tabs-bg);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         position: relative;
 
-        &::before {
-            content: '';
-            width: 100%;
-            height: 0;
-            border-bottom: 1px solid var(--el-border-color-light);
-            position: absolute;
-            left: 0;
-            bottom: 0;
-        }
-
-        .scroll-pane {
-            &::v-deep .el-scrollbar__view {
-                padding-left: 6px;
-                display: flex;
-                align-items: end;
-                gap: 4px;
-
-                .tab {
-                    height: 26px;
-                    padding: 2px 8px;
-                    border: 1px solid var(--el-border-color-light);
-                    background: var(--tabs-tag--bg);
-                    display: inline-block;
-                    color: var(--tabs-tag-text-color);
-                    cursor: pointer;
-
-                    span {
-                        font-size: 14px;
-                        line-height: 26px;
-                        margin: 0 6px;
-                    }
-
-                    svg {
-                        width: 12px;
-                        height: 12px;
-                        fill: var(--tabs-tag-text-color);
-
-                        &.close-icon {
-                            border-radius: 10%;
-                            transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-
-                            &:hover {
-                                background: var(--el-text-color-placeholder);
-                                box-shadow: 0 0 0 1px var(--el-text-color-placeholder);
-                                fill: var(--el-bg-color);
-                            }
-                        }
-                    }
-
-                    &.is-active {
-                        border-bottom-color: var(--tabs-tag--bg-active);
-                        background: var(--tabs-tag--bg-active);
-                        color: var(--tabs-tag-text-color-active);
-
-                        svg {
-                            fill: var(--tabs-tag-text-color-active);
-
-                            &.close-icon:hover {
-                                background: var(--el-color-primary-light-3);
-                                box-shadow: 0 0 0 1px var(--el-color-primary-light-3);
-                            }
-                        }
-                    }
-                }
-            }
-
-            .ghost {
-                opacity: 0.2;
-            }
+        .scroll-pane .ghost {
+            opacity: 0.2;
         }
 
         .contextmenu {

@@ -1,18 +1,14 @@
 <template>
   <div class="page-401">
-    <el-button class="back-btn" @click="back">返回</el-button>
+    <el-button class="back-btn" @click="back">{{ $t("common.back") }}</el-button>
     <el-row>
       <el-col :span="12">
-        <h1 class="text-jumbo">
-          401错误!
-        </h1>
-        <h2 style="margin: 20px 0">您没有访问权限！</h2>
-        <h6 style="margin: 25px 0">对不起，您没有访问权限，请不要进行非法操作！您可以返回主页面</h6>
+        <h1 class="text-jumbo">{{ $t("page.page401.title") }}</h1>
+        <h2 style="margin: 20px 0">{{ $t("page.page401.noaccess") }}</h2>
+        <h6 style="margin: 25px 0">{{ $t("page.page401.noaccessDesc") }}</h6>
         <ul>
           <li class="link-type">
-            <router-link to="/">
-              回到首页
-            </router-link>
+            <router-link to="/">{{ $t("common.backHome") }}</router-link>
           </li>
         </ul>
       </el-col>

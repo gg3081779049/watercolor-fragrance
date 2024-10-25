@@ -12,5 +12,5 @@ set "zip=watercolor-fragrance.zip"
 
 if exist "%zip%" del "%zip%"
 
-set includeList="bin","build", "src","public",".eslintignore",".env.*",".gitignore","*.js","*.json","*.md"
+set includeList="bin","build","mock","src","public",".eslintignore",".env.*",".gitignore","*.js","*.json","*.md"
 powershell Compress-Archive -Path %includeList% -DestinationPath "%cd%\%zip%"

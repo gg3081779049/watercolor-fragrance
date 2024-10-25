@@ -3,25 +3,26 @@
     <el-form class="login-form" ref="loginForm" :model="loginForm" :rules="loginRules">
       <h3 class="title">
         <img draggable="false" src="@/assets/images/logo.png" alt="logo">
-        {{ title }}
+        {{ $t('system.title') }}
       </h3>
       <el-form-item prop="username">
-        <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号">
+        <el-input v-model="loginForm.username" type="text" auto-complete="off" :placeholder="$t('page.login.account')">
           <template #prefix>
             <svg-icon icon="user" />
           </template>
         </el-input>
       </el-form-item>
       <el-form-item prop="password">
-        <el-input v-model="loginForm.password" type="password" auto-complete="off" placeholder="密码">
+        <el-input v-model="loginForm.password" type="password" auto-complete="off"
+          :placeholder="$t('page.login.password')">
           <template #prefix>
             <svg-icon icon="lock" />
           </template>
         </el-input>
       </el-form-item>
       <el-form-item prop="code" v-if="captcha">
-        <el-input v-model="loginForm.code" auto-complete="off" placeholder="验证码" style="width: 64%"
-          @keyup.enter.native="handleLogin"><template #prefix>
+        <el-input v-model="loginForm.code" auto-complete="off" :placeholder="$t('page.login.captcha')"
+          style="width: 64%" @keyup.enter.native="handleLogin"><template #prefix>
             <svg-icon icon="validCode" />
           </template>
         </el-input>
@@ -30,15 +31,19 @@
         </div>
       </el-form-item>
       <div class="box">
-        <el-checkbox v-model="loginForm.rememberMe">记住密码</el-checkbox>
-        <router-link v-if="register" class="register-link" :to="'/register'">立即注册</router-link>
+        <el-checkbox v-model="loginForm.rememberMe">
+          {{ $t('page.login.remember') }}
+        </el-checkbox>
+        <router-link v-if="register" class="register-link" :to="'/register'">
+          {{ $t('page.login.register') }}
+        </router-link>
       </div>
-      <el-button style="width:100%" type="primary" :loading="loading" @click.native.prevent="handleLogin">
-        <span v-if="!loading">登 录</span>
-        <span v-else>登 录 中...</span>
+      <el-button style="width:100%" type="primary" :loading="loading" auto-insert-space
+        @click.native.prevent="handleLogin">
+        {{ loading ? $t('page.login.logging') : $t('page.login.login') }}
       </el-button>
     </el-form>
-    <span class="copyright">Copyright © 2024 watercolor-fragrance All Rights Reserved.</span>
+    <span class="copyright">{{ $t('system.copyright') }}</span>
   </div>
 </template>
 
@@ -63,9 +68,9 @@ export default {
         uuid: ""
       },
       loginRules: {
-        username: [{ required: true, trigger: "blur", message: "请输入您的账号" }],
-        password: [{ required: true, trigger: "blur", message: "请输入您的密码" }],
-        code: [{ required: true, trigger: "change", message: "请输入验证码" }],
+        username: [{ required: true, trigger: "blur", message: this.$t('page.login.rules.account') }],
+        password: [{ required: true, trigger: "blur", message: this.$t('page.login.rules.password') }],
+        code: [{ required: true, trigger: "change", message: this.$t('page.login.rules.captcha') }],
       },
       loading: false,
       // 验证码开关
@@ -98,7 +103,7 @@ export default {
       }
     },
     handleLogin() {
-      this.$refs.loginForm.validate(valid => {
+      this.$refs?.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
           if (this.loginForm.rememberMe) {
@@ -111,14 +116,14 @@ export default {
             Cookies.remove('rememberMe')
           }
           useUserStore().Login(this.loginForm).then(() => {
-            this.$router.push({ path: this.$route.query && this.$route.query.redirect || "/" }).catch(() => { })
-            this.$notify.success({ title: '登录成功', message: `欢迎回来，${this.loginForm.username} !` })
+            this.$router.push({ path: this.$route.query?.redirect || "/" }).catch(() => { })
+            // this.$notify.success({ title: this.$t('message.loginSuccess'), message: `${this.$t('message.welcomeBack')}, ${this.loginForm.username} !` })
           }).catch(() => {
             this.loading = false
             if (this.captcha) {
               this.getCode()
             }
-          });
+          })
         }
       })
     }

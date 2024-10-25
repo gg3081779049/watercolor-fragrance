@@ -1,5 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import Layout from '@/layout';
+import { createRouter, createWebHistory } from 'vue-router'
+import Layout from '@/layout'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -32,14 +32,20 @@ const router = createRouter({
             path: 'home',
             name: 'Home',
             component: () => import('@/views/home/index.vue'),
-            meta: { title: ['首页'], icon: ['home'], noCache: false, hidden: false },
+            meta: { title: 'home', icon: 'home', noCache: false, hidden: false },
         }, {
             path: 'user',
             name: 'User',
             component: () => import('@/views/user/index.vue'),
-            meta: { title: ['个人中心'], icon: ['user'], noCache: false, hidden: true },
+            meta: { title: 'user', icon: 'user', noCache: false, hidden: true },
         }]
     }]
-});
+})
 
-export default router;
+// 捕捉连续点击多次路由报错
+let push = router.push
+router.push = function (to) {
+    return push.call(this, to).catch(err => err)
+}
+
+export default router

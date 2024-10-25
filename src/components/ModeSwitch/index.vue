@@ -1,9 +1,8 @@
 <template>
-  <div :class="`theme-switch theme-switch-${mode}`" @click="toggleMode">
-    <svg-icon icon="theme-switch-light"
+  <div :class="`mode-switch mode-switch-${mode}`" @click="toggleMode">
+    <svg-icon icon="mode-switch-light"
       :style="{ transform: mode === 'light' ? 'scale(1) rotate(360deg)' : 'scale(0)' }" />
-    <svg-icon icon="theme-switch-dark"
-      :style="{ transform: mode === 'light' ? 'rotate(360deg) scale(0)' : '' }" />
+    <svg-icon icon="mode-switch-dark" :style="{ transform: mode === 'light' ? 'rotate(360deg) scale(0)' : '' }" />
   </div>
 </template>
 
@@ -12,7 +11,7 @@ import { useSettingsStore } from '@/store/modules/settings'
 import { mapWritableState } from 'pinia'
 
 export default {
-  name: "ThemeSwitch",
+  name: "ModeSwitch",
   computed: {
     ...mapWritableState(useSettingsStore, ["mode"])
   },
@@ -21,11 +20,11 @@ export default {
       this.mode = this.mode === "light" ? "dark" : "light"
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
-  .theme-switch {
+  .mode-switch {
     width: 22px;
     height: 22px;
     border-radius: 50%;
@@ -44,16 +43,12 @@ export default {
     }
   }
 
-  .theme-switch-light {
+  .mode-switch-light {
     background: #f0f0f0;
-    border: 1px solid hsla(0, 0%, 33%, 0.651);
-
-    &:hover {
-      border: 1px solid hsl(0, 0%, 33%);
-    }
+    border: 1px solid var(--navbar-icon-fill-color);
   }
 
-  .theme-switch-dark {
+  .mode-switch-dark {
     background: #2f2f2f;
     border: 1px solid hsla(0, 0%, 66%, 0.651);
 

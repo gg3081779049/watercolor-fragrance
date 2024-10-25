@@ -1,5 +1,7 @@
 <template>
-  
+  <div class="p20">
+    <el-empty />
+  </div>
 </template>
 
 <script>
@@ -8,5 +10,4 @@ export default {
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

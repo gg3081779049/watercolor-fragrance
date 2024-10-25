@@ -1,48 +1,42 @@
 <template>
-    <div class="right-toolbar">
-        <el-tooltip :content="`${showSearch ? '隐藏' : '显示'}搜索栏`" placement="top" effect="light" :hide-after="0">
-            <el-button @click="showSearchChange">
-                <svg-icon :icon="`${showSearch ? 'zoom-out' : 'zoom-in'}`" />
+    <el-button-group class="right-toolbar">
+        <el-tooltip :content="$t(`toolTip.${showSearch ? 'showSearchBar' : 'hiddenSearchBar'}`)" placement="top"
+            effect="light" :hide-after="0" v-if="showSearch !== undefined">
+            <el-button @click="$emit('update:showSearch', !showSearch)">
+                <svg-icon :icon="`zoom-${showSearch ? 'out' : 'in'}`" />
             </el-button>
         </el-tooltip>
-        <el-tooltip :content="tabFullscreen ? '还原' : '最大化'" placement="top" effect="light">
-            <el-button @click="tabFullscreen = !tabFullscreen">
-                <svg-icon :icon="tabFullscreen ? 'exit-fullscreen' : 'fullscreen'" />
+        <el-tooltip :content="$t('toolTip.columnSetting')" placement="top" effect="light" v-if="columns !== undefined">
+            <el-button v-popover="this.$refs['popoverRef']">
+                <svg-icon icon="filter" />
+                <el-popover ref="popoverRef" :popper-style="{ minWidth: '100px', width: '120px', padding: '8px' }"
+                    :hide-after="0" trigger="click" virtual-triggering>
+                    <el-scrollbar max-height="320px">
+                        <el-checkbox v-for="(item, key) in columns" :key="key" v-model="item.value">
+                            {{ item.label }}
+                        </el-checkbox>
+                    </el-scrollbar>
+                </el-popover>
             </el-button>
         </el-tooltip>
-        <el-tooltip content="刷新" placement="top" effect="light">
-            <el-button @click="refresh">
+        <slot />
+        <el-tooltip :content="$t('toolTip.refresh')" placement="top" effect="light" v-if="$attrs.onRefresh">
+            <el-button v-rotate-on-click v-prevent-reclick="500" @click="$emit('refresh')">
                 <svg-icon ref="refresh" icon="refresh" />
             </el-button>
         </el-tooltip>
-    </div>
+    </el-button-group>
 </template>
 
 <script>
-import { useAppStore } from '@/store/modules/app'
-import { mapWritableState } from 'pinia'
-
 export default {
     name: 'RightToolbar',
     props: {
         showSearch: {
-            type: Boolean,
-            default: true
-        }
-    },
-    computed: {
-        ...mapWritableState(useAppStore, ["tabFullscreen"])
-    },
-    methods: {
-        showSearchChange() {
-            this.$emit("update:showSearch", !this.showSearch)
+            type: Boolean
         },
-        refresh() {
-            this.$emit("refresh")
-            this.$refs.refresh.$el.animate(
-                { transform: `rotate(-180deg)` },
-                { duration: 500, easing: "ease-out" }
-            )
+        columns: {
+            type: Object
         }
     }
 }
@@ -51,32 +45,31 @@ export default {
 <style lang="scss" scoped>
     .right-toolbar {
         margin-left: auto;
-        border: 1px solid var(--el-border-color);
-        border-radius: var(--el-border-radius-base);
-        box-sizing: border-box;
-        display: flex;
-        overflow: hidden;
 
         .el-button {
             width: 36px;
             height: 24px;
-            margin: 0;
-            border-right-width: 0;
-            border-top-width: 0;
-            border-bottom-width: 0;
-            border-radius: 0;
-
-            &:active {
-                border-color: var(--el-color-primary-light-7);
-            }
-
-            &:first-child {
-                border-left-width: 0;
-            }
 
             svg {
                 margin: 0;
             }
+        }
+    }
+
+    .el-checkbox {
+        width: 100%;
+        padding-left: 10px;
+        margin-right: 0;
+        border-radius: 2px;
+        box-sizing: border-box;
+        overflow: hidden;
+
+        &:hover {
+            background: var(--el-color-info-light-9);
+        }
+
+        &.is-checked:hover {
+            background: var(--el-color-primary-light-9);
         }
     }
 </style>

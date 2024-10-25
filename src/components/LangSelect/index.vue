@@ -1,12 +1,13 @@
 <template>
-    <el-dropdown trigger="click">
+    <el-dropdown class="lang-select" trigger="click">
         <span>
             <svg-icon className="lang-icon" icon="lang" />
         </span>
         <template #dropdown>
             <el-dropdown-menu>
-                <el-dropdown-item v-for="lang in langArray" :key="lang" @click="language = lang.key">
-                    {{ lang.val }}
+                <el-dropdown-item v-for="val, key in $tm('settings.options.language')" :key="key"
+                    :style="{ color: language === key ? 'var(--el-color-primary)' : '' }" @click="language = key">
+                    {{ val }}
                 </el-dropdown-item>
             </el-dropdown-menu>
         </template>
@@ -19,27 +20,19 @@ import { mapWritableState } from 'pinia'
 
 export default {
     name: 'LangSwitch',
-    data() {
-        const context = require.context('@/locales/lang', false, /\.js$/)
-        return {
-            langArray: context.keys().map(key => {
-                let k = key.replace(/^\.\/(.*)\.\w+$/, '$1')
-                return {
-                    key: k,
-                    val: context(key).default.lang ?? k
-                }
-            })
-        }
-    },
-    computed: { ...mapWritableState(useSettingsStore, ['language']) }
+    computed: {
+        ...mapWritableState(useSettingsStore, ['language'])
+    }
 }
 </script>
 
-<style scoped>
-    .lang-icon {
-        width: 18px;
-        height: 18px;
-        fill: var(--navbar-icon-fill-color);
-        cursor: pointer;
+<style lang="scss" scoped>
+    .lang-select {
+        svg {
+            width: 18px;
+            height: 18px;
+            fill: var(--navbar-icon-fill-color);
+            cursor: pointer;
+        }
     }
 </style>

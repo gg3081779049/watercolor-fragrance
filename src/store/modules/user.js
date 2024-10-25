@@ -8,6 +8,7 @@ export const useUserStore = defineStore('user', {
         name: '',
         avatar: '',
         roles: [],
+        permissions: []
     }),
     actions: {
         // 登录
@@ -34,6 +35,7 @@ export const useUserStore = defineStore('user', {
                         state.name = ''
                         state.avatar = ''
                         state.roles = []
+                        state.permissions = []
                     })
                     removeToken()
                     resolve()
@@ -48,9 +50,8 @@ export const useUserStore = defineStore('user', {
                     this.$patch(state => {
                         state.name = user.username
                         state.avatar = (user.avatar && user.avatar !== "") ? user.avatar : require("@/assets/images/avatar.png")
-                        if (res.roles && res.roles.length) {
-                            state.roles = res.roles
-                        }
+                        if (res.roles instanceof Array) state.roles = res.roles
+                        if (res.permissions instanceof Array) state.permissions = res.permissions
                     })
                     resolve(res)
                 }).catch(error => {

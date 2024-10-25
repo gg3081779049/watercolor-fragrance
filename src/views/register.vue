@@ -1,6 +1,6 @@
 <template>
   <div class="register">
-    <span class="copyright">Copyright © 2024 watercolor-fragrance All Rights Reserved.</span>
+    <span class="copyright">{{ $t('system.copyright') }}</span>
   </div>
 </template>
 
@@ -8,8 +8,8 @@
 export default {
   name: 'Register',
   mounted() {
-    this.$alert("<font color='red'>当前系统没有开启注册功能！</font>", "系统提示", {
-      confirmButtonText: '返回',
+    this.$alert(`<font color='red'>${this.$t('page.register.systemTipDesc')}</font>`, this.$t('common.systemTip'), {
+      confirmButtonText: this.$t('common.back'),
       dangerouslyUseHTMLString: true,
       showClose: false,
       type: 'error'

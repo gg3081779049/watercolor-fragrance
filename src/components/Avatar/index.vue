@@ -5,22 +5,22 @@
     </slot>
     <template #dropdown>
       <el-dropdown-menu>
-        <el-dropdown-item @click="$router.push('user')">
+        <el-dropdown-item @click="$router.push('User')">
           <span>
             <svg-icon icon="user" />
-            个人中心
+            {{ $t('operation.userCenter') }}
           </span>
         </el-dropdown-item>
         <el-dropdown-item @click="showSettings = true">
           <span>
             <svg-icon icon="setting" />
-            系统设置
+            {{ $t('operation.configuration') }}
           </span>
         </el-dropdown-item>
         <el-dropdown-item divided @click="logout">
           <span>
             <svg-icon icon="exit" />
-            退出登录
+            {{ $t('operation.logout') }}
           </span>
         </el-dropdown-item>
       </el-dropdown-menu>
@@ -35,7 +35,7 @@ import { useUserStore } from '@/store/modules/user'
 import { mapState, mapWritableState, mapActions } from 'pinia'
 
 export default {
-  name: "AvatarBox",
+  name: "Avatar",
   computed: {
     ...mapState(useUserStore, ["name", "avatar"]),
     ...mapWritableState(useAppStore, ["showSettings"]),
@@ -43,15 +43,17 @@ export default {
   methods: {
     ...mapActions(useUserStore, ["Logout"]),
     async logout() {
-      this.$confirm("确定要退出系统吗？", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$confirm(this.$t('message.confirmLogout'), this.$t('common.systemTip'), {
+        confirmButtonText: this.$t('common.confirm'),
+        cancelButtonText: this.$t('common.cancel'),
         type: "warning",
       }).then(() => {
-        this.$router.push("/login")
-        this.Logout()
+        return this.Logout()
+      }).then(() => {
+        return this.$router.push("/login")
+      }).then(() => {
         useTabsStore().$reset()
-      }).catch(() => { })
+      })
     },
   },
 }

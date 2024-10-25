@@ -1,8 +1,8 @@
 <template>
   <div class="navbar-search" :class="{ show }">
-    <svg-icon class="navbar-search-icon" icon="navbar-search" @click.stop="click" />
-    <el-select ref="navbarSearchSelect" v-model="search" filterable default-first-option remote placeholder="搜索..."
-      class="navbar-search-select" :remote-method="querySearch" @change="change">
+    <svg-icon class="navbar-search-icon" icon="navbar-search" @click.stop="handleClick" />
+    <el-select class="navbar-search-select" ref="navbarSearchSelect" v-model="search" filterable default-first-option
+      remote :placeholder="`${$t('placeholder.search')}...`" :remote-method="querySearch" @change="change">
       <el-option v-for="option in options" :key="option" :label="option.label" :value="option.value" />
     </el-select>
   </div>
@@ -11,6 +11,7 @@
 <script>
 import { useRouteStore } from '@/store/modules/route'
 import { mapState } from 'pinia'
+import { isExternal } from '@/utils'
 import Fuse from "fuse.js"
 
 export default {
@@ -20,19 +21,13 @@ export default {
       show: false,
       search: "",
       options: [],
-      searchPool: [],
       fuse: null,
     }
   },
-  computed: {
-    ...mapState(useRouteStore, ["sidebarRouteList"])
-  },
+  computed: { ...mapState(useRouteStore, ["listRoutes"]) },
   created() {
-    this.searchPool = this.sidebarRouteList.filter(route => !route.meta.hidden).map(route => ({
-      title: route.meta.title.join(" > "),
-      path: route.path,
-    }))
-    this.fuse = new Fuse(this.searchPool, {
+    let searchPool = this.listRoutes.map(({ meta, path, query }) => ({ title: meta.title.join(" > "), path, query }))
+    this.fuse = new Fuse(searchPool, {
       shouldSort: true,
       threshold: 0.4,
       location: 0,
@@ -42,7 +37,7 @@ export default {
     })
   },
   methods: {
-    click() {
+    handleClick() {
       this.show = !this.show
       // 自动聚焦
       if (this.show) {
@@ -53,17 +48,19 @@ export default {
     },
     querySearch(query) {
       if (query[0] !== " " && query[0] !== ">") {
-        this.options = this.fuse
-          .search(query)
-          .map((item) => ({ label: item.item.title, value: item.item.path }))
+        this.options = this.fuse.search(query).map(({ item }) => ({ label: item.title, value: item }))
       } else {
         this.options = []
       }
     },
-    change(val) {
-      this.$router.push('/' + val)
+    change({ path, query }) {
       this.search = ""
       this.options = []
+      if (isExternal(path)) {
+        window.open(path)
+      } else {
+        this.$router.push({ path: '/' + path, query })
+      }
     },
   }
 }

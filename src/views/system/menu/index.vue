@@ -1,28 +1,28 @@
 <template>
-  <div class="app-container">
-    <div class="app-card">
-      <el-collapse-transition>
-        <el-form ref="queryForm" class="query-form" :model="queryParams" v-if="showSearch" inline>
-          <el-form-item label="菜单名称" prop="title">
-            <el-input v-model="queryParams.title" placeholder="请输入菜单名称" clearable @keyup.enter="getTree" />
-          </el-form-item>
-          <el-form-item label="路由名称" prop="path">
-            <el-input v-model="queryParams.path" placeholder="请输入路由名称" clearable @keyup.enter="getTree" />
-          </el-form-item>
-          <el-form-item>
-            <el-button @click="getTree">
-              <svg-icon icon="search" />
-              <span>搜索</span>
-            </el-button>
-            <el-button @click="resetQuery">
-              <svg-icon icon="refresh" />
-              <span>重置</span>
-            </el-button>
-          </el-form-item>
-        </el-form>
-      </el-collapse-transition>
+  <div class="app-card m20">
+    <el-collapse-transition>
+      <el-form ref="queryForm" class="query-form" :model="queryParams" v-if="showSearch" inline>
+        <el-form-item label="菜单名称" prop="title">
+          <el-input v-model="queryParams.title" placeholder="请输入菜单名称" clearable @keyup.enter="getTree" />
+        </el-form-item>
+        <el-form-item label="路由名称" prop="path">
+          <el-input v-model="queryParams.path" placeholder="请输入路由名称" clearable @keyup.enter="getTree" />
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" plain @click="getTree">
+            <svg-icon icon="search" />
+            <span>{{ $t('common.search') }}</span>
+          </el-button>
+          <el-button @click="resetQuery">
+            <svg-icon icon="refresh" />
+            <span>{{ $t('common.reset') }}</span>
+          </el-button>
+        </el-form-item>
+      </el-form>
+    </el-collapse-transition>
 
-      <div class="button-group">
+    <div class="flex-column g14 p14">
+      <div class="flex">
         <el-button type="primary" size="small" plain @click="handleAdd">
           <SvgIcon icon="plus" />
           <span>新增</span>
@@ -35,13 +35,17 @@
           <svg-icon icon="sort" />
           <span>{{ isExpandAll ? '折叠' : '展开' }}</span>
         </el-button>
-        <right-toolbar v-model:showSearch="showSearch" @refresh="getTree" />
+        <right-toolbar v-model:showSearch="showSearch" :columns="columnSettings" @refresh="getTree" />
       </div>
-
-      <el-table ref="tableRef" v-if="refreshTable" v-loading="loading" :data="tree" row-key="id"
-        :default-expand-all="isExpandAll" @select="handleSelect">
+      <!-- 菜单表格 -->
+      <el-table class="app-table" v-if="refreshTable" v-loading="loading" :data="tree" row-key="id"
+        :default-expand-all="isExpandAll" border @select="handleSelect">
         <el-table-column type="selection" width="40" align="center" />
-        <el-table-column prop="title" label="菜单名称" width="160" show-overflow-tooltip />
+        <el-table-column label="菜单名称" width="160" show-overflow-tooltip>
+          <template #default="scoped">
+            {{ $t(`route.${scoped.row.title}`) }}
+          </template>
+        </el-table-column>
         <el-table-column prop="icon" label="图标" width="100" align="center">
           <template #default="scope">
             <svg-icon :icon="scope.row.icon" />
@@ -56,8 +60,8 @@
           </template>
         </el-table-column>
         <el-table-column prop="createTime" label="创建时间" width="200" align="center">
-          <template #default="scope">
-            <span>{{ scope.row.createTime }}</span>
+          <template #default="{ row: { createTime } }">
+            <span>{{ $parseTime(new Date(createTime)) }}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="240" align="center">
@@ -77,80 +81,76 @@
           </template>
         </el-table-column>
       </el-table>
-      <!-- 添加或修改菜单对话框 -->
-      <el-dialog v-model="open" :title="title" width="680px" append-to-body @closed="cancel">
-        <el-form ref="form" :model="form" :rules="rules" label-width="100px">
-          <el-form-item label="菜单名称" prop="title">
-            <el-input v-model="form.title" placeholder="请输入菜单名称" />
-          </el-form-item>
-          <el-form-item label="菜单路由" prop="path">
-            <el-input v-model="form.path" placeholder="请输入菜单路由" />
-          </el-form-item>
-          <el-form-item label="上级目录" prop="parentId">
-            <el-tree-select v-model="form.parentId" :data="dirTree" placeholder="选择上级目录"
-              :props="{ value: 'id', label: 'title', class: () => 'el-tree-select-node' }"
-              :filter-node-method="(val, node) => node.hasChild && node.title.includes(val)" check-strictly filterable
-              highlight-current>
-              <template #default="{ data }">
-                {{ data.title }}
-                <span v-if="data.hasChild">({{ data.children.length }})</span>
-              </template>
-            </el-tree-select>
-          </el-form-item>
-          <el-form-item label="菜单图标" prop="icon">
-            <IconSelect v-model="form.icon" />
-          </el-form-item>
-          <el-form-item label="显示排序" prop="order">
-            <el-input-number v-model="form.order" controls-position="right" :min="1" />
-          </el-form-item>
-          <div style="display:flex;flex-wrap:wrap">
-            <el-form-item label="菜单类型" prop="hasChild" style="width: 50%">
-              <el-radio-group v-model="form.hasChild" style="margin-left: 10px">
-                <el-radio :value="true">目录</el-radio>
-                <el-radio :value="false">菜单</el-radio>
-              </el-radio-group>
-            </el-form-item>
-            <el-form-item prop="noCache" style="width: 50%">
-              <template #label>
-                <el-tooltip content="选择是则会被`keep-alive`缓存，需要匹配组件的`name`和地址保持一致" placement="top" :show-after="300">
-                  是否缓存
-                </el-tooltip>
-              </template>
-              <el-radio-group v-model="form.noCache" style="margin-left: 10px">
-                <el-radio :value="true">缓存</el-radio>
-                <el-radio :value="false">不缓存</el-radio>
-              </el-radio-group>
-            </el-form-item>
-            <el-form-item prop="hidden" style="width: 50%">
-              <template #label>
-                <el-tooltip content="选择隐藏则路由将不会出现在侧边栏，但仍然可以访问" placement="top" :show-after="300">
-                  是否隐藏
-                </el-tooltip>
-              </template>
-              <el-radio-group v-model="form.hidden" style="margin-left: 10px">
-                <el-radio :value="true">隐藏</el-radio>
-                <el-radio :value="false">不隐藏</el-radio>
-              </el-radio-group>
-            </el-form-item>
-            <el-form-item prop="disabled" style="width: 50%">
-              <template #label>
-                <el-tooltip content="选择停用则路由将不会出现在侧边栏，也不能被访问" placement="top" :show-after="300">
-                  菜单状态
-                </el-tooltip>
-              </template>
-              <el-radio-group v-model="form.disabled" style="margin-left: 10px">
-                <el-radio :value="false">正常</el-radio>
-                <el-radio :value="true">停用</el-radio>
-              </el-radio-group>
-            </el-form-item>
-          </div>
-        </el-form>
-        <template #footer>
-          <el-button @click="cancel">取 消</el-button>
-          <el-button type="primary" @click="submitForm">确 定</el-button>
-        </template>
-      </el-dialog>
     </div>
+    <!-- 添加或修改菜单对话框 -->
+    <app-dialog v-model="open" :title="title" width="680px" @closed="cancel" @confirm="submitForm">
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+        <el-form-item label="菜单名称" prop="title">
+          <el-input v-model="form.title" placeholder="请输入菜单名称" />
+        </el-form-item>
+        <el-form-item label="菜单路由" prop="path">
+          <el-input v-model="form.path" placeholder="请输入菜单路由" />
+        </el-form-item>
+        <el-form-item label="上级目录" prop="parentId">
+          <el-tree-select v-model="form.parentId" :data="dirTree" placeholder="选择上级目录"
+            :props="{ value: 'id', label: 'title', class: () => 'el-tree-select-node' }"
+            :filter-node-method="(val, node) => node.hasChild && node.title.includes(val)" check-strictly filterable
+            highlight-current>
+            <template #default="{ data }">
+              {{ data.title }}
+              <span v-if="data.hasChild">({{ data.children?.length }})</span>
+            </template>
+          </el-tree-select>
+        </el-form-item>
+        <el-form-item label="菜单图标" prop="icon">
+          <IconSelect v-model="form.icon" />
+        </el-form-item>
+        <el-form-item label="显示排序" prop="order">
+          <el-input-number v-model="form.order" controls-position="right" :min="1" />
+        </el-form-item>
+        <div style="display:flex;flex-wrap:wrap">
+          <el-form-item label="菜单类型" prop="hasChild" style="width: 50%">
+            <el-radio-group v-model="form.hasChild" style="margin-left: 10px">
+              <el-radio :value="true">目录</el-radio>
+              <el-radio :value="false">菜单</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item prop="noCache" style="width: 50%">
+            <template #label>
+              <el-tooltip content="选择是则会被`keep-alive`缓存，需要匹配组件的`name`和地址保持一致" placement="top" :show-after="300">
+                是否缓存
+              </el-tooltip>
+            </template>
+            <el-radio-group v-model="form.noCache" style="margin-left: 10px">
+              <el-radio :value="true">缓存</el-radio>
+              <el-radio :value="false">不缓存</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item prop="hidden" style="width: 50%">
+            <template #label>
+              <el-tooltip content="选择隐藏则路由将不会出现在侧边栏，但仍然可以访问" placement="top" :show-after="300">
+                是否隐藏
+              </el-tooltip>
+            </template>
+            <el-radio-group v-model="form.hidden" style="margin-left: 10px">
+              <el-radio :value="true">隐藏</el-radio>
+              <el-radio :value="false">不隐藏</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item prop="disabled" style="width: 50%">
+            <template #label>
+              <el-tooltip content="选择停用则路由将不会出现在侧边栏，也不能被访问" placement="top" :show-after="300">
+                菜单状态
+              </el-tooltip>
+            </template>
+            <el-radio-group v-model="form.disabled" style="margin-left: 10px">
+              <el-radio :value="false">正常</el-radio>
+              <el-radio :value="true">停用</el-radio>
+            </el-radio-group>
+          </el-form-item>
+        </div>
+      </el-form>
+    </app-dialog>
   </div>
 </template>
 
@@ -169,6 +169,15 @@ export default {
       loading: true,
       // 显示搜索栏
       showSearch: true,
+      // 列设置
+      columnSettings: {
+        title: { label: '菜单名称', value: true },
+        icon: { label: '图标', value: true },
+        path: { label: '路由名称', value: true },
+        state: { label: '状态', value: true },
+        createTime: { label: '创建时间', value: true },
+        operate: { label: '操作', value: true },
+      },
       // 是否展开，默认全部折叠
       isExpandAll: false,
       // 重新渲染表格状态
@@ -210,25 +219,26 @@ export default {
       this.loading = true
       getList(this.queryParams).then(res => {
         this.loading = false
-        this.tree = arrayToTree(res.data)
-      })
-    },
-    getDirTree() {
-      getList().then(res => {
-        this.dirTree = [{ id: 0, title: '根目录', hasChild: true, children: arrayToTree(res.data) }]
+        // 搜索条件有值时，则 this.tree = res.data
+        if (Object.values(this.queryParams).some(Boolean)) {
+          this.tree = res.data
+        } else {
+          this.tree = arrayToTree(res.data)
+        }
       })
     },
     // 表单重置
     reset() {
-      this.$refs['form'] && this.$refs['form'].resetFields()
+      this.$refs['form']?.resetFields()
       this.form = {
-        parentId: 0,
-        title: '',
-        path: '',
-        icon: '',
-        order: 1,
         id: undefined,
+        parentId: 0,
+        order: 1,
         hasChild: false,
+        path: '',
+        query: null,
+        icon: '',
+        title: '',
         noCache: false,
         hidden: false,
         disabled: false
@@ -236,7 +246,7 @@ export default {
     },
     /** 重置按钮操作 */
     resetQuery() {
-      this.$refs['queryForm'] && this.$refs['queryForm'].resetFields()
+      this.$refs['queryForm']?.resetFields()
       this.queryParams.title = undefined
       this.queryParams.path = undefined
       this.getTree()
@@ -256,34 +266,34 @@ export default {
     // 新增按钮操作
     handleAdd(row) {
       this.reset()
-      this.getDirTree()
-      this.form.parentId = row ? row.id : 0
-      this.title = "添加菜单"
-      this.open = true
+      getList().then(res => {
+        this.dirTree = [{ id: 0, title: '根目录', hasChild: true, children: arrayToTree(res.data) }]
+        this.form.parentId = row ? row.id : 0
+        this.title = "添加菜单"
+        this.open = true
+      })
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset()
-      this.getDirTree()
-      getItem(row.id).then(res => {
-        this.form = res.data
-        this.title = "修改菜单"
-        this.open = true
+      getList().then(res => {
+        this.dirTree = [{ id: 0, title: '根目录', hasChild: true, children: arrayToTree(res.data) }]
+        getItem(row.id).then(res => {
+          this.form = res.data
+          this.title = "修改菜单"
+          this.open = true
+        })
       })
     },
     /** 删除按钮操作 */
     handleDelete(rows) {
       if (rows.length === 0) return
-      this.$confirm(`是否确认删除"${rows.map(({ title }) => title)}"?`, '系统提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
+      this.$modal.confirm.warning(`是否确认删除"${rows.map(({ title }) => title)}"?`).then(() => {
         return deleteItem(rows.map(({ id }) => id))
       }).then(() => {
         this.getTree()
         this.$message.success('删除成功')
-      }).catch(() => { })
+      })
     },
     // 取消按钮
     cancel() {

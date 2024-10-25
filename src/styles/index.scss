@@ -1,10 +1,72 @@
+@import url('./theme/default/light.scss');
+@import url('./theme/default/dark.scss');
 @import url('./element-ui.scss');
-@import url('./default/light.scss');
-@import url('./default/dark.scss');
+@import url('./transition.scss');
 
 * {
     margin: 0;
     padding: 0;
+}
+
+.menu-icon {
+    width: 1em;
+    height: 1em;
+    margin-right: 6px;
+
+    +span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+.main-scrollbar {
+    width: 100%;
+
+    .el-scrollbar__wrap .el-scrollbar__view {
+        min-height: 100%;
+    }
+}
+
+.app-card {
+    background: var(--el-bg-color);
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+.query-form {
+    padding: 14px;
+    border-bottom: 0.8px solid var(--el-border-color-lighter);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+
+    .el-form-item {
+        min-width: 300px;
+        margin: 0;
+
+        &:last-child {
+            width: auto;
+            min-width: initial;
+            margin-left: auto;
+        }
+
+        .el-input {
+            width: 200px;
+        }
+    }
+}
+
+.app-table {
+    width: auto;
+
+    .el-table__header-wrapper,
+    .el-table__fixed-header-wrapper {
+        th {
+            word-break: break-word;
+            background-color: var(--el-fill-color-lighter);
+            height: 40px;
+            font-size: 13px;
+        }
+    }
 }
 
 .abs-center {
@@ -14,32 +76,55 @@
     transform: translate(-50%, -50%);
 }
 
-.app-container {
+.flex {
+    display: flex;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.m20 {
+    margin: 20px;
+}
+
+.m16 {
+    margin: 16px;
+}
+
+.m14 {
+    margin: 14px;
+}
+
+.m0 {
+    margin: 0;
+}
+
+.p20 {
     padding: 20px;
 }
 
-.app-card {
-    background: var(--el-bg-color);
-    box-shadow: var(--el-box-shadow-lighter);
+.p16 {
+    padding: 16px;
 }
 
-.query-form {
-    padding: 14px 14px 0 14px;
-
-    .el-form-item {
-        min-width: 300px;
-        margin-right: 0;
-        margin-bottom: 14px;
-
-        .el-input {
-            width: 200px;
-        }
-    }
-}
-
-.button-group {
+.p14 {
     padding: 14px;
-    border-top: 0.8px solid var(--el-border-color-lighter);
-    border-bottom: 0.8px solid var(--el-border-color-lighter);
-    display: flex;
+}
+
+.p0 {
+    padding: 0;
+}
+
+.g20 {
+    gap: 20px;
+}
+
+.g16 {
+    gap: 16px;
+}
+
+.g14 {
+    gap: 14px;
 }

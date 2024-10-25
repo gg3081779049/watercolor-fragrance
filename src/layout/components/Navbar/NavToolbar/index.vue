@@ -1,23 +1,16 @@
 <template>
-    <component v-for="item in navToolbar" :key="item" :is="$.components[item]" />
+    <component v-for="item in navToolbar" :key="item" :is="require(`@/components/${item.is}`).default"
+        v-show="item.show" />
 </template>
 
 <script>
-import NavbarSearch from "@/components/NavbarSearch"
-import Screenfull from "@/components/Screenfull"
-import DataScreen from "@/components/DataScreen"
-import LangSelect from "@/components/LangSelect"
-import ThemeSwitch from "@/components/ThemeSwitch"
+import { useSettingsStore } from '@/store/modules/settings'
+import { mapState } from 'pinia'
 
 export default {
     name: 'NavToolbar',
-    components: { NavbarSearch, Screenfull, DataScreen, LangSelect, ThemeSwitch },
-    data() {
-        return {
-            navToolbar: ['NavbarSearch', 'Screenfull', 'DataScreen', 'LangSelect', 'ThemeSwitch']
-        }
-    },
+    computed: {
+        ...mapState(useSettingsStore, ['navToolbar'])
+    }
 }
 </script>
-
-<style lang="scss" scoped></style>

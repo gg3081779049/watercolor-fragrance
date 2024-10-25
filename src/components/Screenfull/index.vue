@@ -24,7 +24,7 @@ export default {
       if (screenfull.isEnabled) {
         screenfull.toggle()
       } else {
-        this.$message({ message: "你的浏览器不支持全屏", type: "warning" })
+        this.$message({ message: this.$t('message.unsupportFullscreen'), type: "warning" })
       }
     },
     changeIcon() {

@@ -11,6 +11,12 @@ export default {
     // 系统语言
     language: 'zh',
 
+    // 页面切换动画类型
+    pageAnimateType: 'fade',
+
+    // 是否开启动态标题
+    dynamicTitle: false,
+
     // 头部高度
     headerHeight: 50,
 
@@ -23,13 +29,16 @@ export default {
     // 是否显示面包屑图标
     showBreadcrumbIcon: false,
 
-    // 标签页高度
-    TabsHeight: 36,
+    // 标签栏高度
+    tabsHeight: 40,
 
-    // 是否显示标签页
+    // 标签栏风格
+    tabsStyle: 'card',
+
+    // 是否显示标签栏
     showTabs: true,
 
-    // 是否显示标签页图标
+    // 是否显示标签栏图标
     showTabsIcon: false,
 
     // 是否开启标签拖拽
@@ -43,4 +52,13 @@ export default {
 
     // 是否开启水印
     watermark: false,
+
+    // 工具栏
+    navToolbar: [
+        { is: 'NavbarSearch', icon: 'navbar-search', show: true },
+        { is: 'Screenfull', icon: 'nav-fullscreen', show: true },
+        { is: 'DataScreen', icon: 'screen', show: false },
+        { is: 'LangSelect', icon: 'lang', show: true },
+        { is: 'ModeSwitch', icon: 'mode-switch-light', show: true },
+    ]
 }

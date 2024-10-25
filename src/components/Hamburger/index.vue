@@ -1,24 +1,28 @@
 <template>
-    <svg-icon icon="hamburger" className="hamburger" :style="{ transform: `rotate(${appStore.collapse ? 0 : 180}deg)` }"
-        @click="appStore.collapse = !appStore.collapse" />
+    <svg-icon icon="hamburger" className="hamburger" :style="{ transform: `rotate(${collapse ? 0 : 180}deg)` }"
+        @click="collapse = !collapse" />
 </template>
 
 <script>
 import { useAppStore } from '@/store/modules/app'
-import { mapStores } from 'pinia'
+import { mapWritableState } from 'pinia'
 
 export default {
     name: 'Hamburger',
-    computed: {
-        ...mapStores(useAppStore),
-    }
+    computed: { ...mapWritableState(useAppStore, ["collapse"]) }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     .hamburger {
         width: 20px;
         height: 20px;
         fill: var(--navbar-icon-fill-color);
+        cursor: pointer;
+
+        &:hover {
+            background: rgba(128, 128, 128, 0.122);
+            box-shadow: 0 0 0 6px rgba(128, 128, 128, 0.122);
+        }
     }
 </style>

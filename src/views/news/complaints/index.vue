@@ -1,6 +1,6 @@
 <template>
-  <div class="app-container">
-    <el-empty description="empty" />
+  <div class="p20">
+    <el-empty />
   </div>
 </template>
 

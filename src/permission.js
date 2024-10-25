@@ -2,6 +2,7 @@ import router from '@/router'
 import { ElMessage } from 'element-plus'
 import { getToken } from '@/utils/auth'
 import { isRelogin } from '@/utils/request'
+import { useAppStore } from '@/store/modules/app'
 import { useUserStore } from '@/store/modules/user'
 import { useRouteStore } from '@/store/modules/route'
 import NProgress from 'nprogress'
@@ -16,6 +17,7 @@ const whiteList = ['/login', '/register', '/applylicense']
 router.beforeEach((to, from, next) => {
     NProgress.done()
     if (getToken()) {
+        if (to.meta.title) useAppStore().title = to.meta.title
         if (to.path === '/login') {
             next({ path: '/' })
             NProgress.done()
