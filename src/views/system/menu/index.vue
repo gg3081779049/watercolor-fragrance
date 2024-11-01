@@ -1,5 +1,6 @@
 <template>
   <div class="app-card m20">
+    <!-- 查询条件 -->
     <el-collapse-transition>
       <el-form ref="queryForm" class="query-form" :model="queryParams" v-if="showSearch" inline>
         <el-form-item label="菜单名称" prop="title">
@@ -24,47 +25,48 @@
     <div class="flex-column g14 p14">
       <div class="flex">
         <el-button type="primary" size="small" plain @click="handleAdd">
-          <SvgIcon icon="plus" />
-          <span>新增</span>
+          <svg-icon icon="plus" />
+          <span>{{ $t('common.add') }}</span>
         </el-button>
         <el-button type="danger" size="small" plain @click="handleDelete(selection)">
-          <SvgIcon icon="delete" />
-          <span>删除</span>
+          <svg-icon icon="delete" />
+          <span>{{ $t('common.delete') }}</span>
         </el-button>
         <el-button type="info" size="small" plain @click="expandChange">
           <svg-icon icon="sort" />
           <span>{{ isExpandAll ? '折叠' : '展开' }}</span>
         </el-button>
-        <right-toolbar v-model:showSearch="showSearch" :columns="columnSettings" @refresh="getTree" />
+        <right-toolbar v-model:showSearch="showSearch" v-model:column-keys="columnKeys" :columns="columns"
+          @refresh="getTree" />
       </div>
       <!-- 菜单表格 -->
-      <el-table class="app-table" v-if="refreshTable" v-loading="loading" :data="tree" row-key="id"
-        :default-expand-all="isExpandAll" border @select="handleSelect">
-        <el-table-column type="selection" width="40" align="center" />
-        <el-table-column label="菜单名称" width="160" show-overflow-tooltip>
+      <app-table ref="app-table-ref" v-if="refreshTable" v-loading="loading" :data="tree" row-key="id"
+        :default-expand-all="isExpandAll" :columnProps="columnKeys" @select="handleSelect">
+        <el-table-column type="selection" width="40" />
+        <el-table-column label="菜单名称" width="160" align="left">
           <template #default="scoped">
             {{ $t(`route.${scoped.row.title}`) }}
           </template>
         </el-table-column>
-        <el-table-column prop="icon" label="图标" width="100" align="center">
+        <el-table-column prop="icon" label="图标" width="100">
           <template #default="scope">
             <svg-icon :icon="scope.row.icon" />
           </template>
         </el-table-column>
-        <el-table-column prop="path" label="路由名称" />
-        <el-table-column label="状态" width="100" align="center">
+        <el-table-column prop="path" label="路由名称" align="left" />
+        <el-table-column prop="status" label="状态" width="100">
           <template #default="{ row: { disabled, hidden } }">
             <el-tag :type="disabled ? 'danger' : hidden ? 'info' : 'success'" disable-transitions>
               {{ disabled ? '停用' : hidden ? '隐藏' : '正常' }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" label="创建时间" width="200" align="center">
+        <el-table-column prop="createTime" label="创建时间" width="200">
           <template #default="{ row: { createTime } }">
             <span>{{ $parseTime(new Date(createTime)) }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="240" align="center">
+        <el-table-column prop="operation" label="操作" width="240">
           <template #default="scope">
             <el-button type="primary" link @click="handleAdd(scope.row)">
               <svg-icon icon="plus" />
@@ -80,7 +82,7 @@
             </el-button>
           </template>
         </el-table-column>
-      </el-table>
+      </app-table>
     </div>
     <!-- 添加或修改菜单对话框 -->
     <app-dialog v-model="open" :title="title" width="680px" @closed="cancel" @confirm="submitForm">
@@ -170,14 +172,14 @@ export default {
       // 显示搜索栏
       showSearch: true,
       // 列设置
-      columnSettings: {
-        title: { label: '菜单名称', value: true },
-        icon: { label: '图标', value: true },
-        path: { label: '路由名称', value: true },
-        state: { label: '状态', value: true },
-        createTime: { label: '创建时间', value: true },
-        operate: { label: '操作', value: true },
-      },
+      columns: [],
+      columnKeys: [
+        'icon',
+        'path',
+        'status',
+        'createTime',
+        'operation'
+      ],
       // 是否展开，默认全部折叠
       isExpandAll: false,
       // 重新渲染表格状态
@@ -212,6 +214,11 @@ export default {
   },
   created() {
     this.getTree()
+  },
+  mounted() {
+    this.columns = this.$refs['app-table-ref']?.columns
+      .filter(({ props }) => 'prop' in props)
+      .map(({ props: { prop, label } }) => ({ value: prop, label }))
   },
   methods: {
     /** 查询菜单树 */

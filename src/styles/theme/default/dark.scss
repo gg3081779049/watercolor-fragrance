@@ -10,7 +10,7 @@ html.default.dark {
     --sidebar-sub-menu-bg: hsl(0, 0%, 6%);
     --sidebar-sub-menu-bg-hover: hsl(0, 0%, 4%);
     --sidebar-menu-bg-active: hsla(47, 50%, 50%, 0.08);
-    --sidebar-text-color-active: hsl(47, 50%, 50%);
+    --sidebar-text-color-active: var(--el-color-primary);
     /* navbar */
     --navbar-bg: hsl(0, 0%, 8%);
     --navbar-icon-fill-color: hsl(0, 0%, 83%);
@@ -19,7 +19,7 @@ html.default.dark {
     --tabs-tag--bg: hsl(0, 0%, 12%);
     --tabs-tag--bg-active: hsl(0, 0%, 4%);
     --tabs-tag-text-color: hsl(0, 0%, 93%);
-    --tabs-tag-text-color-active: hsl(47, 50%, 50%);
+    --tabs-tag-text-color-active: var(--el-color-primary);
     /* element */
     --el-color-primary: hsl(47, 50%, 50%);
     --el-color-primary-light-3: hsl(47, 50%, 40.75%);

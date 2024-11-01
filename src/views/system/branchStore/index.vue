@@ -7,7 +7,7 @@
           <el-input v-model="queryParams.storeName" placeholder="请输入分店名称" clearable @keyup.enter="getList" />
         </el-form-item>
         <el-form-item label="店长" prop="storeManager">
-          <el-input v-model="queryParams.storeName" placeholder="请输入店长名称" clearable @keyup.enter="getList" />
+          <el-input v-model="queryParams.storeManager" placeholder="请输入店长名称" clearable @keyup.enter="getList" />
         </el-form-item>
         <el-form-item label="详细地址" prop="address">
           <el-input v-model="queryParams.address" placeholder="请输入详细地址" clearable @keyup.enter="getList" />
@@ -26,25 +26,34 @@
     </el-collapse-transition>
 
     <div class="flex-column g14 p14">
-      <button-group @add="handleAdd" @delete="handleDelete">
-        <right-toolbar v-model:showSearch="showSearch" :columns="columnSettings" @refresh="getList" />
-      </button-group>
+      <div class="flex">
+        <el-button type="primary" size="small" plain @click="handleAdd">
+          <svg-icon icon="plus" />
+          <span>{{ $t('common.add') }}</span>
+        </el-button>
+        <el-button type="danger" size="small" plain @click="handleDelete(selection)">
+          <svg-icon icon="delete" />
+          <span>{{ $t('common.delete') }}</span>
+        </el-button>
+        <right-toolbar v-model:show-search="showSearch" v-model:column-keys="columnKeys" :columns="columns"
+          @refresh="getList" />
+      </div>
 
       <!-- 菜单表格 -->
-      <el-table class="app-table" v-loading="loading" :data="list" :tooltip-options="{ showAfter: 600 }" border>
-        <el-table-column type="selection" width="40" align="center" />
-        <el-table-column show-overflow-tooltip align="center" width="80" prop="id" label="分店ID" />
-        <el-table-column show-overflow-tooltip align="center" width="160" prop="storeName" label="分店名称" />
-        <el-table-column show-overflow-tooltip align="center" width="100" prop="storeManager" label="店长" />
-        <el-table-column show-overflow-tooltip align="center" width="160" prop="contactNumber" label="联系方式" />
-        <el-table-column show-overflow-tooltip align="left" min-width="200" prop="address" label="详细地址" />
-        <el-table-column show-overflow-tooltip align="center" width="100" prop="status" label="状态" />
-        <el-table-column show-overflow-tooltip align="center" width="200" prop="createTime" label="创建时间">
+      <app-table ref="app-table-ref" v-loading="loading" :data="list" :columnProps="columnKeys">
+        <el-table-column type="selection" width="40" />
+        <el-table-column prop="id" label="分店ID" width="80" />
+        <el-table-column prop="storeName" label="分店名称" width="160" />
+        <el-table-column prop="storeManager" label="店长" width="100" />
+        <el-table-column prop="contactNumber" label="联系方式" width="160" />
+        <el-table-column prop="address" label="详细地址" min-width="200" align="left" />
+        <el-table-column prop="status" label="状态" width="100" />
+        <el-table-column prop="createTime" label="创建时间" width="200">
           <template #default="{ row }">
             {{ $parseTime(new Date(row.createTime)) }}
           </template>
         </el-table-column>
-        <el-table-column show-overflow-tooltip align="center" width="200" prop="operation" label="操作">
+        <el-table-column prop="operation" label="操作" width="160">
           <template #default="{ row }">
             <el-button type="info" link @click="handleUpdate">
               <svg-icon icon="edit" />
@@ -56,7 +65,7 @@
             </el-button>
           </template>
         </el-table-column>
-      </el-table>
+      </app-table>
 
       <!-- 页脚 -->
       <Pagination :total="total" v-model:current-page="queryParams.pageIndex" v-model:page-size="queryParams.pageSize"
@@ -66,13 +75,24 @@
     <!-- 添加或修改菜单对话框 -->
     <app-dialog v-model="open" :title="title" @closed="cancel" @confirm="submitForm">
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+        <el-form-item prop="storeName" label="分店名称">
 
+        </el-form-item>
+        <el-form-item prop="storeManager" label="店长">
+
+        </el-form-item>
+        <el-form-item prop="contactNumber" label="联系方式">
+
+        </el-form-item>
+        <el-form-item prop="address" label="详细地址">
+
+        </el-form-item>
       </el-form>
     </app-dialog>
   </div>
 </template>
 
-<script lang="jsx">
+<script>
 import { getList, getItem, addItem, deleteItem, updateItem } from '@/api/system/branchStore'
 
 export default {
@@ -89,6 +109,18 @@ export default {
       title: "",
       // 显示搜索栏
       showSearch: true,
+      // 列设置
+      columns: [],
+      columnKeys: [
+        'id',
+        'storeName',
+        'storeManager',
+        'contactNumber',
+        'address',
+        'status',
+        'createTime',
+        'operation'
+      ],
       // 菜单列表
       list: [],
       // 总条数
@@ -100,22 +132,22 @@ export default {
         pageIndex: 1,
         pageSize: 10,
         storeName: '',
-        storeName: '',
+        storeManager: '',
         address: ''
       },
       // 表单参数
       form: {},
-      // 列设置
-      columnSettings: {
-        id: { label: '分店ID', value: true },
-        storeName: { label: '分店名称', value: true },
-      },
       // 表单校验
       rules: {}
     }
   },
   created() {
     this.getList()
+  },
+  mounted() {
+    this.columns = this.$refs['app-table-ref']?.columns
+      .filter(({ props }) => 'prop' in props)
+      .map(({ props: { prop, label } }) => ({ value: prop, label }))
   },
   methods: {
     // 查询列表
@@ -130,24 +162,48 @@ export default {
     // 重置按钮操作
     resetQuery() {
       this.$refs['queryForm']?.resetFields()
+      this.queryParams.storeName = ''
+      this.queryParams.storeManager = ''
+      this.queryParams.address = ''
+      this.getList()
     },
     // 取消按钮
     cancel() {
       this.$refs['form']?.resetFields()
-      this.form = {
-
-      }
+      this.form = {}
     },
     // 提交按钮
-    submitForm() { },
+    submitForm() {
+      this.$refs["form"].validate(valid => {
+        if (valid) {
+          if (this.form.id === undefined) {
+            // 新增
+          } else {
+            // 修改
+          }
+        }
+      })
+    },
     // 多选框选中数据
     handleSelect(selection) {
       this.selection = selection
     },
     // 新增按钮操作
-    handleAdd() { },
+    handleAdd() {
+      this.cancel()
+      this.title = '新增分店'
+      this.open = true
+    },
     // 删除按钮操作
-    handleDelete(rows) { },
+    handleDelete(rows) {
+      if (rows.length === 0) return
+      this.$modal.confirm.warning(`是否确认删除"${rows.map(({ storeName }) => storeName)}"?`).then(() => {
+        return deleteItem(rows.map(({ id }) => id))
+      }).then(() => {
+        this.getList()
+        this.$message.success('删除成功')
+      })
+    },
     // 导出按钮操作
     handleExport() { },
     // 修改按钮操作

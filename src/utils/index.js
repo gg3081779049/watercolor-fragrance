@@ -130,6 +130,13 @@ export function filterTree(tree, func) {
     return tree.filter(item => func(item) && (item.children = filterTree(item.children, func)))
 }
 
+// 提取对象
+export function pick(keys) {
+    return function (obj) {
+        keys.reduce((acc, key) => { acc[key] = obj[key]; return acc }, {})
+    }
+}
+
 // 短横线转大驼峰
 export function dashToCamel(str) {
     return `-${str}`.replace(/-[a-zA-Z]/g, s => s.at(-1).toUpperCase())

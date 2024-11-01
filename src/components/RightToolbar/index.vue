@@ -6,15 +6,16 @@
                 <svg-icon :icon="`zoom-${showSearch ? 'out' : 'in'}`" />
             </el-button>
         </el-tooltip>
-        <el-tooltip :content="$t('toolTip.columnSetting')" placement="top" effect="light" v-if="columns !== undefined">
+        <el-tooltip :content="$t('toolTip.columnSetting')" placement="top" effect="light"
+            v-if="columnKeys !== undefined">
             <el-button v-popover="this.$refs['popoverRef']">
                 <svg-icon icon="filter" />
                 <el-popover ref="popoverRef" :popper-style="{ minWidth: '100px', width: '120px', padding: '8px' }"
                     :hide-after="0" trigger="click" virtual-triggering>
                     <el-scrollbar max-height="320px">
-                        <el-checkbox v-for="(item, key) in columns" :key="key" v-model="item.value">
-                            {{ item.label }}
-                        </el-checkbox>
+                        <el-checkbox-group :modelValue="columnKeys" @change="$emit('update:columnKeys', $event)">
+                            <el-checkbox v-for="{ value, label } in columns" :value="value" :label="label" />
+                        </el-checkbox-group>
                     </el-scrollbar>
                 </el-popover>
             </el-button>
@@ -35,8 +36,11 @@ export default {
         showSearch: {
             type: Boolean
         },
+        columnKeys: {
+            type: Array,
+        },
         columns: {
-            type: Object
+            type: Array,
         }
     }
 }

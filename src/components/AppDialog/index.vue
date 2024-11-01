@@ -2,7 +2,7 @@
     <el-dialog class="app-dialog" :show-close="false" append-to-body>
         <template #header="{ close, titleClass }">
             <span :class="titleClass">{{ $attrs.title }}</span>
-            <div class="flex g16">
+            <div class="flex g14">
                 <svg-icon icon="close" @click="close" />
             </div>
         </template>
@@ -56,6 +56,7 @@ export default {
                 align-items: center;
 
                 svg {
+                    fill: var(--el-text-color-primary);
                     transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
                     cursor: pointer;
 

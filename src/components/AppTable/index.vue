@@ -1,33 +1,65 @@
 <template>
     <el-table class="app-table" :tooltip-options="{ showAfter: 600 }" border>
-        <template v-for="column in columns" :key="column">
-            <el-table-column v-if="!columnSettings[column.prop] || columnSettings[column.prop]?.value" align="center"
-                show-overflow-tooltip v-bind="column">
-                <template #default="scoped" v-if="column.render">
-                    <component :is="column.render(scoped)" v-if="typeof column.render === 'function'" />
-                    <component :is="column.render" v-if="typeof column.render === 'string'">
-                        {{ scoped.row[column.prop] }}
-                    </component>
-                </template>
-            </el-table-column>
-        </template>
-        <slot />
+        <component v-for="column in displayColumns" :is="column" />
     </el-table>
 </template>
 
-<script>
+<script lang="jsx">
 export default {
     name: 'AppTable',
     props: {
-        columns: {
+        columnProps: {
+            type: Array,
+        },
+        addColumns: {
             type: Array,
             default: []
         },
-        columnSettings: {
-            type: Object
+        filterColumns: {
+            type: Function,
+            default(props) {
+                return this.columnProps.includes(props.prop) || props.prop === undefined
+            }
+        }
+    },
+    data() {
+        return {
+            defaultTableColumn: {
+                'align': 'center',
+                'show-overflow-tooltip': ''
+            }
+        }
+    },
+    computed: {
+        columns() {
+            let slots = this.$slots.default?.() || []
+            slots.push(...this.addColumns.map(column => {
+                return (
+                    <el-table-column {...column}>
+                        {
+                            ['default', 'header', 'filter-icon'].reduce((acc, slotName) => {
+                                if (typeof column[slotName] === 'function') {
+                                    acc[slotName] = slotProps => column[slotName](slotProps)
+                                }
+                                return acc
+                            }, {})
+                        }
+                    </el-table-column>
+                )
+            }))
+            // 设置默认值
+            slots.forEach(slot => slot.props = { ...this.defaultTableColumn, ...slot.props })
+            return slots
+        },
+        displayColumns() {
+            if (this.columnProps === undefined) {
+                return this.columns
+            } else {
+                return this.columns.filter(({ props }) => {
+                    return this.filterColumns?.(props)
+                })
+            }
         }
     }
 }
 </script>
-
-<style lang="scss" scoped></style>

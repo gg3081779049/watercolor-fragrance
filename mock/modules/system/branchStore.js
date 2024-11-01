@@ -1,5 +1,5 @@
 const { branchStoreList } = require(`${process.cwd()}/mock/data`)
-const { getNextUniqueMin } = require(`${process.cwd()}/mock/utils`)
+const { getNextUniqueMin, pickKeys } = require(`${process.cwd()}/mock/utils`)
 
 module.exports = [{
     url: '/system/branchStore/list',
@@ -38,10 +38,7 @@ module.exports = [{
         let minId = getNextUniqueMin(branchStoreList.map(item => item.id))
         let form = { ...req.body, id: minId }
         let keys = ['id', 'storeName', 'storeManager', 'contactNumber', 'region', 'address', 'longitude', 'latitude', 'pictures', 'facilities', 'status', 'createTime']
-        let item = keys.reduce((acc, key) => {
-            acc[key] = form[key]
-            return acc
-        }, {})
+        let item = pickKeys(form, keys)
         branchStoreList.push(item)
         return {
             code: 200,

@@ -35,10 +35,7 @@ module.exports = [{
         let minId = getNextUniqueMin(menuList.map(item => item.id))
         let form = { ...req.body, id: minId, createTime: new Date().getTime() }
         let keys = ['id', 'parentId', 'order', 'hasChild', 'path', 'query', 'component', 'icon', 'title', 'noCache', 'hidden', 'disabled', 'createTime']
-        let item = keys.reduce((acc, key) => {
-            acc[key] = form[key]
-            return acc
-        }, {})
+        let item = pickKeys(form, keys)
         menuList.push(item)
         return {
             code: 200,

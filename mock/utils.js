@@ -4,3 +4,10 @@ module.exports.getNextUniqueMin = function (nums, min = 1) {
     while (numSet.has(min)) min++
     return min
 }
+
+module.exports.pickKeys = function (obj, keys) {
+    return keys.reduce((acc, key) => {
+        acc[key] = obj[key]
+        return acc
+    }, {})
+}

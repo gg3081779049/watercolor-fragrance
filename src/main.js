@@ -22,10 +22,10 @@ import { download } from '@/utils/request'
 
 // 全局组件
 import SvgIcon from '@/components/SvgIcon'
-import ButtonGroup from '@/components/ButtonGroup'
 import RightToolbar from '@/components/RightToolbar'
-import Pagination from '@/components/Pagination'
+import AppTable from '@/components/AppTable'
 import AppDialog from '@/components/AppDialog'
+import Pagination from '@/components/Pagination'
 
 const app = createApp(App)
 
@@ -36,10 +36,10 @@ app.config.globalProperties.$parseTime = parseTime
 app.config.globalProperties.$download = download
 
 app.component(SvgIcon.name || 'SvgIcon', SvgIcon)
-app.component(ButtonGroup.name || 'ButtonGroup', ButtonGroup)
 app.component(RightToolbar.name || 'RightToolbar', RightToolbar)
-app.component(Pagination.name || 'Pagination', Pagination)
+app.component(AppTable.name || 'AppTable', AppTable)
 app.component(AppDialog.name || 'AppDialog', AppDialog)
+app.component(Pagination.name || 'Pagination', Pagination)
 
 app.use(store)
 app.use(router)
